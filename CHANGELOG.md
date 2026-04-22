@@ -2,6 +2,25 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.1.0] - 2026-04-22
+
+### Added
+
+- **Design** (2 skills):
+  - `shadcn-ui` v1.0.0 — shadcn/ui component integration and best practices
+  - `ui-ux-pro-max` v1.0.0 — UI/UX design intelligence with BM25 search engine, 11 data CSVs, 13 stack guides, 3 Python scripts
+
+- **Framework** (2 skills):
+  - `electron` v1.0.0 — Electron desktop app automation via Chrome DevTools Protocol
+  - `tauri-v2` v1.0.1 — Tauri v2 cross-platform development (IPC, permissions, plugins, mobile) with 5 reference documents
+
+- **Dev Workflow** (3 skills):
+  - `git-commit` v1.0.0 — Conventional Commits workflow (generalized from AgentCraft)
+  - `guard` v1.0.0 — High-risk session safety guardrail (generalized from actant-next)
+  - `investigate` v1.0.0 — Systematic root cause investigation methodology (generalized from actant-next)
+
+- Updated README.md with new skill categories and installation commands
+
 ## [1.0.0] - 2026-04-22
 
 ### Added
