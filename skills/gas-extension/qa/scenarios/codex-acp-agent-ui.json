@@ -1,0 +1,104 @@
+{
+  "name": "codex-acp-agent-ui",
+  "description": "在 Agents - Insiders (VS Code Agents 正式 host) 中验证三件事：(1) chatSessions 贡献被 host 识别；(2) 扩展在 --agents 模式下成功激活；(3) codex-acp 后端链路在 Agents host 下可用",
+  "tags": ["codex-acp", "e2e", "agents-insiders", "lm-provider"],
+  "setup": {
+    "build": true,
+    "env": {
+      "GAS_QA_MODE": "1",
+      "GAS_QA_AUTORUN": "1",
+      "GAS_QA_PROMPT": "say hi in three words",
+      "GAS_QA_TIMEOUT_MS": "90000"
+    },
+    "launchOptions": {
+      "readyTimeoutMs": 60000
+    }
+  },
+  "steps": [
+    {
+      "id": "agent-ui-01-startup",
+      "description": "启动 Agents 窗口 (Code - Insiders.exe --agents) 并截图",
+      "action": "screenshot",
+      "args": { "name": "agent-ui-01-startup" },
+      "expect": "Agents Insiders 窗口正常渲染（Sessions/Customizations/Agents/Skills 等 Agents 专属 UI 可见）"
+    },
+    {
+      "id": "agent-ui-02-agents-host",
+      "description": "检查 Agents host 专属 UI（'Customizations' 文字）可见",
+      "action": "hasText",
+      "args": { "text": "Customizations" },
+      "expect": "Agents UI 文本可见，确认 --agents 开关生效"
+    },
+    {
+      "id": "agent-ui-03-no-activation-failure",
+      "description": "不应出现扩展激活失败横幅",
+      "action": "hasText",
+      "args": { "text": "Activating extension failed" },
+      "expect": "该文本不应出现；hasText 应返回 false"
+    },
+    {
+      "id": "agent-ui-04-show-audit-log",
+      "description": "打开 Game Agent Studio 的 audit log output channel",
+      "action": "command",
+      "args": { "label": "Game Agent Studio: Show Audit Log" },
+      "expect": "Output 面板切换到 Game Agent Studio，显示 markdown-formatted 审计日志",
+      "screenshotAfter": true
+    },
+    {
+      "id": "agent-ui-04b-dismiss",
+      "description": "关闭可能残留的下拉",
+      "action": "pressKey",
+      "args": { "key": "Escape" }
+    },
+    {
+      "id": "agent-ui-05-audit-adapter-initialized",
+      "description": "audit log 里应该能看到 adapter.initialized",
+      "action": "waitForText",
+      "args": { "text": "adapter.initialized", "timeout": 15000 },
+      "expect": "扩展 activate 完成并初始化 CodexAcpAdapter"
+    },
+    {
+      "id": "agent-ui-06-audit-agent-ready",
+      "description": "autorun 触发后 agent.ready 事件表明 ACP 握手 OK",
+      "action": "waitForText",
+      "args": { "text": "agent.ready", "timeout": 45000 },
+      "expect": "codex-acp 子进程启动并完成 initialize"
+    },
+    {
+      "id": "agent-ui-07-audit-prompt-completed",
+      "description": "autorun 发起的 prompt 成功完结 — 后端链路 OK 的最终证据",
+      "action": "waitForText",
+      "args": { "text": "prompt.completed", "timeout": 120000 },
+      "expect": "core.prompt 执行完毕，codex-acp 返回 stop/end_turn"
+    },
+    {
+      "id": "agent-ui-08-stop-reason-stop",
+      "description": "stopReason=stop 表示 codex-acp 以 end_turn 收尾",
+      "action": "hasText",
+      "args": { "text": "\"stopReason\": \"stop\"" },
+      "expect": "audit log markdown 里的 prompt.completed 事件 stopReason=stop"
+    },
+    {
+      "id": "agent-ui-09-has-game-agent-studio-label",
+      "description": "chatSessions 贡献的 displayName 应可在 workbench 文本中找到",
+      "action": "hasText",
+      "args": { "text": "Game Agent Studio" }
+    },
+    {
+      "id": "agent-ui-10-observe-model-picker-texts",
+      "description": "Informational — 观察 UI 是否渲染了 base model 名或 reasoning 标签",
+      "action": "evaluate",
+      "args": {
+        "expression": "(() => { const text = (globalThis.document?.body?.innerText ?? ''); const baseHits = ['gpt-5.4', 'gpt-5.3-codex', 'gpt-5.2-codex', 'gpt-5.1-codex-max', 'gpt-5.2', 'gpt-5.1-codex-mini'].filter(b => text.includes(b)); const reasoningHits = ['Low', 'Medium', 'High', 'XHigh', 'Xhigh'].filter(r => text.includes(r)); return { basesSeen: baseHits, reasoningSeen: reasoningHits, note: 'informational — empty arrays are OK if user hasn\\'t entered a chat session yet' }; })()"
+      },
+      "expect": "evaluate 正常返回（有无 hit 都 PASS，仅观察）"
+    },
+    {
+      "id": "agent-ui-11-final",
+      "description": "最终 UI 截图",
+      "action": "screenshot",
+      "args": { "name": "agent-ui-11-final" }
+    }
+  ],
+  "cleanup": []
+}

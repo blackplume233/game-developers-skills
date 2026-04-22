@@ -1,0 +1,49 @@
+# Privacy audit reference rules for AI agent review.
+# The AI reads these rules as context for semantic-level judgment,
+# not as mechanically-executed regex patterns.
+
+dimensions:
+  CRITICAL:
+    - label: "Secrets & credentials"
+      description: >
+        API keys, tokens, secrets, passwords, private keys.
+        Distinguish real values (high entropy, known formats like sk-, ghp_, AKIA)
+        from placeholders and documentation examples.
+
+  HIGH:
+    - label: "Identity information"
+      description: >
+        Usernames, emails, phone numbers, real names embedded in content.
+        Author attribution in frontmatter is acceptable;
+        user data leakage in instructions is not.
+    - label: "Hardcoded paths & environments"
+      description: >
+        Absolute paths like C:\Users\<name>\... or /home/<name>/...
+        Internal URLs (localhost, 192.168.x, 10.x, *.internal, *.corp).
+        Generic convention paths like ~/.cursor/skills/ are acceptable.
+    - label: "Company internal domains"
+      patterns_hint:
+        - 'https?://[a-z]+\.(internal|corp|local)\.'
+
+  MEDIUM:
+    - label: "Business sensitive"
+      description: >
+        Internal product names, unpublished APIs, architecture details,
+        proprietary business logic that should not be public.
+
+  LOW:
+    - label: "Generalization"
+      description: >
+        Project-specific references in skills claiming to be universal.
+        Team-internal jargon that outsiders cannot understand.
+      patterns_hint:
+        - 'game-agent-extension'
+
+exclude_paths:
+  - "scenarios/*"
+
+known_safe_patterns:
+  - 'example@example\.com'
+  - 'sk-example'
+  - 'your-api-key-here'
+  - 'https?://localhost:\d+.*in documentation examples'

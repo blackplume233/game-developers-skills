@@ -1,0 +1,19 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node (if npx skills generates local files)
+node_modules/
+.skills.json
+skills-lock.json
+
+# Temp
+*.tmp
+*.bak

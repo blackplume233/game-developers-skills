@@ -1,0 +1,68 @@
+{
+  "name": "startup-smoke",
+  "description": "验证扩展启动后的基本 UI 状态：workbench 加载、Chat 面板渲染、无阻塞弹窗",
+  "tags": ["smoke", "startup", "ui"],
+  "setup": {
+    "build": true,
+    "launchOptions": {
+      "readyTimeoutMs": 45000
+    }
+  },
+  "steps": [
+    {
+      "id": "startup-screenshot",
+      "description": "VS Code 启动后截图",
+      "action": "screenshot",
+      "args": { "name": "01-startup" },
+      "expect": "VS Code 窗口正常渲染，标题栏显示 [Extension Development Host]",
+      "screenshotBefore": false,
+      "screenshotAfter": false
+    },
+    {
+      "id": "no-trust-dialog",
+      "description": "确认没有 Workspace Trust 弹窗阻塞",
+      "action": "hasText",
+      "args": { "text": "Do you trust the authors" },
+      "expect": "不应出现 Trust 弹窗（hasText 应返回 false）。launch 参数已包含 --disable-workspace-trust",
+      "screenshotBefore": false,
+      "screenshotAfter": false
+    },
+    {
+      "id": "chat-panel-visible",
+      "description": "Chat 面板是否可见",
+      "action": "hasText",
+      "args": { "text": "CHAT" },
+      "expect": "CHAT 标签页应在侧栏可见，说明 chatSessionsProvider 正常注册",
+      "screenshotBefore": false,
+      "screenshotAfter": true
+    },
+    {
+      "id": "chat-input-placeholder",
+      "description": "Chat 输入框占位符文本",
+      "action": "hasText",
+      "args": { "text": "Describe what to build" },
+      "expect": "Chat 面板底部应有 'Describe what to build' 输入提示",
+      "screenshotBefore": false,
+      "screenshotAfter": false
+    },
+    {
+      "id": "explorer-visible",
+      "description": "Explorer 面板正常加载",
+      "action": "hasText",
+      "args": { "text": "EXPLORER" },
+      "expect": "左侧 Explorer 面板可见，workspace 目录已加载",
+      "screenshotBefore": false,
+      "screenshotAfter": false
+    },
+    {
+      "id": "no-critical-errors",
+      "description": "检查状态栏无严重错误指示",
+      "action": "queryText",
+      "args": { "selector": ".statusbar-item-label" },
+      "expect": "状态栏不应包含红色错误指示器或 'Failed to activate' 文本",
+      "screenshotBefore": false,
+      "screenshotAfter": true
+    }
+  ],
+  "cleanup": []
+}

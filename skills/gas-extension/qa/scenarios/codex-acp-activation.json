@@ -1,0 +1,59 @@
+{
+  "name": "codex-acp-activation",
+  "description": "验证切换到 codex-acp 后端后的激活行为：无 SSO 弹窗、无认证命令、Chat 面板可用",
+  "tags": ["codex-acp", "activation", "regression"],
+  "setup": {
+    "build": true,
+    "launchOptions": {
+      "readyTimeoutMs": 45000
+    }
+  },
+  "steps": [
+    {
+      "id": "activation-screenshot",
+      "description": "激活后截图（无 SSO 弹窗）",
+      "action": "screenshot",
+      "args": { "name": "acp-01-activated" },
+      "expect": "VS Code 窗口正常渲染，没有 'Sign In / OAuth / Company SSO' 类弹窗或通知",
+      "screenshotBefore": false,
+      "screenshotAfter": false
+    },
+    {
+      "id": "no-signout-command",
+      "description": "gas.signOut 命令应已移除",
+      "action": "evaluate",
+      "args": { "expression": "(async () => { const v = globalThis.vscode; return v && typeof v.commands?.getCommands === 'function' ? (await v.commands.getCommands(true)).includes('gas.signOut') : null; })()" },
+      "expect": "返回 false 或 null（gas.signOut 不再注册）",
+      "screenshotBefore": false,
+      "screenshotAfter": false
+    },
+    {
+      "id": "show-audit-log",
+      "description": "执行 Show Audit Log 命令",
+      "action": "command",
+      "args": { "label": "Game Agent Studio: Show Audit Log" },
+      "expect": "Output 面板切换到 'Game Agent Studio' 输出通道，能看到 adapter.initialized adapterId=codex-acp 日志",
+      "screenshotBefore": false,
+      "screenshotAfter": true
+    },
+    {
+      "id": "audit-log-text",
+      "description": "审计日志应包含 codex-acp 后端标记",
+      "action": "hasText",
+      "args": { "text": "codex-acp" },
+      "expect": "审计日志中应出现 'codex-acp' 字样（adapter.initialized 事件包含 adapterId=codex-acp）",
+      "screenshotBefore": false,
+      "screenshotAfter": false
+    },
+    {
+      "id": "chat-panel-available",
+      "description": "CHAT 面板仍然可见",
+      "action": "hasText",
+      "args": { "text": "CHAT" },
+      "expect": "chatSessionsProvider 正常注册（虽然改了后端但 UI 贡献未改）",
+      "screenshotBefore": false,
+      "screenshotAfter": true
+    }
+  ],
+  "cleanup": []
+}

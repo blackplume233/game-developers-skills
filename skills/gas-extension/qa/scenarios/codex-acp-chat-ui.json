@@ -1,0 +1,109 @@
+{
+  "name": "codex-acp-chat-ui",
+  "description": "通过 UI（命令面板触发 gas.qaRunPrompt）端到端验证：扩展真实调用本地 codex-acp，收到 Codex 回答，输出面板可见回答文本",
+  "tags": ["codex-acp", "e2e", "ui-interaction"],
+  "setup": {
+    "build": true,
+    "env": {
+      "GAS_QA_MODE": "1",
+      "GAS_QA_PROMPT": "say hi in three words",
+      "GAS_QA_TIMEOUT_MS": "90000"
+    },
+    "launchOptions": {
+      "readyTimeoutMs": 60000
+    }
+  },
+  "steps": [
+    {
+      "id": "ui-01-startup",
+      "description": "启动后初次截图",
+      "action": "screenshot",
+      "args": { "name": "ui-01-startup" },
+      "expect": "VS Code 窗口正常渲染",
+      "screenshotAfter": false
+    },
+    {
+      "id": "ui-02-no-error",
+      "description": "无激活失败横幅",
+      "action": "hasText",
+      "args": { "text": "Activating extension failed" },
+      "expect": "不应出现激活失败横幅（hasText 应返回 false）",
+      "screenshotAfter": false
+    },
+    {
+      "id": "ui-03-qa-mode-enabled",
+      "description": "QA 模式 activation 日志可在输出通道中找到",
+      "action": "command",
+      "args": { "label": "Game Agent Studio: Show Audit Log" },
+      "expect": "Output 面板切换到 Game Agent Studio",
+      "screenshotAfter": true
+    },
+    {
+      "id": "ui-04-run-qa-prompt",
+      "description": "通过命令面板触发 gas.qaRunPrompt（QA 模式命令）— 扩展将真实调用 core.prompt(),流式写入 QA 输出通道",
+      "action": "command",
+      "args": { "label": "Game Agent Studio: QA Run Prompt" },
+      "expect": "命令面板找到并执行该命令（仅在 gas.qaMode 上下文为 true 时可见）",
+      "screenshotAfter": false
+    },
+    {
+      "id": "ui-04b-dismiss-dropdown",
+      "description": "按 Escape 关闭 OUTPUT 频道下拉（Enter 触发命令后常会弹出频道选择器）",
+      "action": "pressKey",
+      "args": { "key": "Escape" },
+      "expect": "任何遗留的下拉菜单被关闭，QA 输出通道正文可见",
+      "screenshotAfter": false
+    },
+    {
+      "id": "ui-04c-settle",
+      "description": "让 OUTPUT 面板稳定到 QA 频道",
+      "action": "wait",
+      "args": { "ms": 1200 },
+      "expect": "UI 稳定",
+      "screenshotAfter": true
+    },
+    {
+      "id": "ui-05-wait-qa-start",
+      "description": "等待 QA 输出通道出现 [QA] START 标记",
+      "action": "waitForText",
+      "args": { "text": "[QA] START", "timeout": 20000 },
+      "expect": "扩展的 gas.qaRunPrompt 已开始执行并写入 QA 输出通道",
+      "screenshotAfter": false
+    },
+    {
+      "id": "ui-06-wait-codex-done",
+      "description": "等待 Codex 真实返回并写 [QA] DONE 标记（最多 90s）",
+      "action": "waitForText",
+      "args": { "text": "[QA] DONE", "timeout": 90000 },
+      "expect": "core.prompt 完成，codex-acp 返回，stopReason 写入输出。若超时 FAIL = 后端链路未通",
+      "screenshotAfter": true
+    },
+    {
+      "id": "ui-07-stop-reason-ok",
+      "description": "验证 stopReason=stop（正常结束，而非 error/cancel）",
+      "action": "hasText",
+      "args": { "text": "stopReason=stop" },
+      "expect": "Codex 正常结束，非 error",
+      "screenshotAfter": false
+    },
+    {
+      "id": "ui-08-has-greeting",
+      "description": "输出应包含问候词（hi/hello/hey/hola 之一）",
+      "action": "evaluate",
+      "args": {
+        "expression": "(() => { const t = (globalThis.document?.body?.innerText ?? '').toLowerCase(); const matches = ['hi', 'hello', 'hey', 'hola', 'howdy'].filter(w => t.includes(w)); return { matched: matches, count: matches.length }; })()"
+      },
+      "expect": "返回对象 count >= 1，表示输出中包含至少一种问候词，证明 Codex 真的回答了 'say hi in three words'",
+      "screenshotAfter": true
+    },
+    {
+      "id": "ui-09-final-screenshot",
+      "description": "最终 UI 状态截图（含 QA 输出通道完整内容）",
+      "action": "screenshot",
+      "args": { "name": "ui-09-final" },
+      "expect": "输出通道显示 [QA] START / 模型回答 / [QA] DONE stopReason=stop",
+      "screenshotAfter": false
+    }
+  ],
+  "cleanup": []
+}

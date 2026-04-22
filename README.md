@@ -1,0 +1,98 @@
+# Game Developers Skills
+
+AI Agent 技能私有仓库，兼容 [skills.sh](https://skills.sh/) / `npx skills` 生态。
+
+## 技能目录
+
+### Agent Orchestration（通用）
+
+| 技能 | 版本 | 说明 |
+|------|------|------|
+| [paseo](skills/agent-orchestration/paseo/) | 1.0.0 | Paseo CLI 参考手册，管理 agent 生命周期 |
+| [paseo-chat](skills/agent-orchestration/paseo-chat/) | 1.0.0 | 通过 Chat Room 协调多 agent 异步通信 |
+| [paseo-committee](skills/agent-orchestration/paseo-committee/) | 1.0.0 | 双 agent 委员会模式，根因分析与方案规划 |
+| [paseo-handoff](skills/agent-orchestration/paseo-handoff/) | 1.0.0 | 将当前任务完整移交给另一个 agent |
+| [paseo-loop](skills/agent-orchestration/paseo-loop/) | 1.0.0 | 迭代 worker/verifier 循环直到目标达成 |
+| [paseo-orchestrator](skills/agent-orchestration/paseo-orchestrator/) | 1.0.0 | 团队编排：构建 agent 团队，通过 chat 协调 |
+| [codex-subagent](skills/agent-orchestration/codex-subagent/) | 1.0.0 | 将子任务委托给 Codex CLI 执行 |
+
+### Skill Management（通用）
+
+| 技能 | 版本 | 说明 |
+|------|------|------|
+| [find-skills](skills/skill-management/find-skills/) | 1.0.0 | 从 skills.sh 生态发现和安装技能 |
+| [skill-repo-manager](skills/skill-management/skill-repo-manager/) | 1.0.0 | 管理本仓库：搜索、安装、发布（含版本校验+AI 隐私审查） |
+
+### GAS Extension（项目专用）
+
+| 技能 | 版本 | 说明 |
+|------|------|------|
+| [qa](skills/gas-extension/qa/) | 1.0.0 | Playwright E2E 测试工程师，6 种测试模式 |
+| [ship](skills/gas-extension/ship/) | 1.0.0 | 一站式交付流水线：审查→构建→验证→提交→推送 |
+
+## 快速安装
+
+```bash
+# 全局安装所有通用技能
+npx skills add <owner>/game-developers-skills \
+  --skill paseo --skill paseo-chat --skill paseo-committee \
+  --skill paseo-handoff --skill paseo-loop --skill paseo-orchestrator \
+  --skill codex-subagent --skill find-skills --skill skill-repo-manager \
+  -g -y
+
+# 项目级安装 GAS 扩展技能
+cd ~/game-agent-extension
+npx skills add <owner>/game-developers-skills --skill qa --skill ship
+
+# 一键全部安装
+npx skills add <owner>/game-developers-skills --skill '*' -g -y
+```
+
+## 版本规范
+
+每个 `SKILL.md` 的 YAML frontmatter 中包含 `version` 字段，遵循语义化版本：
+
+- `major.minor.patch`（如 `1.2.0`）
+- 新技能首次发布：`1.0.0`
+- 内容修复（typo、措辞）：patch +1
+- 功能增强（新章节、新脚本）：minor +1
+- 破坏性变更（重命名、删除、不兼容）：major +1
+
+上传时由 `skill-repo-manager` 强制校验版本号只能递增。
+
+## 隐私审查
+
+每次上传前由 AI Agent 执行语义级隐私审查，检查 5 个维度：
+
+1. **CRITICAL** — 密钥凭证（API Key、Token、Secret）
+2. **HIGH** — 身份信息（用户名、邮箱）、硬编码路径
+3. **MEDIUM** — 业务敏感（内部产品名、未公开 API）
+4. **LOW** — 泛化程度（项目特定引用）
+
+详见 [docs/privacy-audit-guide.md](docs/privacy-audit-guide.md)。
+
+## 目录结构
+
+```
+skills/
+├── agent-orchestration/    # 通用 - Agent 编排
+│   ├── paseo/
+│   ├── paseo-chat/
+│   ├── paseo-committee/
+│   ├── paseo-handoff/
+│   ├── paseo-loop/
+│   ├── paseo-orchestrator/
+│   └── codex-subagent/
+├── skill-management/       # 通用 - 技能管理
+│   ├── find-skills/
+│   └── skill-repo-manager/
+└── gas-extension/          # GAS 扩展专用
+    ├── qa/
+    │   ├── SKILL.md
+    │   ├── pitfalls.md
+    │   ├── commands/
+    │   └── scenarios/
+    └── ship/
+        ├── SKILL.md
+        └── commands/
+```

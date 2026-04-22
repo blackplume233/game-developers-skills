@@ -1,0 +1,96 @@
+{
+  "name": "codex-acp-interaction",
+  "description": "端到端验证：扩展通过 codex-acp 后端与本地 Codex 交互（激活 → 打开 Chat → 检查审计日志 → UI 稳定）",
+  "tags": ["codex-acp", "e2e", "regression"],
+  "setup": {
+    "build": true,
+    "launchOptions": {
+      "readyTimeoutMs": 60000
+    }
+  },
+  "steps": [
+    {
+      "id": "acp-01-startup",
+      "description": "启动后初次截图",
+      "action": "screenshot",
+      "args": { "name": "acp-01-startup" },
+      "expect": "VS Code 窗口正常渲染，没有 'Activating extension failed' 横幅",
+      "screenshotAfter": false
+    },
+    {
+      "id": "acp-02-no-activation-error",
+      "description": "扩展激活未失败",
+      "action": "hasText",
+      "args": { "text": "Activating extension failed" },
+      "expect": "不应出现激活失败横幅（hasText 应返回 false）",
+      "screenshotAfter": false
+    },
+    {
+      "id": "acp-03-no-sso-popup",
+      "description": "不再出现公司 SSO 登录弹窗",
+      "action": "hasText",
+      "args": { "text": "Sign in to Company" },
+      "expect": "不应出现 SSO 弹窗（hasText 应返回 false）",
+      "screenshotAfter": false
+    },
+    {
+      "id": "acp-04-no-signout-command",
+      "description": "gas.signOut 命令应已从扩展贡献中移除",
+      "action": "evaluate",
+      "args": {
+        "expression": "(async () => { try { const vs = globalThis.require?.('vscode'); if (!vs || !vs.commands) return null; const cmds = await vs.commands.getCommands(true); return cmds.includes('gas.signOut'); } catch (e) { return null; } })()"
+      },
+      "expect": "返回 false 或 null（gas.signOut 已不再注册；workbench 不开放 require('vscode') 时降级为 null）",
+      "screenshotAfter": false
+    },
+    {
+      "id": "acp-05-show-audit-log",
+      "description": "执行 Show Audit Log 命令打开输出面板",
+      "action": "command",
+      "args": { "label": "Game Agent Studio: Show Audit Log" },
+      "expect": "Output 面板切换到 Game Agent Studio 通道",
+      "screenshotAfter": true
+    },
+    {
+      "id": "acp-06-audit-log-codex-acp",
+      "description": "审计日志应包含 adapter.initialized codex-acp 事件",
+      "action": "hasText",
+      "args": { "text": "codex-acp" },
+      "expect": "审计日志中应出现 'codex-acp' 字样（adapterId=codex-acp）",
+      "screenshotAfter": false
+    },
+    {
+      "id": "acp-07-chat-panel",
+      "description": "Chat 面板仍然可见",
+      "action": "hasText",
+      "args": { "text": "CHAT" },
+      "expect": "chatSessionsProvider 已注册，左侧出现 CHAT 标签",
+      "screenshotAfter": true
+    },
+    {
+      "id": "acp-08-open-chat",
+      "description": "打开 Chat 面板",
+      "action": "command",
+      "args": { "label": "View: Show Chat" },
+      "expect": "命令执行完成（不检查 UI 结果，见下一步）",
+      "screenshotAfter": true
+    },
+    {
+      "id": "acp-09-wait-chat-render",
+      "description": "等待 Chat 面板完成渲染",
+      "action": "wait",
+      "args": { "ms": 2500 },
+      "expect": "等待 2.5s 以供 React renderer 完成首帧",
+      "screenshotAfter": false
+    },
+    {
+      "id": "acp-10-final-screenshot",
+      "description": "最终截图",
+      "action": "screenshot",
+      "args": { "name": "acp-10-final" },
+      "expect": "UI 稳定，无错误横幅，无未处理异常弹窗",
+      "screenshotAfter": false
+    }
+  ],
+  "cleanup": []
+}

@@ -1,0 +1,57 @@
+{
+  "name": "command-registration",
+  "description": "验证 GAS 扩展注册的命令在命令面板中可见、可执行",
+  "tags": ["commands", "palette", "regression"],
+  "setup": {
+    "build": true,
+    "launchOptions": {}
+  },
+  "steps": [
+    {
+      "id": "open-palette",
+      "description": "打开命令面板",
+      "action": "pressKey",
+      "args": { "key": "F1" },
+      "expect": "命令面板弹出，显示 '>' 提示符",
+      "screenshotBefore": false,
+      "screenshotAfter": true
+    },
+    {
+      "id": "search-gas-commands",
+      "description": "搜索 Game Agent Studio 命令",
+      "action": "command",
+      "args": { "label": "Game Agent Studio" },
+      "expect": "命令面板结果列表中应出现 GAS 相关命令（如 Show Audit Log）。切换到 codex-acp 后没有 Sign Out。",
+      "screenshotBefore": false,
+      "screenshotAfter": true
+    },
+    {
+      "id": "close-palette",
+      "description": "关闭命令面板",
+      "action": "pressKey",
+      "args": { "key": "Escape" },
+      "expect": "命令面板关闭",
+      "screenshotBefore": false,
+      "screenshotAfter": false
+    },
+    {
+      "id": "run-show-audit-log",
+      "description": "执行 Show Audit Log 命令",
+      "action": "command",
+      "args": { "label": "Game Agent Studio: Show Audit Log" },
+      "expect": "Output 面板应打开或切换到 'Game Agent Studio' 输出通道",
+      "screenshotBefore": false,
+      "screenshotAfter": true
+    },
+    {
+      "id": "wait-after-command",
+      "description": "等待命令执行完毕",
+      "action": "wait",
+      "args": { "ms": 2000 },
+      "expect": "UI 响应完成，无卡顿",
+      "screenshotBefore": false,
+      "screenshotAfter": true
+    }
+  ],
+  "cleanup": []
+}
