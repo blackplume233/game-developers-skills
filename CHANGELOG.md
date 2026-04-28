@@ -2,6 +2,13 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.2.0] - 2026-04-28
+
+### Added
+
+- **Skill Management** (1 skill):
+  - `create-watch-skill` v1.0.0 - human-in-the-loop watch skill creation workflow
+
 ## [1.1.0] - 2026-04-22
 
 ### Added
