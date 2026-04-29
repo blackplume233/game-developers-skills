@@ -2,6 +2,18 @@
 
 AI Agent 技能私有仓库，兼容 [skills.sh](https://skills.sh/) / `npx skills` 生态。
 
+## 必装技能
+
+首次使用本仓库？建议先安装 **skill-repo-manager**，它是管理本仓库的核心技能——支持搜索、安装、发布技能，并在每次上传时自动执行版本校验和 AI 隐私审查。
+
+```bash
+npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -g -y
+```
+
+安装后，你可以直接在 AI Agent 对话中说「上传技能」「搜索技能」「发布到仓库」等，agent 会自动调用此技能完成完整的发布流程（版本检查 → 隐私审计 → Changelog → 提交 → 推送）。
+
+> **示例**：本仓库中的 [gua（周易揲蓍占卦）](skills/divination/gua/) 技能就是通过 `skill-repo-manager` 完成审查与上传的。
+
 ## 技能目录
 
 ### Agent Orchestration（通用）
@@ -45,6 +57,12 @@ AI Agent 技能私有仓库，兼容 [skills.sh](https://skills.sh/) / `npx skil
 | [guard](skills/dev-workflow/guard/) | 1.0.0 | 高风险操作安全护栏，防止盲目推进 |
 | [investigate](skills/dev-workflow/investigate/) | 1.0.0 | 系统性根因调查方法论（假设→验证→根因→修复建议） |
 
+### Divination（通用）
+
+| 技能 | 版本 | 说明 |
+|------|------|------|
+| [gua](skills/divination/gua/) | 1.0.0 | 周易揲蓍占卦推演，以大语言模型直觉替代蓍草随机性 |
+
 ### GAS Extension（项目专用）
 
 | 技能 | 版本 | 说明 |
@@ -65,6 +83,7 @@ npx skills add blackplume233/game-developers-skills \
   --skill codex-subagent --skill find-skills --skill skill-repo-manager \
   --skill shadcn-ui --skill ui-ux-pro-max --skill electron --skill tauri-v2 \
   --skill git-commit --skill guard --skill investigate \
+  --skill gua \
   -g -y
 
 # 项目级安装 GAS 扩展技能
@@ -128,6 +147,10 @@ skills/
 ├── skill-management/       # 通用 - 技能管理
 │   ├── find-skills/
 │   └── skill-repo-manager/
+├── divination/             # 通用 - 占卜推演
+│   └── gua/
+│       ├── SKILL.md
+│       └── reference.md    # 六十四卦速查表
 └── gas-extension/          # GAS 扩展专用
     ├── qa/
     │   ├── SKILL.md

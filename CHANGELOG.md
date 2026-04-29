@@ -2,6 +2,18 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.3.0] - 2026-04-29
+
+### Added
+
+- **Divination** (1 skill):
+  - `gua` v1.0.0 — 周易揲蓍占卦推演，以大语言模型直觉替代蓍草随机性
+
+### Changed
+
+- README: 新增「必装技能」章节，将 `skill-repo-manager` 作为使用本仓库的推荐首装技能
+- README: 新增 Divination 分类
+
 ## [1.2.0] - 2026-04-28
 
 ### Added
