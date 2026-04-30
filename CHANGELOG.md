@@ -2,6 +2,17 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.4.0] - 2026-04-30
+
+### Removed
+
+- `paseo` v1.0.0
+- `paseo-chat` v1.0.0
+- `paseo-committee` v1.0.0
+- `paseo-handoff` v1.0.0
+- `paseo-loop` v1.0.0
+- `paseo-orchestrator` v1.0.0
+
 ## [1.3.0] - 2026-04-29
 
 ### Added

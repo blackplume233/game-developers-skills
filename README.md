@@ -20,12 +20,6 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 
 | 技能 | 版本 | 说明 |
 |------|------|------|
-| [paseo](skills/agent-orchestration/paseo/) | 1.0.0 | Paseo CLI 参考手册，管理 agent 生命周期 |
-| [paseo-chat](skills/agent-orchestration/paseo-chat/) | 1.0.0 | 通过 Chat Room 协调多 agent 异步通信 |
-| [paseo-committee](skills/agent-orchestration/paseo-committee/) | 1.0.0 | 双 agent 委员会模式，根因分析与方案规划 |
-| [paseo-handoff](skills/agent-orchestration/paseo-handoff/) | 1.0.0 | 将当前任务完整移交给另一个 agent |
-| [paseo-loop](skills/agent-orchestration/paseo-loop/) | 1.0.0 | 迭代 worker/verifier 循环直到目标达成 |
-| [paseo-orchestrator](skills/agent-orchestration/paseo-orchestrator/) | 1.0.0 | 团队编排：构建 agent 团队，通过 chat 协调 |
 | [codex-subagent](skills/agent-orchestration/codex-subagent/) | 1.0.0 | 将子任务委托给 Codex CLI 执行 |
 
 ### Skill Management（通用）
@@ -78,8 +72,6 @@ npx skills add blackplume233/game-developers-skills --skill guard -g -y
 
 # 全局安装所有通用技能
 npx skills add blackplume233/game-developers-skills \
-  --skill paseo --skill paseo-chat --skill paseo-committee \
-  --skill paseo-handoff --skill paseo-loop --skill paseo-orchestrator \
   --skill codex-subagent --skill find-skills --skill skill-repo-manager \
   --skill shadcn-ui --skill ui-ux-pro-max --skill electron --skill tauri-v2 \
   --skill git-commit --skill guard --skill investigate \
@@ -122,12 +114,6 @@ npx skills add blackplume233/game-developers-skills --skill '*' -g -y
 ```
 skills/
 ├── agent-orchestration/    # 通用 - Agent 编排
-│   ├── paseo/
-│   ├── paseo-chat/
-│   ├── paseo-committee/
-│   ├── paseo-handoff/
-│   ├── paseo-loop/
-│   ├── paseo-orchestrator/
 │   └── codex-subagent/
 ├── design/                 # 通用 - UI/UX 设计
 │   ├── shadcn-ui/
