@@ -1,0 +1,3 @@
+[submodule "references/trellis"]
+	path = references/trellis
+	url = https://github.com/donchitos/claude-code-game-studios.git

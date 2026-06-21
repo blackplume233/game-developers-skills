@@ -1,12 +1,13 @@
 ---
 name: find-skills
-version: 1.0.0
-description: Helps users discover and install agent skills when they ask questions like "how do I do X", "find a skill for X", "is there a skill that can...", or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.
+version: 1.1.0
+description: Helps users discover and install agent skills from skills.sh, the current skill repository, and referenced skill repositories under references/ when they ask questions like "how do I do X", "find a skill for X", "is there a skill that can...", or express interest in extending capabilities.
 ---
 
 # Find Skills
 
-This skill helps you discover and install skills from the open agent skills ecosystem.
+This skill helps you discover and install skills from the open agent skills
+ecosystem, the current repository, and referenced skill repositories.
 
 ## When to Use This Skill
 
@@ -42,7 +43,34 @@ When a user asks for help with something, identify:
 2. The specific task (e.g., writing tests, creating animations, reviewing PRs)
 3. Whether this is a common enough task that a skill likely exists
 
-### Step 2: Search for Skills
+### Step 2: Search Local and Referenced Skills First
+
+When you are inside a skill repository, search local skills and referenced
+repositories before falling back to the public marketplace:
+
+```bash
+python skills/skill-management/find-skills/scripts/search_skills.py [query]
+```
+
+This helper scans:
+
+- `skills/**/SKILL.md`
+- `references/*/**/SKILL.md`
+- `skills/*/*/references/*/**/SKILL.md`
+
+Present matches with their scope:
+
+```text
+[local:skills] guard v1.0.0 - High-risk session safety guardrail
+  path: skills/dev-workflow/guard/SKILL.md
+[reference:some-skill-repo] external-skill v1.2.0 - External skill summary
+  path: references/some-skill-repo/skills/category/external-skill/SKILL.md
+```
+
+Use `--repo-root <path>` when the current working directory is outside the
+target repository.
+
+### Step 3: Search Public Marketplace
 
 Run the find command with a relevant query:
 
@@ -56,7 +84,7 @@ For example:
 - User asks "can you help me with PR reviews?" → `npx skills find pr review`
 - User asks "I need to create a changelog" → `npx skills find changelog`
 
-### Step 3: Present Options to the User
+### Step 4: Present Options to the User
 
 When you find relevant skills, present them to the user with:
 
@@ -64,7 +92,7 @@ When you find relevant skills, present them to the user with:
 2. The install command they can run
 3. A link to learn more at skills.sh
 
-### Step 4: Offer to Install
+### Step 5: Offer to Install
 
 If the user wants to proceed, you can install the skill for them:
 

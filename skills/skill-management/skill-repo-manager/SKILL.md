@@ -1,18 +1,19 @@
 ---
 name: skill-repo-manager
-version: 1.0.0
+version: 1.1.0
 description: >-
   Manage a private Skill repository: search (local repo + skills.sh),
-  install (to any agent directory), and publish (version check + AI privacy
-  audit + git push). Triggers on: "manage skills", "upload skill",
-  "publish skill", "skill search", "skill repo", "skill upload",
-  "技能仓库", "上传技能", "发布技能", "技能搜索".
+  install (to any agent directory), reference external skill repositories as
+  git submodules, and publish (version check + AI privacy audit + git push).
+  Triggers on: "manage skills", "upload skill", "publish skill",
+  "skill search", "skill repo", "skill upload", "reference skill repo",
+  "技能仓库", "上传技能", "发布技能", "技能搜索", "引用技能仓库".
 ---
 
 # Skill Repo Manager
 
 Manages your private Skill repository. Activates when you need to search,
-install, or publish Skills.
+install, reference external skill repositories, or publish Skills.
 
 ## Prerequisites
 
@@ -227,9 +228,75 @@ Verdict: PASS | WARNING | BLOCK
 1. `git push origin main`
 2. Remind user to run `npx skills update` on other machines
 
+## Operation 4: Reference External Skill Repository
+
+Use this when the user gives a Git URL or local repository path and asks to
+make its skills discoverable from this repository without copying the source
+files.
+
+### 4.1 Add as a git submodule
+
+Run the helper from the target skill repository root:
+
+```bash
+python skills/skill-management/skill-repo-manager/scripts/add_reference_repo.py <git-url-or-local-path>
+```
+
+Optional arguments:
+
+```bash
+python skills/skill-management/skill-repo-manager/scripts/add_reference_repo.py <repo> --name <reference-name>
+python skills/skill-management/skill-repo-manager/scripts/add_reference_repo.py <repo> --branch <branch-name>
+python skills/skill-management/skill-repo-manager/scripts/add_reference_repo.py <repo> --repo-root <path-to-skill-repo>
+```
+
+The script:
+
+1. Resolves the target skill repository root
+2. Creates `references/` if missing
+3. Runs `git submodule add <repo> references/<reference-name>`
+4. Initializes the submodule recursively
+5. Lists discovered `SKILL.md` files inside the referenced repository
+
+For local repository paths, the script uses Git's per-command
+`protocol.file.allow=always` setting so local-path submodules work on modern
+Git installations.
+
+### 4.2 Verify discovery through find-skills
+
+After adding the reference, run:
+
+```bash
+python skills/skill-management/find-skills/scripts/search_skills.py <keyword>
+```
+
+The search helper scans:
+
+- `skills/**/SKILL.md` in this repository
+- `references/*/**/SKILL.md` from referenced repositories
+- `skills/*/*/references/*/**/SKILL.md` for skill-local references
+
+If the expected skill is not listed, inspect whether the referenced repository
+contains valid `SKILL.md` frontmatter with at least `name`, `version`, and
+`description`.
+
+### 4.3 Commit scope
+
+When publishing a new reference, stage only the submodule metadata and any
+skill documentation updates:
+
+```bash
+git add .gitmodules references/<reference-name> skills/skill-management/skill-repo-manager/ skills/skill-management/find-skills/ README.md CHANGELOG.md
+```
+
+Do not vendor-copy the referenced repository into `skills/`; keep it as a
+submodule so ownership and upstream history remain intact.
+
 ## Important Rules
 
 - NEVER skip the version check or privacy audit when publishing
 - NEVER push code that has unresolved CRITICAL privacy issues
 - NEVER decrement a version number
+- NEVER copy a referenced external repository into this repo when the user
+  asked for a reference/submodule
 - When in doubt about privacy, flag as HIGH and ask the user

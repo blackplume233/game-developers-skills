@@ -16,6 +16,12 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 
 ## 技能目录
 
+## 引用仓库
+
+| 仓库 | 路径 | 说明 |
+|------|------|------|
+| [trellis](https://github.com/donchitos/claude-code-game-studios) | [references/trellis](references/trellis/) | Claude Code 游戏工作室流程技能集合，可通过 `find-skills` 搜索发现 |
+
 ### Agent Orchestration（通用）
 
 | 技能 | 版本 | 说明 |
@@ -26,8 +32,8 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 
 | 技能 | 版本 | 说明 |
 |------|------|------|
-| [find-skills](skills/skill-management/find-skills/) | 1.0.0 | 从 skills.sh 生态发现和安装技能 |
-| [skill-repo-manager](skills/skill-management/skill-repo-manager/) | 1.0.0 | 管理本仓库：搜索、安装、发布（含版本校验+AI 隐私审查） |
+| [find-skills](skills/skill-management/find-skills/) | 1.1.0 | 从本仓库、引用仓库和 skills.sh 生态发现和安装技能 |
+| [skill-repo-manager](skills/skill-management/skill-repo-manager/) | 1.1.0 | 管理本仓库：搜索、安装、引用外部技能仓库、发布（含版本校验+AI 隐私审查） |
 
 ### Design（通用）
 
@@ -113,6 +119,7 @@ npx skills add blackplume233/game-developers-skills --skill '*' -g -y
 
 ```
 skills/
+├── references/             # 外部技能仓库 git submodule 引用
 ├── agent-orchestration/    # 通用 - Agent 编排
 │   └── codex-subagent/
 ├── design/                 # 通用 - UI/UX 设计
@@ -132,7 +139,11 @@ skills/
 │   └── investigate/
 ├── skill-management/       # 通用 - 技能管理
 │   ├── find-skills/
+│   │   ├── SKILL.md
+│   │   └── scripts/        # 本地与引用仓库技能搜索
 │   └── skill-repo-manager/
+│       ├── SKILL.md
+│       └── scripts/        # 引用仓库子模块、发布辅助
 ├── divination/             # 通用 - 占卜推演
 │   └── gua/
 │       ├── SKILL.md
