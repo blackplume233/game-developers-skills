@@ -1,0 +1,4 @@
+interface:
+  display_name: "Auto Goal"
+  short_description: "Run goals from a shared goal file"
+  default_prompt: "Use $auto-goal to clarify this objective into a shared goal file, bridge native Goal mode if available, and execute it through evidence gates."

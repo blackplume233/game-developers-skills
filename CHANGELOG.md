@@ -2,6 +2,12 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.5.0] - 2026-06-21
+
+### Added
+
+- `auto-goal` v1.0.0: added a file-backed automatic Goal execution skill for Codex, Claude, and other agents, with repository-baseline capture, live editable goal files, HTN-style recursive decomposition, subagent guidance, and self-correcting loop evidence.
+
 ## [1.4.0] - 2026-04-30
 
 ### Removed
