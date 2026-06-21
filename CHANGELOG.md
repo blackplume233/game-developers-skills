@@ -11,6 +11,10 @@ All notable changes to this skill repository will be documented in this file.
 - `find-skills` v1.1.0: add a local search helper that scans this repository plus referenced skill repositories under `references/`.
 - Reference `trellis` (`donchitos/claude-code-game-studios`) as `references/trellis` for game studio workflow skills.
 
+### Changed
+
+- Updated `auto-goal` v1.0.0 -> v1.1.0: switch the skill, bundled templates, UI metadata, and validator output to Chinese; add `artifact_language` as a required goal-state field so durable documents and native Goal objectives follow repository language preferences.
+
 ## [1.4.0] - 2026-04-30
 
 ### Removed

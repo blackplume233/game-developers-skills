@@ -1,23 +1,23 @@
-# References
+# 参考记录
 
-## Wrong Paths
-
--
-
-## Failed Plans
+## 错误路径
 
 -
 
-## Useful Patterns
+## 失败计划
 
 -
 
-## External Reference Lessons
-
-<!-- Record lessons learned from local or online review of Ponytail and SkillOpt, including source and date. -->
+## 有用模式
 
 -
 
-## Subagent Findings
+## 外部参考经验
+
+<!-- 记录从本地或在线 Ponytail/SkillOpt 审查中学到的经验，包括来源、日期和影响。 -->
+
+-
+
+## 子代理发现
 
 -

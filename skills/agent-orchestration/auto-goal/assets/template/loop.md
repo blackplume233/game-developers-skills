@@ -1,53 +1,54 @@
-# Loop XXX
+# 循环 XXX
 
-## Base Goal Slice
+## 基础目标切片
 
-<!-- Which part of goal.md this loop addresses. -->
+<!-- 本轮处理 goal.md 中的哪一部分。 -->
 
-## Sub Goal
+## 子目标
 
-<!-- One bounded, executable, verifiable goal for this loop. -->
+<!-- 一个有边界、可执行、可验证的本轮目标。 -->
 
-## HTN Decomposition
+## HTN 分解
 
-<!-- If this loop delegates to a child Auto Goal task, record child path, child Base Goal, expected evidence, and parent integration rule. Otherwise write "none". -->
+<!-- 如果本轮委托给子 Auto Goal 任务，记录子任务路径、子基础目标、预期证据和父级整合规则。否则写“无”。 -->
 
 - child_task: none
 
-## Repository Baseline Check
+## 仓库基准检查
 
-<!-- Record language preference, relevant tech stack, commands, directory rules, safety constraints, and files read for this loop. -->
+<!-- 记录本轮相关的语言偏好、技术栈、命令、目录规则、安全约束和已读文件。 -->
 
-- language:
-- tech:
-- validation:
-- directories:
-- safety:
-- read:
+- 文档语言:
+- 回复语言:
+- 技术:
+- 验证:
+- 目录:
+- 安全:
+- 已读:
 
-## Plan
+## 计划
 
 - [ ]
 
-## Reference Review
+## 参考审查
 
-<!-- Local or online Ponytail/SkillOpt lessons considered for this loop. -->
-
--
-
-## Execution Notes
+<!-- 本轮考虑的本地或在线 Ponytail/SkillOpt 经验。 -->
 
 -
 
-## Verification
+## 执行记录
 
 -
 
-## Result
+## 验证
+
+-
+
+## 结果
 
 result: pending
 
-## Updates
+## 更新
 
 - goal.md:
 - references.md:

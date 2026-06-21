@@ -1,52 +1,64 @@
 ---
 name: auto-goal
-version: 1.0.0
-description: File-backed automatic Goal execution for any repository or workspace. Use when the user asks to use auto-goal, Goal mode, native Codex/Claude goal mode with a goal file, file-maintained objectives, self-correcting goals, human-AI goal collaboration, subagent-assisted goal execution, interoperable goals across Codex/Claude/other agents, HTN-style recursive decomposition, HGoal-inspired execution, Ponytail-style minimal implementation review, or SkillOpt-style iterative optimization of goals and procedures.
+version: 1.1.0
+description: 文件化自动 Goal 执行技能，适用于任何仓库或工作区。用于用户要求 auto-goal、Goal 模式、带 goal 文件的 Codex/Claude 原生目标模式、文件维护目标、自修正目标、人机协作目标、子代理辅助执行、跨 Codex/Claude/其他 agent 互操作目标、HTN 递归分解、HGoal 风格执行、Ponytail 风格最小实现审查，或 SkillOpt 风格的目标与流程迭代优化。
 ---
 
 # Auto Goal
 
-Use this skill to turn a user's intent into one file-backed task, then run it through repeated sub-goal loops. `goal.md` stays concise and human-editable; loop details, evidence, subagent reports, and wrong paths live in companion files.
+使用本技能时，将用户意图转换为一个文件化任务，并通过反复的子目标循环执行。`goal.md` 保持简洁、可人工实时编辑；循环细节、证据、子代理报告和错误路径放在配套文件中。
 
-## Read First
+## 优先阅读
 
-1. First follow the host repository's baseline requirements, including any root or directory-level agent instructions, workflow rules, safety rules, language preferences, technical stack requirements, build/test commands, dependency policy, directory conventions, and contribution conventions.
-2. Read the user's current request and any supplied goal file path.
-3. Read the current `goal.md`, if one is supplied or already exists.
-4. Read only task-relevant project files needed to define evidence, constraints, and safe write scope.
-5. Inspect local copies or local notes for [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) and [microsoft/SkillOpt](https://github.com/microsoft/SkillOpt) when their ideas affect the current goal loop. If local copies are absent or stale, learn from the linked upstream repositories online before applying their patterns.
-6. If multiple instruction sources conflict, obey the higher-priority system/developer/user instructions first, then the nearest applicable repository instructions.
+1. 首先遵循宿主仓库的基准要求，包括根目录或局部 agent 指令、工作流规则、安全规则、语言偏好、技术栈要求、构建/测试命令、依赖策略、目录约定和贡献约定。
+2. 读取用户当前请求和用户提供的目标文件路径。
+3. 如果用户提供了 `goal.md`，或当前任务目录已存在 `goal.md`，先读取它。
+4. 只读取定义证据、约束和安全写入范围所需的任务相关项目文件。
+5. 当当前循环会用到相关思想时，先检查本地副本或本地笔记中的 [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) 和 [microsoft/SkillOpt](https://github.com/microsoft/SkillOpt)。如果本地副本缺失或可能过时，再在线学习上游仓库。
+6. 如果多处指令冲突，先遵守系统/开发者/用户等更高优先级指令，再遵守最近的仓库指令。
 
-## Repository Baseline Capture
+## 仓库基准捕获
 
-Before drafting or updating `goal.md`, identify and record the host repository baseline that constrains this Goal.
+在创建或更新 `goal.md` 之前，识别并记录约束此 Goal 的宿主仓库基准。
 
-Minimum baseline fields:
+最低基准字段：
 
-- Language preference for user-facing replies and durable artifacts.
-- Technology stack, framework, runtime, package manager, and version constraints when discoverable.
-- Build, test, lint, format, QA, release, or validation commands relevant to the Goal.
-- Dependency policy: whether to add dependencies, prefer standard library/native APIs, or use existing project dependencies.
-- Directory and artifact conventions, including where generated task files and final outputs belong.
-- Safety rules for destructive operations, secrets, external services, network access, and generated assets.
-- Contribution style: naming, formatting, documentation, commit/review expectations, and existing code patterns.
+- 面向用户回复和持久文档的语言偏好。
+- 技术栈、框架、运行时、包管理器和版本约束。
+- 与目标相关的构建、测试、lint、format、QA、发布或验证命令。
+- 依赖策略：是否允许新增依赖，是否优先标准库、原生 API 或既有项目依赖。
+- 目录和产物约定，包括生成任务文件和最终输出应放置的位置。
+- 破坏性操作、密钥、外部服务、网络访问和生成资产的安全规则。
+- 贡献风格：命名、格式、文档、提交/评审要求和既有代码模式。
 
-Write the concise baseline summary into `goal.md` Constraints or Execution Guidance. Put detailed command evidence, discovered files, and unresolved questions in the active loop or `references.md`.
+把简洁的基准摘要写入 `goal.md` 的 `约束` 或 `执行指导`。详细命令证据、已发现文件和未解决问题写入当前循环文件或 `references.md`。
 
-## Task Directory
+## 语言规则
 
-- If the user supplies a path, use that path.
-- If the user supplies a directory, create or reuse the Auto Goal task files there.
-- If the user supplies a `goal.md` path, treat its parent as the task directory.
-- If the repository explicitly defines an artifact, output, task-result, or goal-result directory, create or reuse a task directory there.
-- If no repository artifact directory is defined, use `.agents/artifact/goal/<date-slug>/`.
-- Do not default to planning/specification directories unless the repository explicitly identifies them as the correct artifact location for generated Goal task state.
-- If the goal is cross-agent or should survive future sessions, choose a committed or otherwise shared project path and state why it is durable.
-- If the goal is local and temporary, place it under the repository's ignored/local runtime area when one exists, or under a clearly named local folder such as `.auto-goal/`.
-- Do not store shared goals only in an ignored or machine-local path.
-- Do not assume any specific repository layout, task system, or skill system exists.
+语言偏好是硬约束，不是普通提示。
 
-Use this structure:
+- 如果用户或仓库要求中文，则 `goal.md`、`references.md`、`loops/`、`subagents/` 报告、最终报告、提示词和原生 Goal objective 默认使用中文。
+- 如果用户或仓库要求其他语言，则所有持久目标文档和面向用户输出默认使用该语言。
+- 只有在用户明确要求英文、双语或某个文件必须使用英文时，才允许偏离默认语言。
+- 代码标识符、命令、路径、API 名称、错误消息、引用标题和第三方专有名词可以保持原文。
+- 每个 `goal.md` 的 `状态` 必须包含 `artifact_language`，例如 `zh-CN`、`en-US` 或 `bilingual-zh-en`。
+- `artifact_language` 必须同时约束原生 Goal objective。创建 Codex/Claude 原生 Goal 时，objective 应使用该语言，并明确要求每轮重读 `goal.md`。
+- 如果发现既有目标文件语言与仓库或用户偏好不一致，先在 `goal.md` 中修正 `artifact_language` 和相关约束，再继续执行。
+
+## 任务目录
+
+- 如果用户提供文件路径，使用该路径。
+- 如果用户提供目录，在该目录创建或复用 Auto Goal 任务文件。
+- 如果用户提供 `goal.md` 路径，把它的父目录视为任务目录。
+- 如果仓库明确指定 artifact、output、task-result 或 goal-result 目录，在那里创建或复用任务目录。
+- 如果仓库没有定义产物目录，使用 `.agents/artifact/goal/<date-slug>/`。
+- 不要默认把任务状态放进规划/规范目录，除非仓库明确把这些目录指定为 Goal 任务状态的产物位置。
+- 如果目标需要跨 agent 或跨会话持续存在，选择已提交或共享的项目路径，并说明它为什么持久。
+- 如果目标是本地临时任务，放在仓库的 ignored/local runtime 区域；若没有，则放在 `.auto-goal/` 等明确的本地目录。
+- 不要把共享目标只存放在 ignored 或机器本地路径中。
+- 不要假设任何特定仓库布局、任务系统或技能系统存在。
+
+使用这个结构：
 
 ```text
 <task-dir>/
@@ -59,189 +71,190 @@ Use this structure:
   child-goals/
 ```
 
-## Core Goal File
+## 核心目标文件
 
-Keep `goal.md` short enough for the user to inspect and edit live. It is the coordination surface, not the full log.
+`goal.md` 要足够短，方便用户实时检查和编辑。它是协作界面，不是完整日志。
 
-Use `assets/template/goal.md` as the starting shape. A valid `goal.md` includes only:
+使用 `assets/template/goal.md` 作为初始形状。有效的 `goal.md` 只包含：
 
-- `Goal`: the detailed, unambiguous Base Goal and compact done evidence.
-- `Constraints`: scope limits, exclusions, safety rules, compatibility needs, repository language preference, and technical requirements.
-- `Execution Guidance`: how to split each loop into a sub-goal, follow repository conventions, and verify it.
-- `State`: a YAML block with current machine-readable state.
+- `目标`：详细、无歧义的基础目标和紧凑的完成证据。
+- `约束`：范围限制、排除项、安全规则、兼容需求、仓库语言偏好和技术要求。
+- `执行指导`：每轮如何拆分子目标、遵循仓库约定并验证。
+- `状态`：包含机器可读状态的 YAML 代码块。
 
-State must be YAML-shaped plain text so Codex, Claude, and humans can edit it without special tooling. Required state keys are `status`, `updated_at`, `execution_mode`, `native_goal_id`, `current_loop`, `next_sub_goal`, `last_verified_loop`, and `references`.
+状态必须是 YAML 形状的纯文本，方便 Codex、Claude 和人类直接编辑。必需状态键是 `status`、`updated_at`、`artifact_language`、`execution_mode`、`native_goal_id`、`current_loop`、`next_sub_goal`、`last_verified_loop` 和 `references`。
 
-## Workflow
+## 工作流
 
-1. Convert the user's request into a detailed, unambiguous goal statement before execution:
-   - preserve the user's actual intent
-   - expand vague terms into concrete deliverables, boundaries, and success criteria
-   - identify assumptions and unknowns
-   - ask only when ambiguity would make execution unsafe or likely wrong
-2. Capture the repository baseline and decide how it constrains language, technology, validation, directories, dependencies, and safety.
-3. Locate or create the Auto Goal task directory.
-4. Write the clarified Base Goal and concise repository baseline to `goal.md`; create `references.md`, `loops/`, `evidence/`, and `subagents/` when useful.
-5. Try to bridge into a native host Goal mode when available; otherwise record simulated file-backed mode.
-6. Run `scripts/validate_goal_file.py <goal.md>` after creation or material edits.
-7. For every loop, re-read `goal.md` before doing any work. This is mandatory because the user may edit it while the goal is running.
-8. Re-check task-relevant repository baseline files if the loop touches new modules, tools, languages, generated artifacts, or external systems.
-9. Review applicable reference patterns:
-   - Ponytail: prefer not doing work, existing platform capability, standard library, native feature, installed dependency, or the minimum implementation that satisfies evidence; never cut safety, validation, accessibility, or data-loss handling.
-   - SkillOpt: treat loop outcomes as rollout evidence; edit task files with small bounded changes; accept method changes only when the next validation gate improves or a known failure is prevented.
-10. Derive one bounded Sub Goal from the Base Goal and current State.
-11. Create or update `loops/loop-XXX.md` with:
-   - Base Goal slice being addressed
-   - Sub Goal
-   - repository baseline check for this loop
-   - plan
-   - execution notes
-   - verification
-   - result
-   - updates to apply back to `goal.md` or `references.md`
-12. If the Sub Goal is still too broad, decompose it recursively using the HTN rules below instead of pretending it is executable.
-13. Execute the Sub Goal, using subagents when they improve isolation, review, exploration, or parallel progress.
-14. Verify whether the Sub Goal actually advances the Base Goal and satisfies the repository baseline.
-15. Update files:
-   - keep `goal.md` concise: State, next Sub Goal, and any changed constraints or guidance
-   - record wrong paths, failed plans, useful patterns, and accepted subagent findings in `references.md`
-   - store detailed loop traces in `loops/`
-   - store raw evidence in `evidence/`
-16. Before claiming completion, require:
-   - `goal.md` status is `complete`
-   - Base Goal done evidence has current proof
-   - latest loop verification passes
-   - unresolved wrong paths or failed plans have either been corrected or declared external/non-required
-   - the host repository's baseline completion, testing, safety, and review requirements are satisfied
+1. 先把用户请求转换为详细、无歧义的目标表述，再执行：
+   - 保留用户真实意图。
+   - 把模糊词扩展为具体交付物、边界和成功标准。
+   - 识别假设和未知项。
+   - 只有当歧义会导致执行不安全或大概率走错时才提问。
+2. 捕获仓库基准，并决定它如何约束语言、技术、验证、目录、依赖和安全。
+3. 决定 `artifact_language`。优先级为：用户明确要求 > 仓库语言规则 > 会话语言 > 任务内容自然语言；无法确定时使用当前对话语言。
+4. 定位或创建 Auto Goal 任务目录。
+5. 用 `artifact_language` 对应语言把明确化后的基础目标和简洁仓库基准写入 `goal.md`；需要时创建 `references.md`、`loops/`、`evidence/` 和 `subagents/`。
+6. 尝试桥接到宿主原生 Goal 模式；不可用时记录为文件模拟模式。
+7. 创建或实质修改后，运行 `scripts/validate_goal_file.py <goal.md>`。
+8. 每轮开始前必须重新读取 `goal.md`。用户可能在执行期间直接编辑它。
+9. 如果循环会触及新模块、工具、语言、生成产物或外部系统，重新检查任务相关仓库基准文件。
+10. 审查适用参考模式：
+    - Ponytail：优先不做、复用平台能力、标准库、原生特性、已安装依赖，或实现满足证据的最小方案；不要削弱安全、验证、可访问性或数据丢失处理。
+    - SkillOpt：把循环结果视为 rollout 证据；小步、有边界地编辑任务文件；只有当下一个验证门槛更好或能避免已知失败时，才接受方法变化。
+11. 根据基础目标和当前状态推导一个有边界的子目标。
+12. 创建或更新 `loops/loop-XXX.md`，记录：
+    - 正在处理的基础目标切片。
+    - 子目标。
+    - 本轮仓库基准检查。
+    - 计划。
+    - 执行记录。
+    - 验证。
+    - 结果。
+    - 需要回写到 `goal.md` 或 `references.md` 的更新。
+13. 如果子目标仍然太宽，按下面的 HTN 规则递归分解，不要假装它已经可执行。
+14. 执行子目标；当子代理能提升隔离性、审查质量、探索能力或并行进度时，多使用子代理。
+15. 验证子目标是否真正推进基础目标，并满足仓库基准。
+16. 更新文件：
+    - `goal.md` 保持简洁：状态、下一个子目标，以及变化后的约束或指导。
+    - 错误路径、失败计划、有用模式和已接受子代理发现写入 `references.md`。
+    - 详细循环轨迹写入 `loops/`。
+    - 原始证据写入 `evidence/`。
+17. 声称完成前必须满足：
+    - `goal.md` 的 `status` 是 `complete`。
+    - 基础目标完成证据有当前证明。
+    - 最新循环验证通过。
+    - 未解决的错误路径或失败计划已被修正，或被声明为外部/非必需。
+    - 宿主仓库的完成、测试、安全和评审要求已满足。
 
-## Native Goal Mode Bridge
+## 原生 Goal 模式桥接
 
-After creating or locating the Auto Goal task directory, try to enter the host agent's native Goal mode if the host exposes one. This is a best-effort bridge; never assume it succeeded unless a real native goal id, tool result, or host-visible confirmation exists.
+创建或定位 Auto Goal 任务目录后，尽力进入宿主 agent 的原生 Goal 模式。除非存在真实的原生 goal id、工具结果或宿主可见确认，否则不要假设桥接成功。
 
-- Codex: if a native `create_goal` capability is available, create one Goal whose objective is to complete the Auto Goal task from the task directory. The native objective must mention the `goal.md` path and require every loop to re-read `goal.md` before acting. Record `execution_mode: native-codex-goal` and the returned id or evidence in `native_goal_id`.
-- Claude: if the host exposes a native goal, plan, project, or task execution mode, activate it according to host rules. Record `execution_mode: native-claude-goal` and any host-visible id or evidence in `native_goal_id`.
-- Other agents: if no native Goal mode is exposed, simulate Goal mode with `goal.md`, `references.md`, `loops/`, `evidence/`, and `subagents/`. Record `execution_mode: simulated-file-goal` and `native_goal_id: null`.
-- If native Goal activation fails, record the failure in `references.md`, keep the files as the source of truth, set `execution_mode: simulated-file-goal`, and continue.
-- Do not create more than one native root Goal for the same Auto Goal task unless the user explicitly requests a restart or migration.
+- Codex：如果可用原生 `create_goal` 能力，创建一个 Goal，目标是完成指定任务目录中的 Auto Goal。原生 objective 必须使用 `artifact_language`，提到 `goal.md` 路径，并要求每轮行动前重读 `goal.md`。把 `execution_mode: native-codex-goal` 和返回 id 或证据记录到 `native_goal_id`。
+- Claude：如果宿主暴露原生 goal、plan、project 或 task 执行模式，按宿主规则激活。把 `execution_mode: native-claude-goal` 和可见 id 或证据记录到 `native_goal_id`。
+- 其他 agent：如果没有原生 Goal 模式，用 `goal.md`、`references.md`、`loops/`、`evidence/` 和 `subagents/` 模拟 Goal 模式。记录 `execution_mode: simulated-file-goal` 和 `native_goal_id: null`。
+- 如果原生 Goal 激活失败，把失败写入 `references.md`，继续以文件为事实来源，设置 `execution_mode: simulated-file-goal`。
+- 除非用户明确要求重启或迁移，不要为同一个 Auto Goal 任务创建多个原生根 Goal。
 
-## HTN Recursive Decomposition
+## HTN 递归分解
 
-Use Auto Goal as a lightweight HTN (Hierarchical Task Network) protocol: each Base Goal is decomposed into methods, Sub Goals, and optionally child Auto Goal tasks.
+把 Auto Goal 当作轻量 HTN（Hierarchical Task Network）协议：每个基础目标分解为方法、子目标和可选的子 Auto Goal 任务。
 
-- Treat `goal.md` as the root task node.
-- Treat each loop as one selected method for advancing the root.
-- Treat each Sub Goal as an executable leaf only if it can be completed and verified in one bounded loop.
-- If a Sub Goal needs its own planning, loops, evidence, or user edits, create a child Auto Goal task under `child-goals/<child-slug>/`.
-- Each child task has its own `goal.md`, `references.md`, `loops/`, `evidence/`, `subagents/`, and optional `child-goals/`.
-- A parent loop that delegates to a child task must record:
-  - child task path
-  - parent Base Goal slice
-  - child Base Goal
-  - expected child completion evidence
-  - how child completion will update the parent
-- Re-read the parent `goal.md` before integrating child results; the user may have changed the parent objective while the child was running.
-- Do not mark the parent Sub Goal accepted until the child task's evidence passes and the parent loop verifies that it advances the parent Base Goal.
-- Use `$hgoal` for heavy recursive, multi-agent, isolated-workdir execution when available or explicitly requested; otherwise simulate HTN recursion with nested Auto Goal task directories.
+- 把 `goal.md` 视为根任务节点。
+- 把每个循环视为推进根任务的一种已选方法。
+- 只有当一个子目标能在一个有边界的循环中完成并验证时，才把它视为可执行叶子。
+- 如果子目标本身需要规划、循环、证据或用户编辑，在 `child-goals/<child-slug>/` 下创建子 Auto Goal 任务。
+- 每个子任务都有自己的 `goal.md`、`references.md`、`loops/`、`evidence/`、`subagents/` 和可选 `child-goals/`。
+- 委托给子任务的父循环必须记录：
+  - 子任务路径。
+  - 父级基础目标切片。
+  - 子级基础目标。
+  - 预期子级完成证据。
+  - 子级完成后如何更新父级。
+- 整合子结果前重新读取父级 `goal.md`；用户可能已修改父级目标。
+- 子任务证据通过、且父循环验证它推进父级基础目标后，才能接受父级子目标。
+- 如果用户明确要求 `$hgoal`，或目标需要递归多代理/隔离工作目录执行，使用 `$hgoal`；否则用嵌套 Auto Goal 任务目录模拟 HTN 递归。
 
-## External Reference Review
+## 外部参考审查
 
-Use these projects as live references, not as copied doctrine:
+把这些项目当作实时参考，不要照搬成教条：
 
-- [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail): before implementing a Sub Goal, check whether the best move is to avoid work, reuse platform/stdlib/native/installed capability, or implement the smallest thing that satisfies evidence while preserving safety-critical handling.
-- [microsoft/SkillOpt](https://github.com/microsoft/SkillOpt): after each loop, use failed or successful trajectory evidence to make bounded edits to `goal.md`, `references.md`, and future loop policy; do not weaken evidence to make progress look better.
+- [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)：实现子目标前，检查最佳动作是否是不做、复用平台/标准库/原生/已安装能力，或实现满足证据的最小方案，同时保留安全关键处理。
+- [microsoft/SkillOpt](https://github.com/microsoft/SkillOpt)：每轮之后，用成功或失败轨迹证据对 `goal.md`、`references.md` 和后续循环策略做有边界的小改；不要通过削弱证据让进度看起来更好。
 
-Reference lookup rule:
+参考查找规则：
 
-- Prefer local checked-out repositories, local docs, or prior notes when available and clearly current enough.
-- If local references are missing, incomplete, or possibly stale, inspect the linked upstream repositories online.
-- Record any reference-derived lesson that affects execution in `references.md`, including source, date, and how it changed the next Sub Goal.
+- 优先使用本地已检出仓库、本地文档或先前笔记，前提是它们存在且足够新。
+- 如果本地参考缺失、不完整或可能过时，在线检查链接的上游仓库。
+- 将影响执行的参考经验写入 `references.md`，包括来源、日期，以及它如何改变下一子目标。
 
-## Collaboration Loop
+## 协作循环
 
-Use `goal.md` as the live interface between the user and AI.
+把 `goal.md` 当作用户和 AI 的实时协作界面。
 
-- Treat user edits to `goal.md` as first-class instructions, subject to higher-priority system and repository rules.
-- Re-read `goal.md` at the start of every loop and after any known user edit.
-- Re-read relevant repository instructions when the user changes language, target module, output directory, technology, or validation expectations.
-- Keep `goal.md` concise; put history and bulky detail in `references.md`, `loops/`, `evidence/`, and `subagents/`.
-- When chat and `goal.md` disagree, reconcile the conflict in `goal.md` before continuing.
-- Prefer updating task files over leaving important decisions only in chat.
-- Keep revisions small enough that the user can inspect and modify them while the goal is running.
+- 把用户对 `goal.md` 的编辑视为一等指令，但仍受更高优先级系统和仓库规则约束。
+- 每轮开始以及任何已知用户编辑后，都重新读取 `goal.md`。
+- 当用户改变语言、目标模块、输出目录、技术或验证期望时，重新读取相关仓库指令。
+- `goal.md` 保持简洁；历史和大块细节放在 `references.md`、`loops/`、`evidence/` 和 `subagents/`。
+- 如果聊天和 `goal.md` 冲突，先在 `goal.md` 中调和冲突，再继续。
+- 重要决策优先更新到任务文件，不只留在聊天里。
+- 每次修改都要小到用户能检查和继续编辑。
 
-## Self-Correction Rules
+## 自修正规则
 
-The agent may edit task files while executing, but edits must be conservative and auditable.
+agent 可以在执行时编辑任务文件，但编辑必须保守且可审计。
 
-Allowed without extra user confirmation:
+无需额外确认即可执行：
 
-- clarify ambiguous wording without changing user intent
-- add missing evidence gates
-- split a broad plan item into smaller actions
-- mark a path as wrong-direction after failed evidence
-- add continuation tasks after a failed check
-- record newly discovered constraints
-- update YAML State at the end of a loop
+- 澄清模糊措辞但不改变用户意图。
+- 添加缺失证据门槛。
+- 把宽泛计划项拆成更小行动。
+- 在证据失败后标记某路径为错误方向。
+- 添加失败检查后的延续任务。
+- 记录新发现的约束。
+- 在循环结束时更新 YAML 状态。
 
-Requires explicit user confirmation:
+需要用户明确确认：
 
-- shrinking or replacing the root objective
-- deleting a user-written requirement
-- marking external approval, credentials, publishing, or destructive operations as complete
-- changing safety boundaries or write scope
-- destructive filesystem changes
+- 缩小或替换根目标。
+- 删除用户写入的要求。
+- 把外部审批、凭据、发布或破坏性操作标记为完成。
+- 改变安全边界或写入范围。
+- 执行破坏性文件系统变更。
 
-When the current plan is wrong, do not keep retrying it unchanged. Update `references.md` and the current loop with:
+当前计划错误时，不要原样反复重试。更新 `references.md` 和当前循环，写明：
 
-1. failed evidence
-2. failure class, such as `bad-goal`, `bad-plan`, `bad-evidence`, `missing-prerequisite`, `external-blocker`, or `wrong-direction`
-3. changed method or continuation task
-4. next verification gate, reflected in `goal.md` State if it changes the next Sub Goal
+1. 失败证据。
+2. 失败类别，例如 `bad-goal`、`bad-plan`、`bad-evidence`、`missing-prerequisite`、`external-blocker` 或 `wrong-direction`。
+3. 改变后的方法或延续任务。
+4. 下一验证门槛；如果会改变下一子目标，也反映到 `goal.md` 状态中。
 
-## HGoal Lessons To Keep
+## HGoal 经验
 
-- Keep the root objective intact until evidence proves completion.
-- Treat planning and review as evidence for the next cycle, not completion.
-- Use concrete gates and completion audits for broad goals.
-- Preserve state outside chat so a fresh agent can resume.
-- Use isolated subtasks, independent process evidence, or recursive HGoal when the goal is broad enough to need real execution boundaries.
-- Every loop should decompose Base Goal into a Sub Goal, execute it, verify it, and only then update root State.
-- HTN decomposition is allowed and encouraged when one Sub Goal is still too large; create child Auto Goal tasks rather than overloading one loop.
-- If `$hgoal` is explicitly requested or the objective requires recursive multi-agent execution, use `$hgoal` and keep this skill as the human-editable goal file layer.
+- 根目标保持不变，直到证据证明完成。
+- 规划和审查是下一循环的证据，不是完成本身。
+- 宽目标要使用具体门槛和完成审计。
+- 把状态保存在聊天之外，方便新 agent 接手。
+- 当目标足够宽时，使用隔离子任务、独立进程证据或递归 HGoal。
+- 每轮都应把基础目标分解为子目标，执行、验证，然后才更新根状态。
+- 当一个子目标仍然太大时，允许并鼓励 HTN 分解；创建子 Auto Goal 任务，不要把一个循环塞爆。
+- 如果用户明确要求 `$hgoal`，或目标需要递归多代理执行，使用 `$hgoal`，并让本技能保持为人类可编辑的 goal 文件层。
 
-## Subagent Use
+## 子代理使用
 
-Use subagents liberally when they improve isolation, review quality, exploration, or parallel progress.
+当子代理能提升隔离性、审查质量、探索能力或并行进度时，多使用子代理。
 
-- Good subagent tasks include independent research, code review, test design, alternative plan generation, bug reproduction, implementation of a bounded subtask, and verification against the current goal file.
-- Give each subagent the current `goal.md` path, relevant loop file, assigned Sub Goal, allowed write scope, expected evidence, and report location under `subagents/`.
-- Require subagents to report back in task-file terms: what changed, what evidence passed, what remains uncertain, and whether `goal.md` or `references.md` needs correction.
-- Do not let subagent output silently override the goal. Integrate accepted findings into `goal.md`, `references.md`, or the active loop.
-- If subagent tools are unavailable, preserve the same boundaries manually: separate the Sub Goal, evidence, and report in task files.
+- 适合子代理的任务包括独立研究、代码审查、测试设计、替代方案生成、bug 复现、有边界子任务实现，以及根据当前 goal 文件验证。
+- 给每个子代理提供当前 `goal.md` 路径、相关 loop 文件、分配的子目标、允许写入范围、期望证据，以及 `subagents/` 下的报告路径。
+- 要求子代理用任务文件术语回报：改了什么、哪些证据通过、仍不确定什么，以及是否需要修正 `goal.md` 或 `references.md`。
+- 不要让子代理输出静默覆盖 goal。只把已接受发现整合进 `goal.md`、`references.md` 或当前循环。
+- 如果子代理工具不可用，手动保留同样边界：分离子目标、证据和报告。
 
-## SkillOPT-Inspired Optimization
+## SkillOpt 启发式优化
 
-Optimize the task files like an editable skill:
+像优化一个可编辑技能一样优化任务文件：
 
-- Treat failures as rollout evidence, not embarrassment.
-- Edit the smallest useful part of the goal or method.
-- Prefer examples, gates, and anti-patterns over vague instruction inflation.
-- Keep wrong paths, failed plans, and accepted methods in `references.md`.
-- Accept a `goal.md` edit only when it improves the next execution cycle or prevents a known failure.
-- Do not optimize by weakening evidence, narrowing the objective, or hiding unresolved work.
+- 把失败视为 rollout 证据，而不是尴尬。
+- 只编辑最小且有用的目标或方法片段。
+- 优先添加示例、门槛和反模式，少写空泛指令。
+- 错误路径、失败计划和已接受方法写入 `references.md`。
+- 只有当 `goal.md` 修改能改善下一执行周期或避免已知失败时，才接受它。
+- 不要通过削弱证据、缩窄目标或隐藏未解决工作来优化。
 
-## Interoperability Contract
+## 互操作契约
 
-For non-Codex agents:
+对非 Codex agent：
 
-- `goal.md` plus the latest loop and `references.md` must contain enough context to resume without the chat transcript.
-- Put all file paths in repo-relative form where possible.
-- Avoid relying on hidden Codex state, MCP-only state, or memory-only conclusions.
-- Use explicit fields instead of tool-specific state names.
-- When a tool-specific artifact exists, summarize it in Markdown and link to the path.
+- `goal.md` 加最新循环和 `references.md` 必须包含足够上下文，使其无需聊天记录即可恢复。
+- 尽量使用仓库相对路径。
+- 避免依赖隐藏 Codex 状态、MCP 专属状态或只存在于记忆里的结论。
+- 使用显式字段，不使用工具专属状态名。
+- 如果存在工具专属产物，用 Markdown 摘要并链接到路径。
 
-## Scripts And Assets
+## 脚本和资产
 
-- `assets/template/goal.md`: copy or adapt when creating `goal.md`.
-- `assets/template/references.md`: copy or adapt when creating `references.md`.
-- `assets/template/loop.md`: copy or adapt for each loop file.
-- `scripts/validate_goal_file.py`: mechanical Markdown section validator. It does not judge correctness.
+- `assets/template/goal.md`：创建 `goal.md` 时复制或改写。
+- `assets/template/references.md`：创建 `references.md` 时复制或改写。
+- `assets/template/loop.md`：创建每个循环文件时复制或改写。
+- `scripts/validate_goal_file.py`：机械 Markdown 结构校验器；它不判断目标是否正确。

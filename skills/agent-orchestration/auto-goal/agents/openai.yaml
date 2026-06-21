@@ -1,4 +1,4 @@
 interface:
   display_name: "Auto Goal"
-  short_description: "Run goals from a shared goal file"
-  default_prompt: "Use $auto-goal to clarify this objective into a shared goal file, bridge native Goal mode if available, and execute it through evidence gates."
+  short_description: "用共享目标文件执行 Goal"
+  default_prompt: "使用 $auto-goal 将这个目标澄清为共享 goal 文件；遵循仓库语言偏好，必要时桥接原生 Goal 模式，并通过证据门槛循环执行。"
