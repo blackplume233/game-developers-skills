@@ -24,7 +24,8 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 
 | 仓库 | 路径 | 说明 |
 |------|------|------|
-| [trellis](https://github.com/donchitos/claude-code-game-studios) | [references/trellis](references/trellis/) | Claude Code 游戏工作室流程技能集合，可通过 `find-skills` 搜索发现 |
+| [claude-code-game-studios](https://github.com/donchitos/claude-code-game-studios) | [references/claude-code-game-studios](references/claude-code-game-studios/) | Claude Code 游戏工作室流程技能集合，可通过 `find-skills` 搜索发现 |
+| [trellis](https://github.com/mindfold-ai/trellis) | [references/trellis](references/trellis/) | Mindfold Trellis AI 工作流系统，可通过 `find-skills` 搜索发现 |
 
 ### Agent Orchestration（通用）
 
@@ -127,6 +128,7 @@ npx skills add blackplume233/game-developers-skills --skill '*' -g -y
 .
 ├── WIKI.md                 # 项目 Wiki 与维护规则
 ├── references/             # 外部技能仓库 git submodule 引用
+│   ├── claude-code-game-studios/
 │   └── trellis/
 └── skills/
     ├── agent-orchestration/    # 通用 - Agent 编排

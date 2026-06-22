@@ -9,7 +9,8 @@ All notable changes to this skill repository will be documented in this file.
 - `auto-goal` v1.0.0: added a file-backed automatic Goal execution skill for Codex, Claude, and other agents, with repository-baseline capture, live editable goal files, HTN-style recursive decomposition, subagent guidance, and self-correcting loop evidence.
 - `skill-repo-manager` v1.1.0: add an external skill repository reference operation that creates `references/<repo>` git submodules and lists discovered `SKILL.md` files.
 - `find-skills` v1.1.0: add a local search helper that scans this repository plus referenced skill repositories under `references/`.
-- Reference `trellis` (`donchitos/claude-code-game-studios`) as `references/trellis` for game studio workflow skills.
+- Reference `donchitos/claude-code-game-studios` as `references/claude-code-game-studios` for game studio workflow skills.
+- Reference `mindfold-ai/trellis` as `references/trellis` for Trellis AI workflow skills.
 - `project-wiki-maintainer` v1.0.0: add a generic workflow for maintaining project Wiki and README together, with a `wiki_guard.py` freshness gate.
 - `WIKI.md`: add repository maintenance rules, publishing gates, referenced repository notes, and local skill update guidance.
 

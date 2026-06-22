@@ -54,7 +54,8 @@ Current references:
 
 | Name | Source | Path | Notes |
 |------|--------|------|-------|
-| trellis | https://github.com/donchitos/claude-code-game-studios.git | `references/trellis` | Game studio workflow skills discoverable through `find-skills` |
+| claude-code-game-studios | https://github.com/donchitos/claude-code-game-studios.git | `references/claude-code-game-studios` | Claude Code 游戏工作室流程技能集合，可通过 `find-skills` 搜索发现 |
+| trellis | https://github.com/mindfold-ai/trellis.git | `references/trellis` | Mindfold Trellis AI 工作流系统，可通过 `find-skills` 搜索发现 |
 
 Add a reference repository with:
 
