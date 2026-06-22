@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Wiki Maintainer"
+  short_description: "Keep project wiki and README synchronized"
+  default_prompt: "Use $project-wiki-maintainer to update the project wiki and README for this repository change."

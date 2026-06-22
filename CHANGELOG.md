@@ -10,10 +10,13 @@ All notable changes to this skill repository will be documented in this file.
 - `skill-repo-manager` v1.1.0: add an external skill repository reference operation that creates `references/<repo>` git submodules and lists discovered `SKILL.md` files.
 - `find-skills` v1.1.0: add a local search helper that scans this repository plus referenced skill repositories under `references/`.
 - Reference `trellis` (`donchitos/claude-code-game-studios`) as `references/trellis` for game studio workflow skills.
+- `project-wiki-maintainer` v1.0.0: add a generic workflow for maintaining project Wiki and README together, with a `wiki_guard.py` freshness gate.
+- `WIKI.md`: add repository maintenance rules, publishing gates, referenced repository notes, and local skill update guidance.
 
 ### Changed
 
 - Updated `auto-goal` v1.0.0 -> v1.1.0: switch the skill, bundled templates, UI metadata, and validator output to Chinese; add `artifact_language` as a required goal-state field so durable documents and native Goal objectives follow repository language preferences.
+- Updated `skill-repo-manager` v1.1.0 -> v1.2.0: require README and Wiki updates for every repository change and reference `project-wiki-maintainer` as the documentation gate.
 
 ## [1.4.0] - 2026-04-30
 

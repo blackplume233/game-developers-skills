@@ -1,19 +1,21 @@
 ---
 name: skill-repo-manager
-version: 1.1.0
+version: 1.2.0
 description: >-
   Manage a private Skill repository: search (local repo + skills.sh),
   install (to any agent directory), reference external skill repositories as
-  git submodules, and publish (version check + AI privacy audit + git push).
-  Triggers on: "manage skills", "upload skill", "publish skill",
-  "skill search", "skill repo", "skill upload", "reference skill repo",
+  git submodules, keep README and Wiki synchronized for every repository
+  change, and publish (version check + AI privacy audit + git push). Triggers
+  on: "manage skills", "upload skill", "publish skill", "skill search",
+  "skill repo", "skill upload", "reference skill repo", "update wiki",
   "技能仓库", "上传技能", "发布技能", "技能搜索", "引用技能仓库".
 ---
 
 # Skill Repo Manager
 
 Manages your private Skill repository. Activates when you need to search,
-install, reference external skill repositories, or publish Skills.
+install, reference external skill repositories, update repository docs, or
+publish Skills.
 
 ## Prerequisites
 
@@ -211,11 +213,24 @@ Verdict: PASS | WARNING | BLOCK
    - Updated skill: `Updated <name> v<old> → v<new>`
    - Removed skill: `Removed <name>`
 
+### Step 3.5: README and Wiki (mandatory for every repository change)
+
+Every repository change must update or explicitly validate both README and
+Wiki. Use `project-wiki-maintainer` for this gate.
+
+1. Update `README.md` with user-facing index, install, usage, or layout changes
+2. Update `WIKI.md` with durable workflow/process/maintenance changes
+3. Run:
+   ```bash
+   python skills/dev-workflow/project-wiki-maintainer/scripts/wiki_guard.py --wiki WIKI.md
+   ```
+4. If the guard fails, update the missing document before committing
+
 ### Step 4: Git Commit
 
-1. Stage only the target skill files + CHANGELOG.md:
+1. Stage only the target skill files + CHANGELOG.md + README.md + WIKI.md:
    ```bash
-   git add skills/<category>/<skill-name>/ CHANGELOG.md
+   git add skills/<category>/<skill-name>/ CHANGELOG.md README.md WIKI.md
    ```
 2. Commit message format:
    - New: `feat(skills): add <name> v<version>`
@@ -225,7 +240,7 @@ Verdict: PASS | WARNING | BLOCK
 
 ### Step 5: Push
 
-1. `git push origin main`
+1. `git push origin <current-branch>`
 2. Remind user to run `npx skills update` on other machines
 
 ## Operation 4: Reference External Skill Repository
@@ -286,7 +301,7 @@ When publishing a new reference, stage only the submodule metadata and any
 skill documentation updates:
 
 ```bash
-git add .gitmodules references/<reference-name> skills/skill-management/skill-repo-manager/ skills/skill-management/find-skills/ README.md CHANGELOG.md
+git add .gitmodules references/<reference-name> skills/skill-management/skill-repo-manager/ skills/skill-management/find-skills/ README.md WIKI.md CHANGELOG.md
 ```
 
 Do not vendor-copy the referenced repository into `skills/`; keep it as a
@@ -297,6 +312,8 @@ submodule so ownership and upstream history remain intact.
 - NEVER skip the version check or privacy audit when publishing
 - NEVER push code that has unresolved CRITICAL privacy issues
 - NEVER decrement a version number
+- NEVER commit repository changes without updating or validating both README.md
+  and WIKI.md
 - NEVER copy a referenced external repository into this repo when the user
   asked for a reference/submodule
 - When in doubt about privacy, flag as HIGH and ask the user

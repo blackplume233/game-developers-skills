@@ -10,9 +10,13 @@ AI Agent 技能私有仓库，兼容 [skills.sh](https://skills.sh/) / `npx skil
 npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -g -y
 ```
 
-安装后，你可以直接在 AI Agent 对话中说「上传技能」「搜索技能」「发布到仓库」等，agent 会自动调用此技能完成完整的发布流程（版本检查 → 隐私审计 → Changelog → 提交 → 推送）。
+安装后，你可以直接在 AI Agent 对话中说「上传技能」「搜索技能」「发布到仓库」等，agent 会自动调用此技能完成完整的发布流程（版本检查 → 隐私审计 → Changelog → README/Wiki → 提交 → 推送）。
 
 > **示例**：本仓库中的 [gua（周易揲蓍占卦）](skills/divination/gua/) 技能就是通过 `skill-repo-manager` 完成审查与上传的。
+
+## 项目 Wiki
+
+维护流程、发布规则和引用仓库说明见 [WIKI.md](WIKI.md)。仓库行为变更必须在同一提交中同步 `README.md` 和 `WIKI.md`。
 
 ## 技能目录
 
@@ -27,13 +31,14 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 | 技能 | 版本 | 说明 |
 |------|------|------|
 | [codex-subagent](skills/agent-orchestration/codex-subagent/) | 1.0.0 | 将子任务委托给 Codex CLI 执行 |
+| [auto-goal](skills/agent-orchestration/auto-goal/) | 1.1.0 | 文件驱动的自动 Goal 执行与验证循环 |
 
 ### Skill Management（通用）
 
 | 技能 | 版本 | 说明 |
 |------|------|------|
 | [find-skills](skills/skill-management/find-skills/) | 1.1.0 | 从本仓库、引用仓库和 skills.sh 生态发现和安装技能 |
-| [skill-repo-manager](skills/skill-management/skill-repo-manager/) | 1.1.0 | 管理本仓库：搜索、安装、引用外部技能仓库、发布（含版本校验+AI 隐私审查） |
+| [skill-repo-manager](skills/skill-management/skill-repo-manager/) | 1.2.0 | 管理本仓库：搜索、安装、引用外部技能仓库、README/Wiki 同步、发布（含版本校验+AI 隐私审查） |
 
 ### Design（通用）
 
@@ -56,6 +61,7 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 | [git-commit](skills/dev-workflow/git-commit/) | 1.0.0 | Conventional Commits 规范化提交工作流 |
 | [guard](skills/dev-workflow/guard/) | 1.0.0 | 高风险操作安全护栏，防止盲目推进 |
 | [investigate](skills/dev-workflow/investigate/) | 1.0.0 | 系统性根因调查方法论（假设→验证→根因→修复建议） |
+| [project-wiki-maintainer](skills/dev-workflow/project-wiki-maintainer/) | 1.0.0 | 维护项目 Wiki 与 README，并提供文档新鲜度检查 |
 
 ### Divination（通用）
 
@@ -78,9 +84,9 @@ npx skills add blackplume233/game-developers-skills --skill guard -g -y
 
 # 全局安装所有通用技能
 npx skills add blackplume233/game-developers-skills \
-  --skill codex-subagent --skill find-skills --skill skill-repo-manager \
+  --skill codex-subagent --skill auto-goal --skill find-skills --skill skill-repo-manager \
   --skill shadcn-ui --skill ui-ux-pro-max --skill electron --skill tauri-v2 \
-  --skill git-commit --skill guard --skill investigate \
+  --skill git-commit --skill guard --skill investigate --skill project-wiki-maintainer \
   --skill gua \
   -g -y
 
@@ -118,43 +124,51 @@ npx skills add blackplume233/game-developers-skills --skill '*' -g -y
 ## 目录结构
 
 ```
-skills/
+.
+├── WIKI.md                 # 项目 Wiki 与维护规则
 ├── references/             # 外部技能仓库 git submodule 引用
-├── agent-orchestration/    # 通用 - Agent 编排
-│   └── codex-subagent/
-├── design/                 # 通用 - UI/UX 设计
-│   ├── shadcn-ui/
-│   └── ui-ux-pro-max/
-│       ├── SKILL.md
-│       ├── scripts/        # BM25 搜索引擎
-│       └── data/           # 11 CSV + 13 技术栈
-├── framework/              # 通用 - 框架开发
-│   ├── electron/
-│   └── tauri-v2/
-│       ├── SKILL.md
-│       └── references/     # 5 份深度参考文档
-├── dev-workflow/            # 通用 - 开发工作流
-│   ├── git-commit/
-│   ├── guard/
-│   └── investigate/
-├── skill-management/       # 通用 - 技能管理
-│   ├── find-skills/
-│   │   ├── SKILL.md
-│   │   └── scripts/        # 本地与引用仓库技能搜索
-│   └── skill-repo-manager/
-│       ├── SKILL.md
-│       └── scripts/        # 引用仓库子模块、发布辅助
-├── divination/             # 通用 - 占卜推演
-│   └── gua/
-│       ├── SKILL.md
-│       └── reference.md    # 六十四卦速查表
-└── gas-extension/          # GAS 扩展专用
-    ├── qa/
-    │   ├── SKILL.md
-    │   ├── pitfalls.md
-    │   ├── commands/
-    │   └── scenarios/
-    └── ship/
-        ├── SKILL.md
-        └── commands/
+│   └── trellis/
+└── skills/
+    ├── agent-orchestration/    # 通用 - Agent 编排
+    │   ├── codex-subagent/
+    │   └── auto-goal/
+    ├── design/                 # 通用 - UI/UX 设计
+    │   ├── shadcn-ui/
+    │   └── ui-ux-pro-max/
+    │       ├── SKILL.md
+    │       ├── scripts/        # BM25 搜索引擎
+    │       └── data/           # 11 CSV + 13 技术栈
+    ├── framework/              # 通用 - 框架开发
+    │   ├── electron/
+    │   └── tauri-v2/
+    │       ├── SKILL.md
+    │       └── references/     # 5 份深度参考文档
+    ├── dev-workflow/           # 通用 - 开发工作流
+    │   ├── git-commit/
+    │   ├── guard/
+    │   ├── investigate/
+    │   └── project-wiki-maintainer/
+    │       ├── SKILL.md
+    │       ├── agents/
+    │       └── scripts/        # README/Wiki 新鲜度检查
+    ├── skill-management/       # 通用 - 技能管理
+    │   ├── find-skills/
+    │   │   ├── SKILL.md
+    │   │   └── scripts/        # 本地与引用仓库技能搜索
+    │   └── skill-repo-manager/
+    │       ├── SKILL.md
+    │       └── scripts/        # 引用仓库子模块、发布辅助
+    ├── divination/             # 通用 - 占卜推演
+    │   └── gua/
+    │       ├── SKILL.md
+    │       └── reference.md    # 六十四卦速查表
+    └── gas-extension/          # GAS 扩展专用
+        ├── qa/
+        │   ├── SKILL.md
+        │   ├── pitfalls.md
+        │   ├── commands/
+        │   └── scenarios/
+        └── ship/
+            ├── SKILL.md
+            └── commands/
 ```
