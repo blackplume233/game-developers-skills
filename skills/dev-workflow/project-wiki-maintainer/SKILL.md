@@ -1,6 +1,6 @@
 ---
 name: project-wiki-maintainer
-version: 1.0.0
+version: 1.1.0
 description: Maintain a repository's project Wiki and README as first-class release artifacts. Use when Codex changes repository behavior, adds or updates skills, changes architecture, modifies installation or usage flows, publishes a repository change, or the user asks to update wiki, README, docs index, project knowledge base, onboarding docs, changelog-adjacent documentation, or documentation freshness gates.
 ---
 
@@ -18,7 +18,9 @@ changes. Treat documentation as part of the same change set, not a follow-up.
      repository.
 
 2. Locate the Wiki target.
-   - Prefer an existing in-repo `WIKI.md`.
+   - Prefer an existing in-repo `WIKI.md` as the root Wiki index.
+   - Use `wiki/` for durable multi-page Wiki content when the repository needs
+     more than one process page.
    - If absent, prefer `docs/wiki.md`, `docs/WIKI.md`, or `wiki/Home.md` if one
      already exists.
    - If no Wiki target exists and the user asked to maintain a project Wiki,
@@ -32,7 +34,8 @@ changes. Treat documentation as part of the same change set, not a follow-up.
      feature tables, repository layout, quickstart, and links.
    - Wiki: keep durable operational knowledge. Include workflows, maintenance
      rules, release gates, troubleshooting, ownership conventions, and links to
-     source files.
+     source files. For multi-page Wikis, keep `WIKI.md` as a concise index and
+     place long-form pages under `wiki/`.
    - Do not duplicate long content verbatim between README and Wiki. README
      should point to the Wiki for expanded process details.
 
@@ -55,6 +58,8 @@ locations.
 - Record current repository policies that future agents must obey.
 - Include a "Maintenance Rules" section when the Wiki is used as a process
   source of truth.
+- Prefer one topic per file under `wiki/` once the Wiki grows beyond a short
+  index page.
 - Mark known limitations explicitly, especially where tooling returns success
   while logs show partial failure.
 

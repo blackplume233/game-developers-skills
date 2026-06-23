@@ -51,7 +51,7 @@ def changed_files(repo_root: Path, base: str) -> set[str]:
 def is_doc_only(path: str, readme: str, wiki: str) -> bool:
     if path in {readme, wiki} or path in DEFAULT_IGNORES:
         return True
-    return path.startswith("docs/") and path.lower().endswith((".md", ".mdx", ".txt"))
+    return path.startswith(("docs/", "wiki/")) and path.lower().endswith((".md", ".mdx", ".txt"))
 
 
 def main() -> int:

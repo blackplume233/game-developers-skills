@@ -2,6 +2,17 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.6.0] - 2026-06-23
+
+### Added
+
+- `wiki/`: add a multi-page in-repository Wiki with Home, Installation, Skill Publishing, Referenced Skill Repositories, and Maintenance Rules pages.
+
+### Changed
+
+- Updated `project-wiki-maintainer` v1.0.0 -> v1.1.0: support `wiki/` as a first-class documentation directory in the freshness guard and Wiki maintenance guidance.
+- `README.md` and `WIKI.md`: document the multi-page Wiki structure and private repository installation troubleshooting.
+
 ## [1.5.0] - 2026-06-21
 
 ### Added

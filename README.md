@@ -10,13 +10,17 @@ AI Agent 技能私有仓库，兼容 [skills.sh](https://skills.sh/) / `npx skil
 npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -g -y
 ```
 
+> 本仓库是私有仓库，安装前需要确保当前机器已经具备 GitHub 访问权限。推荐先运行 `gh auth status` 确认已登录，再安装。若 `npx skills add` 因私有仓库、TLS 或默认分支失败，见 [Installation](wiki/Installation.md) 的私有仓库安装排障流程。
+
+`skill-repo-manager` 在仓库中的真实路径是 `skills/skill-management/skill-repo-manager/`，仓库默认分支是 `master`。使用直接下载或自定义安装脚本时需要显式使用该路径和分支。
+
 安装后，你可以直接在 AI Agent 对话中说「上传技能」「搜索技能」「发布到仓库」等，agent 会自动调用此技能完成完整的发布流程（版本检查 → 隐私审计 → Changelog → README/Wiki → 提交 → 推送）。
 
 > **示例**：本仓库中的 [gua（周易揲蓍占卦）](skills/divination/gua/) 技能就是通过 `skill-repo-manager` 完成审查与上传的。
 
 ## 项目 Wiki
 
-维护流程、发布规则和引用仓库说明见 [WIKI.md](WIKI.md)。仓库行为变更必须在同一提交中同步 `README.md` 和 `WIKI.md`。
+维护流程、发布规则和引用仓库说明见 [WIKI.md](WIKI.md) 以及 `wiki/` 目录下的页面。仓库行为变更必须在同一提交中同步 `README.md`、`WIKI.md` 和相关 Wiki 页面。
 
 ## 技能目录
 
@@ -62,7 +66,7 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 | [git-commit](skills/dev-workflow/git-commit/) | 1.0.0 | Conventional Commits 规范化提交工作流 |
 | [guard](skills/dev-workflow/guard/) | 1.0.0 | 高风险操作安全护栏，防止盲目推进 |
 | [investigate](skills/dev-workflow/investigate/) | 1.0.0 | 系统性根因调查方法论（假设→验证→根因→修复建议） |
-| [project-wiki-maintainer](skills/dev-workflow/project-wiki-maintainer/) | 1.0.0 | 维护项目 Wiki 与 README，并提供文档新鲜度检查 |
+| [project-wiki-maintainer](skills/dev-workflow/project-wiki-maintainer/) | 1.1.0 | 维护项目 Wiki 与 README，并提供文档新鲜度检查 |
 
 ### Divination（通用）
 
@@ -82,6 +86,9 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 ```bash
 # 安装单个技能
 npx skills add blackplume233/game-developers-skills --skill guard -g -y
+
+# 私有仓库安装前先确认 GitHub CLI 已登录
+gh auth status
 
 # 全局安装所有通用技能
 npx skills add blackplume233/game-developers-skills \
@@ -127,6 +134,12 @@ npx skills add blackplume233/game-developers-skills --skill '*' -g -y
 ```
 .
 ├── WIKI.md                 # 项目 Wiki 与维护规则
+├── wiki/                   # 项目 Wiki 页面
+│   ├── Home.md
+│   ├── Installation.md
+│   ├── Skill-Publishing.md
+│   ├── Referenced-Skill-Repositories.md
+│   └── Maintenance-Rules.md
 ├── references/             # 外部技能仓库 git submodule 引用
 │   ├── claude-code-game-studios/
 │   └── trellis/
