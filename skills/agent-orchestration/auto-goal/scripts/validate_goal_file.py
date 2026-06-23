@@ -5,6 +5,12 @@ import re
 import sys
 from pathlib import Path
 
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
+
+from goal_state import parse_state
+
 
 SECTION_ALIASES = {
     "goal": ["目标", "Goal"],
@@ -87,19 +93,6 @@ def extract_status(body: str) -> str:
     return match.group(1).strip().lower() if match else ""
 
 
-def parse_yamlish_state(body: str) -> dict:
-    body = re.sub(r"^```(?:yaml|yml)?\s*$", "", body, flags=re.MULTILINE)
-    body = re.sub(r"^```\s*$", "", body, flags=re.MULTILINE)
-    state = {}
-    for raw in body.splitlines():
-        line = raw.strip()
-        if not line or line.startswith("#") or ":" not in line:
-            continue
-        key, value = line.split(":", 1)
-        state[key.strip()] = value.strip()
-    return state
-
-
 def has_valid_top_heading(text: str) -> bool:
     alternatives = "|".join(heading_pattern(heading) for heading in VALID_TOP_LEVEL_HEADINGS)
     return bool(re.search(rf"^#\s+(?:{alternatives})\s*$", text, re.MULTILINE))
@@ -123,7 +116,7 @@ def validate(path: Path) -> dict:
         elif not has_meaningful_content(body):
             warnings.append(f"章节看起来为空：{label}")
 
-    state = parse_yamlish_state(section_body(text, "state"))
+    state = parse_state(text)
     status = state.get("status", "").lower() or extract_status(section_body(text, "state"))
     if not status:
         errors.append("状态章节必须包含 'status: <value>'")

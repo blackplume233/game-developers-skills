@@ -26,7 +26,9 @@
 - 每轮开始前重新读取本文件。
 - 遵循仓库语言偏好、技术要求、验证命令和产物目录约定。
 - 所有持久目标文档和最终报告默认使用 `artifact_language` 指定语言。
+- 生成或大幅改写本文件后，先邀请用户确认目标、约束和完成证据。
 - 每轮只推导一个有边界的子目标。
+- 如目标表述不清，按 grill-me 思路一次澄清一个关键问题，并给出推荐答案。
 - 循环细节记录到 `loops/loop-XXX.md`。
 - 错误路径、失败计划和有用模式记录到 `references.md`。
 - 如果子目标太宽，创建 `child-goals/` 下的子 Auto Goal 任务。
@@ -34,14 +36,14 @@
 
 ## 状态
 
-```yaml
-status: draft
-updated_at: YYYY-MM-DD
-artifact_language: zh-CN
-execution_mode: simulated-file-goal
-native_goal_id: null
-current_loop: null
-next_sub_goal: null
-last_verified_loop: null
-references: references.md
-```
+| 字段 | 值 |
+|---|---|
+| status | draft |
+| updated_at | YYYY-MM-DD |
+| artifact_language | zh-CN |
+| execution_mode | simulated-file-goal |
+| native_goal_id | null |
+| current_loop | null |
+| next_sub_goal | 等待用户确认目标文档 |
+| last_verified_loop | null |
+| references | references.md |

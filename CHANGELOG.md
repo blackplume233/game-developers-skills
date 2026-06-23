@@ -29,6 +29,7 @@ All notable changes to this skill repository will be documented in this file.
 
 - Updated `auto-goal` v1.0.0 -> v1.1.0: switch the skill, bundled templates, UI metadata, and validator output to Chinese; add `artifact_language` as a required goal-state field so durable documents and native Goal objectives follow repository language preferences.
 - Updated `skill-repo-manager` v1.1.0 -> v1.2.0: require README and Wiki updates for every repository change and reference `project-wiki-maintainer` as the documentation gate.
+- Updated `auto-goal` v1.1.0 -> v1.2.0: use Markdown state tables with helper scripts, require user confirmation after goal draft generation, apply grill-me style clarification for ambiguous goals, and prefer workspace artifact roots under `goal/<date-slug>/`.
 
 ## [1.4.0] - 2026-04-30
 
