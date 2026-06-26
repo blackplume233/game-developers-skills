@@ -1,3 +1,15 @@
+---
+status: draft
+updated_at: YYYY-MM-DD
+artifact_language: zh-CN
+execution_mode: simulated-file-goal
+native_goal_id: null
+current_loop: null
+next_sub_goal: 等待用户确认目标文档
+last_verified_loop: null
+references: references.md
+---
+
 # Auto Goal 任务
 
 ## 目标
@@ -33,17 +45,3 @@
 - 错误路径、失败计划和有用模式记录到 `references.md`。
 - 如果子目标太宽，创建 `child-goals/` 下的子 Auto Goal 任务。
 - 验证子目标后再更新根状态。
-
-## 状态
-
-| 字段 | 值 |
-|---|---|
-| status | draft |
-| updated_at | YYYY-MM-DD |
-| artifact_language | zh-CN |
-| execution_mode | simulated-file-goal |
-| native_goal_id | null |
-| current_loop | null |
-| next_sub_goal | 等待用户确认目标文档 |
-| last_verified_loop | null |
-| references | references.md |

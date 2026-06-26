@@ -48,7 +48,7 @@ If `.privacy-rules.yaml` exists, read it before making the final audit decision.
 
 ## Current Skill Notes
 
-- `auto-goal` v1.2.0 publishes Markdown state tables as the preferred goal state format, uses helper scripts for state reads and updates, requires user confirmation after drafting goal files, and applies grill-me style clarification for ambiguous goals.
+- `auto-goal` v1.3.0 stores program-controlled goal state in top-level YAML frontmatter, keeps helper scripts for state reads and updates, remains compatible with older state tables, requires user confirmation after drafting goal files, and applies grill-me style clarification for ambiguous goals.
 
 ## Changelog
 

@@ -2,6 +2,12 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.6.1] - 2026-06-26
+
+### Changed
+
+- Updated `auto-goal` v1.2.0 -> v1.3.0: move program-controlled goal state fields to top-level YAML frontmatter while keeping compatibility with older Markdown state tables.
+
 ## [1.6.0] - 2026-06-23
 
 ### Added

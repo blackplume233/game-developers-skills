@@ -36,7 +36,7 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 | 技能 | 版本 | 说明 |
 |------|------|------|
 | [codex-subagent](skills/agent-orchestration/codex-subagent/) | 1.0.0 | 将子任务委托给 Codex CLI 执行 |
-| [auto-goal](skills/agent-orchestration/auto-goal/) | 1.2.0 | 文件驱动的自动 Goal 执行、Markdown 状态表格、用户确认与验证循环 |
+| [auto-goal](skills/agent-orchestration/auto-goal/) | 1.3.0 | 文件驱动的自动 Goal 执行、frontmatter 状态字段、用户确认与验证循环 |
 
 ### Skill Management（通用）
 

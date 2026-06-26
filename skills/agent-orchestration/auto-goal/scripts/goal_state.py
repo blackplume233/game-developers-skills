@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Read, update, and migrate Auto Goal state blocks.
+"""Read, update, and migrate Auto Goal state frontmatter.
 
 Preferred state format:
 
-| 字段 | 值 |
-|---|---|
-| status | active |
+---
+status: active
+---
 """
 
 from __future__ import annotations
@@ -23,6 +23,7 @@ SECTION_ALIASES = {
 
 STATE_FIELD_LABEL = "字段"
 STATE_VALUE_LABEL = "值"
+FRONTMATTER_PATTERN = re.compile(r"\A---\s*\n([\s\S]*?)\n---\s*(?:\n|\Z)", re.MULTILINE)
 
 
 def heading_pattern(heading: str) -> str:
@@ -41,6 +42,13 @@ def section_pattern(section_key: str) -> re.Pattern[str]:
 def state_body(text: str) -> str:
     match = section_pattern("state").search(text)
     return match.group(2).strip() if match else ""
+
+
+def split_frontmatter(text: str) -> tuple[str, str] | None:
+    match = FRONTMATTER_PATTERN.match(text)
+    if not match:
+        return None
+    return match.group(1).strip(), text[match.end() :]
 
 
 def split_markdown_row(line: str) -> list[str]:
@@ -112,13 +120,52 @@ def parse_yamlish_state(body: str) -> dict[str, str]:
         if not line or line.startswith("#") or ":" not in line:
             continue
         key, value = line.split(":", 1)
-        state[key.strip()] = value.strip()
+        state[key.strip()] = unquote_yaml_scalar(value.strip())
     return state
 
 
+def unquote_yaml_scalar(value: str) -> str:
+    if len(value) >= 2 and value[0] == value[-1] == "'":
+        return value[1:-1].replace("''", "'")
+    if len(value) >= 2 and value[0] == value[-1] == '"':
+        return value[1:-1].replace(r"\"", '"').replace(r"\\", "\\")
+    return value
+
+
+def render_yaml_scalar(value: object) -> str:
+    text = "" if value is None else str(value)
+    text = text.replace("\r", " ").replace("\n", " ").strip()
+    if text == "":
+        return '""'
+    if re.search(r"(^[>|@`!&*{}\[\],#]|:\s|\s#|['\"])", text):
+        return "'" + text.replace("'", "''") + "'"
+    return text
+
+
 def parse_state(text: str) -> dict[str, str]:
+    frontmatter = split_frontmatter(text)
+    if frontmatter:
+        state = parse_yamlish_state(frontmatter[0])
+        if state:
+            return state
     body = state_body(text)
     return parse_markdown_table(body) or parse_yamlish_state(body)
+
+
+def render_state_frontmatter(state: dict[str, str], key_order: list[str] | None = None) -> str:
+    ordered_keys: list[str] = []
+    for key in key_order or []:
+        if key in state and key not in ordered_keys:
+            ordered_keys.append(key)
+    for key in state:
+        if key not in ordered_keys:
+            ordered_keys.append(key)
+
+    lines = ["---"]
+    for key in ordered_keys:
+        lines.append(f"{key}: {render_yaml_scalar(state[key])}")
+    lines.append("---")
+    return "\n".join(lines)
 
 
 def render_state_table(state: dict[str, str], key_order: list[str] | None = None) -> str:
@@ -140,12 +187,12 @@ def render_state_table(state: dict[str, str], key_order: list[str] | None = None
 
 
 def replace_state(text: str, state: dict[str, str], key_order: list[str] | None = None) -> str:
-    pattern = section_pattern("state")
-    table = "\n\n" + render_state_table(state, key_order) + "\n"
-    if pattern.search(text):
-        return pattern.sub(lambda match: match.group(1) + table, text, count=1)
-    suffix = "" if text.endswith("\n") else "\n"
-    return text + suffix + "\n## 状态" + table
+    frontmatter = render_state_frontmatter(state, key_order)
+    body = section_pattern("state").sub("", text, count=1).lstrip()
+    existing = split_frontmatter(body)
+    if existing:
+        body = existing[1].lstrip()
+    return frontmatter + "\n\n" + body
 
 
 def read_state(path: Path) -> dict[str, str]:
@@ -158,7 +205,7 @@ def write_state(path: Path, state: dict[str, str], key_order: list[str] | None =
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Read or update an Auto Goal Markdown state block.")
+    parser = argparse.ArgumentParser(description="Read or update Auto Goal YAML frontmatter state.")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     read_parser = subparsers.add_parser("read", help="Print all state fields as JSON.")

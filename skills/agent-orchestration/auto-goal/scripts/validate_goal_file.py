@@ -16,7 +16,6 @@ SECTION_ALIASES = {
     "goal": ["目标", "Goal"],
     "constraints": ["约束", "Constraints"],
     "execution_guidance": ["执行指导", "Execution Guidance"],
-    "state": ["状态", "State"],
 }
 
 VALID_TOP_LEVEL_HEADINGS = [
@@ -88,11 +87,6 @@ def has_meaningful_content(body: str) -> bool:
     return bool(lines)
 
 
-def extract_status(body: str) -> str:
-    match = re.search(r"^\s*status\s*:\s*([A-Za-z_-]+)\s*$", body, re.MULTILINE)
-    return match.group(1).strip().lower() if match else ""
-
-
 def has_valid_top_heading(text: str) -> bool:
     alternatives = "|".join(heading_pattern(heading) for heading in VALID_TOP_LEVEL_HEADINGS)
     return bool(re.search(rf"^#\s+(?:{alternatives})\s*$", text, re.MULTILINE))
@@ -111,15 +105,15 @@ def validate(path: Path) -> dict:
         label = " / ".join(aliases)
         if not body:
             errors.append(f"缺少章节：{label}")
-        elif section_key in {"goal", "state"} and not has_meaningful_content(body):
+        elif section_key == "goal" and not has_meaningful_content(body):
             errors.append(f"章节没有有效内容：{label}")
         elif not has_meaningful_content(body):
             warnings.append(f"章节看起来为空：{label}")
 
     state = parse_state(text)
-    status = state.get("status", "").lower() or extract_status(section_body(text, "state"))
+    status = state.get("status", "").lower()
     if not status:
-        errors.append("状态章节必须包含 'status: <value>'")
+        errors.append("文件顶部 frontmatter 或旧状态章节必须包含 'status: <value>'")
     elif status not in VALID_STATUSES:
         errors.append(
             "无效 status: "
@@ -131,7 +125,7 @@ def validate(path: Path) -> dict:
 
     for key in REQUIRED_STATE_KEYS:
         if key not in state:
-            errors.append(f"状态章节必须包含 '{key}: <value>'")
+            errors.append(f"文件顶部 frontmatter 或旧状态章节必须包含 '{key}: <value>'")
 
     artifact_language = state.get("artifact_language", "")
     if artifact_language.lower() in {"", "null", "none"}:
