@@ -25,6 +25,11 @@ Expected repository metadata:
 npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -g -y
 ```
 
+`skill-repo-manager` is configured to treat `blackplume233/game-developers-skills`
+as the default skill repository. When a user says "our repository", "the skill
+repo", or asks to install/search/publish without naming another source, agents
+should use this repository.
+
 After installation, restart Codex so the new skill is loaded into the available
 skill list.
 

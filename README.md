@@ -10,6 +10,8 @@ AI Agent 技能私有仓库，兼容 [skills.sh](https://skills.sh/) / `npx skil
 npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -g -y
 ```
 
+`skill-repo-manager` 默认指向 `blackplume233/game-developers-skills`。当你说「安装我们的技能」「搜索仓库里的技能」「发布到远端」时，除非另有说明，它会优先使用这个私有技能仓库。
+
 > 本仓库是私有仓库，安装前需要确保当前机器已经具备 GitHub 访问权限。推荐先运行 `gh auth status` 确认已登录，再安装。若 `npx skills add` 因私有仓库、TLS 或默认分支失败，见 [Installation](wiki/Installation.md) 的私有仓库安装排障流程。
 
 `skill-repo-manager` 在仓库中的真实路径是 `skills/skill-management/skill-repo-manager/`，仓库默认分支是 `master`。使用直接下载或自定义安装脚本时需要显式使用该路径和分支。
@@ -43,7 +45,7 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 | 技能 | 版本 | 说明 |
 |------|------|------|
 | [find-skills](skills/skill-management/find-skills/) | 1.1.0 | 从本仓库、引用仓库和 skills.sh 生态发现和安装技能 |
-| [skill-repo-manager](skills/skill-management/skill-repo-manager/) | 1.2.0 | 管理本仓库：搜索、安装、引用外部技能仓库、README/Wiki 同步、发布（含版本校验+AI 隐私审查） |
+| [skill-repo-manager](skills/skill-management/skill-repo-manager/) | 1.3.0 | 默认指向本私有仓库，管理搜索、安装、引用外部技能仓库、README/Wiki 同步和发布（含版本校验+AI 隐私审查） |
 
 ### Design（通用）
 

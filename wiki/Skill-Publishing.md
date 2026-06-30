@@ -1,7 +1,8 @@
 # Skill Publishing
 
-Use `skill-repo-manager` for publishing repository changes. Do not skip or
-reorder the gates below.
+Use `skill-repo-manager` for publishing repository changes. The manager defaults
+to `blackplume233/game-developers-skills` when no other repository is named. Do
+not skip or reorder the gates below.
 
 ## Required Gates
 

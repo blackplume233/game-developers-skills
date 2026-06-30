@@ -2,6 +2,12 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.7.0] - 2026-06-30
+
+### Changed
+
+- Updated `skill-repo-manager` v1.2.0 -> v1.3.0: default repository operations to `blackplume233/game-developers-skills` when no other skill repository is specified.
+
 ## [1.6.1] - 2026-06-26
 
 ### Changed

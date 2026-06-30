@@ -1,6 +1,6 @@
 ---
 name: skill-repo-manager
-version: 1.2.0
+version: 1.3.0
 description: >-
   Manage a private Skill repository: search (local repo + skills.sh),
   install (to any agent directory), reference external skill repositories as
@@ -17,9 +17,25 @@ Manages your private Skill repository. Activates when you need to search,
 install, reference external skill repositories, update repository docs, or
 publish Skills.
 
+## Default Repository
+
+Unless the user provides another repository, treat this repository as the
+default private skill repository:
+
+```text
+blackplume233/game-developers-skills
+```
+
+Use this default for repository search, install, reference, publish, update, and
+GitHub access checks. If a local clone is needed and the current working
+directory is not the skill repository, locate an existing clone first; otherwise
+clone `https://github.com/blackplume233/game-developers-skills.git` into a
+temporary or user-selected workspace before editing.
+
 ## Prerequisites
 
-- Repository cloned locally (path referred to as `$REPO`)
+- Repository cloned locally (path referred to as `$REPO`); by default this is
+  `blackplume233/game-developers-skills`
 - Node.js installed (for `npx skills`)
 - Git push access configured
 
@@ -58,14 +74,14 @@ npx skills ls -a cursor  # filter by agent
 ### 2.1 From Private Repository
 
 ```bash
-# Install specific skill globally
-npx skills add <owner>/<repo> --skill <name> -g
+# Install specific skill globally from the default repository
+npx skills add blackplume233/game-developers-skills --skill <name> -g
 
-# Install to current project
-npx skills add <owner>/<repo> --skill <name>
+# Install to current project from the default repository
+npx skills add blackplume233/game-developers-skills --skill <name>
 
-# Install all skills
-npx skills add <owner>/<repo> --skill '*' -g -y
+# Install all skills from the default repository
+npx skills add blackplume233/game-developers-skills --skill '*' -g -y
 ```
 
 ### 2.2 From skills.sh Marketplace
