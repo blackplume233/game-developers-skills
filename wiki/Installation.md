@@ -42,8 +42,11 @@ npx skills add blackplume233/game-developers-skills --skill guard -g -y
 # All skills
 npx skills add blackplume233/game-developers-skills --skill '*' -g -y
 
-# Current project only
-npx skills add blackplume233/game-developers-skills --skill qa --skill ship
+# Current project only: generic QA
+npx skills add blackplume233/game-developers-skills --skill qa
+
+# Current project only: project-specific ship workflow
+npx skills add blackplume233/game-developers-skills --skill ship
 ```
 
 Verify installed skills:

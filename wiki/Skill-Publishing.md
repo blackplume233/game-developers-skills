@@ -50,6 +50,7 @@ If `.privacy-rules.yaml` exists, read it before making the final audit decision.
 ## Current Skill Notes
 
 - `auto-goal` v1.3.0 stores program-controlled goal state in top-level YAML frontmatter, keeps helper scripts for state reads and updates, remains compatible with older state tables, requires user confirmation after drafting goal files, and applies grill-me style clarification for ambiguous goals.
+- `qa` v2.0.0 is a generic Dev Workflow skill. It should guide agents to operate the real product entry, collect evidence incrementally, judge behavior like a responsible engineer, and save stable exploratory or regression paths as project test cases.
 
 ## Changelog
 

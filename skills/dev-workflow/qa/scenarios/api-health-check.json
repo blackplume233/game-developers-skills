@@ -1,0 +1,41 @@
+{
+  "name": "api-health-check",
+  "description": "验证 API 服务健康检查、认证边界和一个核心只读接口。",
+  "tags": ["api", "smoke", "contract"],
+  "target": {
+    "type": "api",
+    "entry": "测试环境 API base URL"
+  },
+  "setup": {
+    "commands": ["替换为启动 API 服务的命令"],
+    "env": {},
+    "data": "使用测试 token 或公开只读接口；不要保存真实凭据"
+  },
+  "steps": [
+    {
+      "id": "health",
+      "description": "调用健康检查接口",
+      "action": "request",
+      "args": { "method": "GET", "url": "/health" },
+      "expect": "返回 2xx，响应体包含健康状态或版本信息。",
+      "screenshotAfter": false
+    },
+    {
+      "id": "unauthorized-boundary",
+      "description": "不带认证访问受保护接口",
+      "action": "request",
+      "args": { "method": "GET", "url": "/protected-resource" },
+      "expect": "返回 401/403，错误响应不泄露内部实现细节。",
+      "screenshotAfter": false
+    },
+    {
+      "id": "readonly-resource",
+      "description": "调用一个核心只读接口",
+      "action": "request",
+      "args": { "method": "GET", "url": "/replace-with-readonly-endpoint" },
+      "expect": "返回结构稳定、字段语义符合文档，没有 5xx 或超时。",
+      "screenshotAfter": false
+    }
+  ],
+  "cleanup": []
+}

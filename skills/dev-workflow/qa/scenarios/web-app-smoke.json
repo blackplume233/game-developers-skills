@@ -1,0 +1,51 @@
+{
+  "name": "web-app-smoke",
+  "description": "验证 Web 应用可启动、首屏可见、核心导航可交互、无明显错误提示。",
+  "tags": ["web", "smoke", "ui"],
+  "target": {
+    "type": "web",
+    "entry": "项目本地 dev server 或测试环境 URL"
+  },
+  "setup": {
+    "commands": ["npm run build", "npm run dev"],
+    "env": {},
+    "data": "使用项目约定的测试账号或匿名可访问页面"
+  },
+  "steps": [
+    {
+      "id": "open-home",
+      "description": "打开应用首页",
+      "action": "navigate",
+      "args": { "url": "http://localhost:3000" },
+      "expect": "页面完成加载，没有白屏、浏览器错误页或全局错误提示。",
+      "screenshotAfter": true
+    },
+    {
+      "id": "hero-or-main-content",
+      "description": "确认首屏主体内容可见",
+      "action": "hasText",
+      "args": { "text": "替换为项目首页关键文本" },
+      "expect": "用户能看到可识别的主内容，而不是加载占位或空状态。",
+      "screenshotAfter": false
+    },
+    {
+      "id": "primary-navigation",
+      "description": "操作一个主要导航入口",
+      "action": "click",
+      "args": { "selector": "替换为稳定按钮、链接或 test id" },
+      "expect": "点击后进入预期页面或状态，URL、标题或主体内容发生合理变化。",
+      "screenshotAfter": true
+    },
+    {
+      "id": "no-visible-errors",
+      "description": "确认没有用户可见错误",
+      "action": "evaluate",
+      "args": {
+        "expression": "(() => document.body.innerText.slice(0, 2000))()"
+      },
+      "expect": "文本中不应出现明显的 crash、uncaught、failed to load、500 等错误提示。",
+      "screenshotAfter": false
+    }
+  ],
+  "cleanup": []
+}

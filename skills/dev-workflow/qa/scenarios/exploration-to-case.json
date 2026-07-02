@@ -1,0 +1,49 @@
+{
+  "name": "exploration-to-case",
+  "description": "把一次即兴探索转换为长期测试用例的模板。",
+  "tags": ["exploratory", "case-capture", "qa-memory"],
+  "target": {
+    "type": "mixed",
+    "entry": "探索时使用的真实产品入口"
+  },
+  "setup": {
+    "commands": [],
+    "env": {},
+    "data": "记录探索使用的数据来源、账号类型和初始状态"
+  },
+  "steps": [
+    {
+      "id": "intent",
+      "description": "记录本次探索的用户目标",
+      "action": "note",
+      "args": { "text": "用户想完成什么任务？这个任务为什么重要？" },
+      "expect": "目标明确，可转化为可验证的终态。",
+      "screenshotAfter": false
+    },
+    {
+      "id": "operation-sequence",
+      "description": "记录有效的操作序列",
+      "action": "note",
+      "args": { "text": "列出从入口到终态的最短稳定步骤。" },
+      "expect": "步骤足够具体，另一个工程师可以复现。",
+      "screenshotAfter": false
+    },
+    {
+      "id": "evidence",
+      "description": "记录应该长期保存的证据",
+      "action": "screenshot",
+      "args": { "name": "exploration-final-state" },
+      "expect": "截图或日志能证明用户目标已经完成。",
+      "screenshotAfter": false
+    },
+    {
+      "id": "case-decision",
+      "description": "判断是否保存为自动化或人工回归用例",
+      "action": "note",
+      "args": { "text": "stable / flaky / manual-only；建议保存路径和理由。" },
+      "expect": "给出明确沉淀结论，而不是只输出一次性报告。",
+      "screenshotAfter": false
+    }
+  ],
+  "cleanup": []
+}

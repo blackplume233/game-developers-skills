@@ -1,0 +1,49 @@
+{
+  "name": "desktop-app-smoke",
+  "description": "验证桌面应用可启动、主窗口可见、基础交互可完成并可关闭。",
+  "tags": ["desktop", "smoke", "ui"],
+  "target": {
+    "type": "desktop",
+    "entry": "项目桌面应用启动命令或可执行文件"
+  },
+  "setup": {
+    "commands": ["npm run build"],
+    "env": {},
+    "data": "使用临时 user-data-dir 或测试配置，避免污染本机真实配置"
+  },
+  "steps": [
+    {
+      "id": "launch",
+      "description": "启动桌面应用并等待主窗口稳定",
+      "action": "screenshot",
+      "args": { "name": "desktop-01-launch" },
+      "expect": "主窗口正常渲染，没有空白窗口、崩溃弹窗或权限阻塞弹窗。",
+      "screenshotAfter": false
+    },
+    {
+      "id": "main-action-visible",
+      "description": "确认主操作入口可见",
+      "action": "hasText",
+      "args": { "text": "替换为应用主操作或主标题文本" },
+      "expect": "主操作入口或标题文本可见，说明首屏可用。",
+      "screenshotAfter": true
+    },
+    {
+      "id": "open-command-or-menu",
+      "description": "执行一个菜单、命令或快捷键操作",
+      "action": "pressKey",
+      "args": { "key": "Control+," },
+      "expect": "应用对输入有响应，相关面板、菜单或设置页面出现。",
+      "screenshotAfter": true
+    },
+    {
+      "id": "close-cleanly",
+      "description": "关闭应用并确认没有残留阻塞",
+      "action": "note",
+      "args": { "text": "关闭应用后检查进程、临时目录或日志，确认可重复运行。" },
+      "expect": "应用能清理退出，下一次测试不会被残留进程或配置影响。",
+      "screenshotAfter": false
+    }
+  ],
+  "cleanup": ["关闭桌面进程", "删除临时配置目录"]
+}

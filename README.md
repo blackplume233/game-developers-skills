@@ -69,6 +69,7 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 | [guard](skills/dev-workflow/guard/) | 1.0.0 | 高风险操作安全护栏，防止盲目推进 |
 | [investigate](skills/dev-workflow/investigate/) | 1.0.0 | 系统性根因调查方法论（假设→验证→根因→修复建议） |
 | [project-wiki-maintainer](skills/dev-workflow/project-wiki-maintainer/) | 1.1.0 | 维护项目 Wiki 与 README，并提供文档新鲜度检查 |
+| [qa](skills/dev-workflow/qa/) | 2.0.0 | 通用 QA Engineer：真实操作验证、证据化报告、自动沉淀测试用例 |
 
 ### Divination（通用）
 
@@ -80,7 +81,6 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 
 | 技能 | 版本 | 说明 |
 |------|------|------|
-| [qa](skills/gas-extension/qa/) | 1.0.0 | Playwright E2E 测试工程师，6 种测试模式 |
 | [ship](skills/gas-extension/ship/) | 1.0.0 | 一站式交付流水线：审查→构建→验证→提交→推送 |
 
 ## 快速安装
@@ -96,13 +96,15 @@ gh auth status
 npx skills add blackplume233/game-developers-skills \
   --skill codex-subagent --skill auto-goal --skill find-skills --skill skill-repo-manager \
   --skill shadcn-ui --skill ui-ux-pro-max --skill electron --skill tauri-v2 \
-  --skill git-commit --skill guard --skill investigate --skill project-wiki-maintainer \
+  --skill git-commit --skill guard --skill investigate --skill project-wiki-maintainer --skill qa \
   --skill gua \
   -g -y
 
-# 项目级安装 GAS 扩展技能
-cd ~/game-agent-extension
-npx skills add blackplume233/game-developers-skills --skill qa --skill ship
+# 项目级安装通用 QA 技能
+npx skills add blackplume233/game-developers-skills --skill qa
+
+# 项目级安装项目专用交付技能
+npx skills add blackplume233/game-developers-skills --skill ship
 
 # 一键全部安装
 npx skills add blackplume233/game-developers-skills --skill '*' -g -y
@@ -164,6 +166,11 @@ npx skills add blackplume233/game-developers-skills --skill '*' -g -y
     │   ├── git-commit/
     │   ├── guard/
     │   ├── investigate/
+    │   ├── qa/
+    │   │   ├── SKILL.md
+    │   │   ├── pitfalls.md
+    │   │   ├── commands/
+    │   │   └── scenarios/
     │   └── project-wiki-maintainer/
     │       ├── SKILL.md
     │       ├── agents/
@@ -180,11 +187,6 @@ npx skills add blackplume233/game-developers-skills --skill '*' -g -y
     │       ├── SKILL.md
     │       └── reference.md    # 六十四卦速查表
     └── gas-extension/          # GAS 扩展专用
-        ├── qa/
-        │   ├── SKILL.md
-        │   ├── pitfalls.md
-        │   ├── commands/
-        │   └── scenarios/
         └── ship/
             ├── SKILL.md
             └── commands/

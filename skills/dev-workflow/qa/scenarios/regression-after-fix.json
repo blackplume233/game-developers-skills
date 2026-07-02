@@ -1,0 +1,41 @@
+{
+  "name": "regression-after-fix",
+  "description": "修复缺陷后保存的回归用例模板，确保同类问题不会再次出现。",
+  "tags": ["regression", "after-fix", "evidence"],
+  "target": {
+    "type": "mixed",
+    "entry": "复现缺陷所需的真实入口"
+  },
+  "setup": {
+    "commands": ["替换为构建、启动或准备 fixture 的命令"],
+    "env": {},
+    "data": "记录最小复现数据；不要包含真实用户数据"
+  },
+  "steps": [
+    {
+      "id": "precondition",
+      "description": "建立缺陷复现所需前置状态",
+      "action": "note",
+      "args": { "text": "说明测试数据、账号、页面、文件或 API 状态。" },
+      "expect": "前置状态明确且可重复创建。",
+      "screenshotAfter": false
+    },
+    {
+      "id": "reproduce-path",
+      "description": "执行曾经导致缺陷的用户路径",
+      "action": "note",
+      "args": { "text": "替换为真实操作步骤。" },
+      "expect": "按旧缺陷路径操作后，问题不再出现。",
+      "screenshotAfter": true
+    },
+    {
+      "id": "final-assertion",
+      "description": "验证修复后的最终用户可见结果",
+      "action": "hasText",
+      "args": { "text": "替换为修复后应出现的稳定文本或状态" },
+      "expect": "最终状态符合用户目标，且没有错误提示或副作用。",
+      "screenshotAfter": true
+    }
+  ],
+  "cleanup": ["还原测试数据或删除临时记录"]
+}

@@ -1,0 +1,41 @@
+{
+  "name": "cli-command-smoke",
+  "description": "验证 CLI 命令的帮助信息、基础成功路径和错误路径。",
+  "tags": ["cli", "smoke", "regression"],
+  "target": {
+    "type": "cli",
+    "entry": "项目 CLI 命令"
+  },
+  "setup": {
+    "commands": ["npm run build"],
+    "env": {},
+    "data": "使用临时目录作为输入输出位置"
+  },
+  "steps": [
+    {
+      "id": "help-command",
+      "description": "运行帮助命令",
+      "action": "shell",
+      "args": { "cmd": "替换为项目 CLI --help" },
+      "expect": "退出码为 0，输出包含命令用途、参数说明和示例。",
+      "screenshotAfter": false
+    },
+    {
+      "id": "happy-path",
+      "description": "运行一个最小成功路径",
+      "action": "shell",
+      "args": { "cmd": "替换为项目 CLI 的最小成功命令" },
+      "expect": "命令成功结束，输出清楚说明结果，并生成预期文件或状态。",
+      "screenshotAfter": false
+    },
+    {
+      "id": "invalid-input",
+      "description": "运行一个无效输入场景",
+      "action": "shell",
+      "args": { "cmd": "替换为项目 CLI 的无效输入命令" },
+      "expect": "命令以非 0 或明确错误信息结束，错误文案可指导用户修复。",
+      "screenshotAfter": false
+    }
+  ],
+  "cleanup": ["删除临时输入输出目录"]
+}

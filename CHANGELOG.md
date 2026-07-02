@@ -2,6 +2,12 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.8.0] - 2026-07-02
+
+### Changed
+
+- Updated `qa` v1.0.0 -> v2.0.0: move from `gas-extension` to `dev-workflow`, remove project-specific content, and refocus the skill on generic real-operation QA, evidence-based engineering judgment, and automatic test-case capture.
+
 ## [1.7.0] - 2026-06-30
 
 ### Changed
