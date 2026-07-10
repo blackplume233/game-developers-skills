@@ -45,7 +45,7 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 | 技能 | 版本 | 说明 |
 |------|------|------|
 | [find-skills](skills/skill-management/find-skills/) | 1.1.0 | 从本仓库、引用仓库和 skills.sh 生态发现和安装技能 |
-| [skill-repo-manager](skills/skill-management/skill-repo-manager/) | 1.3.0 | 默认指向本私有仓库，管理搜索、安装、引用外部技能仓库、README/Wiki 同步和发布（含版本校验+AI 隐私审查） |
+| [skill-repo-manager](skills/skill-management/skill-repo-manager/) | 1.4.0 | 默认指向本私有仓库，管理搜索、安装、引用外部技能仓库、README/Wiki 同步和发布（含版本校验+AI 隐私审查） |
 
 ### Design（通用）
 
@@ -109,6 +109,25 @@ npx skills add blackplume233/game-developers-skills --skill ship
 # 一键全部安装
 npx skills add blackplume233/game-developers-skills --skill '*' -g -y
 ```
+
+## skills.sh 仓库页面
+
+本仓库已通过 Skills CLI 匿名安装遥测进入 skills.sh 普通目录。根目录的
+[`skills.sh.json`](skills.sh.json) 负责将技能按类别分组展示，不代表 Official 认证，
+也不改变 CLI 安装行为。新增、删除或移动技能后运行：
+
+```bash
+python skills/skill-management/skill-repo-manager/scripts/sync_skills_sh.py --write
+python skills/skill-management/skill-repo-manager/scripts/sync_skills_sh.py --check
+```
+
+推送后可执行全量安装，让遥测再次发现仓库；页面缓存可能延迟刷新：
+
+```bash
+npx skills add blackplume233/game-developers-skills --skill '*' -g -y
+```
+
+详细维护流程见 [skills.sh 收录与页面维护](wiki/SkillsSH-Listing.md)。
 
 ## 版本规范
 

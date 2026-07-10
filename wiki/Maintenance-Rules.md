@@ -6,6 +6,7 @@
 - `WIKI.md`: root Wiki index
 - `wiki/`: durable Wiki pages
 - `CHANGELOG.md`: release history
+- `skills.sh.json`: skills.sh 普通仓库页面的技能分组配置
 - `skills/<category>/<skill-name>/`: reusable skills
 - `references/<name>/`: external skill repositories as submodules
 - `docs/`: focused supporting documentation
@@ -54,3 +55,5 @@ npx skills add blackplume233/game-developers-skills --skill <skill-name> -g -y
 - Every repository behavior change must update `README.md`, `WIKI.md`, and the
   relevant page under `wiki/`.
 - Never publish a skill without version check and AI privacy audit.
+- 新增、删除或移动技能时，必须运行 `sync_skills_sh.py --write` 和 `--check`。
+- 不得把 `skills.sh.json` 描述为 Official 认证；它只定制普通仓库页面。

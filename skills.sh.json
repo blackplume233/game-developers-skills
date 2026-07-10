@@ -1,0 +1,64 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "Agent Orchestration",
+      "description": "Agent 编排、委派与自主执行技能。",
+      "skills": [
+        "auto-goal",
+        "codex-subagent"
+      ]
+    },
+    {
+      "title": "Design",
+      "description": "UI、UX 与应用设计技能。",
+      "skills": [
+        "shadcn-ui",
+        "ui-ux-pro-max"
+      ]
+    },
+    {
+      "title": "Development Workflow",
+      "description": "工程质量、调试、测试与交付工作流。",
+      "skills": [
+        "git-commit",
+        "guard",
+        "investigate",
+        "project-wiki-maintainer",
+        "qa"
+      ]
+    },
+    {
+      "title": "Divination",
+      "description": "传统文化与决策辅助技能。",
+      "skills": [
+        "gua"
+      ]
+    },
+    {
+      "title": "Frameworks",
+      "description": "桌面端与跨平台框架开发技能。",
+      "skills": [
+        "electron",
+        "tauri-v2"
+      ]
+    },
+    {
+      "title": "Game Development",
+      "description": "游戏开发项目与扩展交付技能。",
+      "skills": [
+        "ship"
+      ]
+    },
+    {
+      "title": "Skill Management",
+      "description": "Skill 发现、维护、发布与仓库管理技能。",
+      "skills": [
+        "create-watch-skill",
+        "find-skills",
+        "skill-repo-manager"
+      ]
+    }
+  ]
+}

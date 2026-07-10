@@ -2,6 +2,18 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.9.0] - 2026-07-10
+
+### Added
+
+- 根目录新增 `skills.sh.json`，按仓库类别组织全部技能的 skills.sh 页面展示。
+- `skill-repo-manager` 新增 `sync_skills_sh.py`，用于从本地技能清单生成和校验页面配置。
+- 新增 skills.sh 普通仓库收录、遥测触发、缓存复查与故障排查文档。
+
+### Changed
+
+- Updated `skill-repo-manager` v1.3.0 -> v1.4.0: 支持 skills.sh 普通个人仓库收录与页面维护，并明确其与 Official 的边界。
+
 ## [1.8.0] - 2026-07-02
 
 ### Changed

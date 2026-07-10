@@ -1,14 +1,16 @@
 ---
 name: skill-repo-manager
-version: 1.3.0
+version: 1.4.0
 description: >-
   Manage a private Skill repository: search (local repo + skills.sh),
   install (to any agent directory), reference external skill repositories as
   git submodules, keep README and Wiki synchronized for every repository
-  change, and publish (version check + AI privacy audit + git push). Triggers
+  change, publish (version check + AI privacy audit + git push), and maintain
+  ordinary personal-repository listings on skills.sh. Triggers
   on: "manage skills", "upload skill", "publish skill", "skill search",
   "skill repo", "skill upload", "reference skill repo", "update wiki",
-  "技能仓库", "上传技能", "发布技能", "技能搜索", "引用技能仓库".
+  "技能仓库", "上传技能", "发布技能", "技能搜索", "引用技能仓库",
+  "skills.sh 收录", "skills.sh.json", "技能页面分组".
 ---
 
 # Skill Repo Manager
@@ -323,6 +325,56 @@ git add .gitmodules references/<reference-name> skills/skill-management/skill-re
 Do not vendor-copy the referenced repository into `skills/`; keep it as a
 submodule so ownership and upstream history remain intact.
 
+## Operation 5: skills.sh 普通仓库收录与页面定制
+
+用于个人或社区仓库的普通收录。不要把它描述成 `Official` 申请：`Official`
+面向技术产品的官方组织，`skills.sh.json` 只控制已收录仓库页面的分组展示。
+
+### 5.1 判断收录状态
+
+访问 `https://www.skills.sh/<owner>/<repo>`。页面存在即表示仓库已被普通收录；
+技能数量不完整通常表示遥测尚未见到所有技能或页面缓存尚未刷新。
+
+### 5.2 生成并校验仓库页面配置
+
+在仓库根目录执行：
+
+```bash
+python skills/skill-management/skill-repo-manager/scripts/sync_skills_sh.py --write
+python skills/skill-management/skill-repo-manager/scripts/sync_skills_sh.py --check
+```
+
+脚本扫描 `skills/<category>/<skill>/SKILL.md`，读取 frontmatter 的 `name`，
+按目录类别生成根目录 `skills.sh.json`，并检查重复技能名和配置漂移。
+生成后仍需人工确认分组标题、描述和技能 slug 是否符合页面预期；页面已经生成过
+URL 时，优先采用 URL 中的 slug。
+
+### 5.3 发布与触发发现
+
+将 `skills.sh.json` 与 README、Wiki、CHANGELOG 一起提交并推送。推送成功后运行：
+
+```bash
+npx skills add <owner>/<repo> --skill '*' -g -y
+```
+
+该安装会通过 Skills CLI 的匿名遥测让 skills.sh 再次看到仓库。然后验证：
+
+1. CLI 输出能发现并安装预期技能；
+2. 目标安装目录存在各技能的 `SKILL.md`；
+3. 仓库页面最终显示正确的技能数量与分组。
+
+skills.sh 页面有缓存，不能把“推送后立即未更新”判断为失败。记录触发时间，稍后
+复查；如果持续不更新，再核对公开仓库、默认分支、合法 `SKILL.md`、实际安装输出
+以及 `skills.sh.json` 是否有效。
+
+### 5.4 配置边界
+
+- `skills.sh.json` 必须位于 GitHub 仓库根目录且为合法 JSON。
+- `groupings` 至少包含一个有效分组；未列出的技能进入 `Other skills`。
+- 配置只影响 skills.sh 页面展示，不改变 CLI 安装行为或 `SKILL.md` 内容。
+- 普通收录与排行榜由 CLI 匿名安装遥测驱动，无需提交 Official 申请。
+- 不承诺缓存刷新时间，也不要通过重复安装伪造热度。
+
 ## Important Rules
 
 - NEVER skip the version check or privacy audit when publishing
@@ -332,4 +384,5 @@ submodule so ownership and upstream history remain intact.
   and WIKI.md
 - NEVER copy a referenced external repository into this repo when the user
   asked for a reference/submodule
+- NEVER claim that `skills.sh.json` grants Official status; it only customizes an ordinary repo page
 - When in doubt about privacy, flag as HIGH and ask the user
