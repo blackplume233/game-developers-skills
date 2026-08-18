@@ -1,0 +1,148 @@
+{
+  "schema_version": "1.0",
+  "case_id": "[game]-[build]-[focus]",
+  "mode": "complete",
+  "status": "active",
+  "current_phase": "P0",
+  "target": {
+    "game": "[游戏名称]",
+    "platform": "[平台]",
+    "build": "[build/版本]",
+    "focus": ["ai"],
+    "learning_question": "[要回答的策划/工程问题]",
+    "case_dir": "[游戏目录外的案例目录]"
+  },
+  "phases": [
+    {
+      "id": "P0",
+      "name": "learning-contract",
+      "status": "in_progress",
+      "artifacts": [],
+      "gate": {
+        "status": "pending",
+        "checks": [
+          {"id": "target-build-scope", "status": "pending", "evidence": ""},
+          {"id": "learning-question", "status": "pending", "evidence": ""},
+          {"id": "isolated-case-dir", "status": "pending", "evidence": ""}
+        ]
+      },
+      "blockers": [],
+      "skip_reason": ""
+    },
+    {
+      "id": "P1",
+      "name": "toolchain-and-extraction-plan",
+      "status": "pending",
+      "artifacts": [],
+      "gate": {"status": "pending", "checks": [
+        {"id": "tool-role-matrix", "status": "pending", "evidence": ""},
+        {"id": "version-license-hash", "status": "pending", "evidence": ""},
+        {"id": "extraction-plan", "status": "pending", "evidence": ""}
+      ]},
+      "blockers": [],
+      "skip_reason": ""
+    },
+    {
+      "id": "P2",
+      "name": "catalog-and-isolated-extraction",
+      "status": "pending",
+      "artifacts": [],
+      "gate": {"status": "pending", "checks": [
+        {"id": "complete-catalog-with-unknowns", "status": "pending", "evidence": ""},
+        {"id": "layered-extract-manifest", "status": "pending", "evidence": ""},
+        {"id": "source-unchanged", "status": "pending", "evidence": ""}
+      ]},
+      "blockers": [],
+      "skip_reason": ""
+    },
+    {
+      "id": "P3",
+      "name": "structured-parse-and-active-view",
+      "status": "pending",
+      "artifacts": [],
+      "gate": {"status": "pending", "checks": [
+        {"id": "active-layer-resolution", "status": "pending", "evidence": ""},
+        {"id": "parse-status-accounting", "status": "pending", "evidence": ""},
+        {"id": "asset-planning-config-position", "status": "pending", "evidence": ""},
+        {"id": "repeat-or-second-parser", "status": "pending", "evidence": ""}
+      ]},
+      "blockers": [],
+      "skip_reason": ""
+    },
+    {
+      "id": "P4",
+      "name": "focus-system-evidence-chain",
+      "status": "pending",
+      "artifacts": [],
+      "gate": {"status": "pending", "checks": [
+        {"id": "end-to-end-chain", "status": "pending", "evidence": ""},
+        {"id": "path-type-field-reference", "status": "pending", "evidence": ""},
+        {"id": "unknown-links-recorded", "status": "pending", "evidence": ""}
+      ]},
+      "blockers": [],
+      "skip_reason": ""
+    },
+    {
+      "id": "P5",
+      "name": "runtime-binary-closure",
+      "status": "pending",
+      "artifacts": [],
+      "gate": {"status": "pending", "checks": [
+        {"id": "build-bound-method-evidence", "status": "pending", "evidence": ""},
+        {"id": "fact-interpretation-naming-boundary", "status": "pending", "evidence": ""}
+      ]},
+      "blockers": [],
+      "skip_reason": ""
+    },
+    {
+      "id": "P6",
+      "name": "engineering-synthesis",
+      "status": "pending",
+      "artifacts": [],
+      "gate": {"status": "pending", "checks": [
+        {"id": "concept-engineering-map", "status": "pending", "evidence": ""},
+        {"id": "agent-kb-concepts-and-claims", "status": "pending", "evidence": ""},
+        {"id": "concept-teaching-contract", "status": "pending", "evidence": ""},
+        {"id": "mechanism-contract-valid", "status": "pending", "evidence": ""},
+        {"id": "design-and-production-translation", "status": "pending", "evidence": ""},
+        {"id": "limitations-explicit", "status": "pending", "evidence": ""}
+      ]},
+      "blockers": [],
+      "skip_reason": ""
+    },
+    {
+      "id": "P7",
+      "name": "learning-delivery-and-review",
+      "status": "pending",
+      "artifacts": [],
+      "gate": {"status": "pending", "checks": [
+        {"id": "layered-learning-path", "status": "pending", "evidence": ""},
+        {"id": "opening-single-actor-evidence-graph", "status": "pending", "evidence": ""},
+        {"id": "concept-definition-config-runtime-boundary", "status": "pending", "evidence": ""},
+        {"id": "mechanism-answer-rendered", "status": "pending", "evidence": ""},
+        {"id": "asset-learning-contract", "status": "pending", "evidence": ""},
+        {"id": "shared-delivery-design-system", "status": "pending", "evidence": ""},
+        {"id": "independent-feynman-verdict", "status": "pending", "evidence": ""},
+        {"id": "reader-internal-separation", "status": "pending", "evidence": ""}
+      ]},
+      "blockers": [],
+      "skip_reason": ""
+    },
+    {
+      "id": "P8",
+      "name": "release-regression-and-learning",
+      "status": "pending",
+      "artifacts": [],
+      "gate": {"status": "pending", "checks": [
+        {"id": "project-and-hash-validation", "status": "pending", "evidence": ""},
+        {"id": "browser-and-reader-surface", "status": "pending", "evidence": ""},
+        {"id": "responsive-design-system-regression", "status": "pending", "evidence": ""},
+        {"id": "agent-kb-integrity-and-query", "status": "pending", "evidence": ""},
+        {"id": "mechanism-query-regression", "status": "pending", "evidence": ""},
+        {"id": "safe-experience-capture", "status": "pending", "evidence": ""}
+      ]},
+      "blockers": [],
+      "skip_reason": ""
+    }
+  ]
+}

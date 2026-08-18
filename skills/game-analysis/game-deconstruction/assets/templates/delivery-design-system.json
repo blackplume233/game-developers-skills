@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "visual_source": "[主WebBook入口.html]",
+  "pages": [
+    {"path": "[主WebBook入口.html]", "role": "book"},
+    {"path": "[资产学习器入口.html]", "role": "asset-learning"}
+  ],
+  "shared_assets": {
+    "tokens": "[共享设计令牌.css]",
+    "icons": "[本地SVG精灵.svg]"
+  },
+  "evidence_surfaces": [
+    {
+      "page": "[资产学习器入口.html]",
+      "selectors": ["[JSON面板选择器]", "[Hex面板选择器]", "[Diff面板选择器]"],
+      "mode": "dark",
+      "purpose": "机器证据阅读"
+    }
+  ],
+  "responsive_viewports": [1440, 1180, 900, 620]
+}

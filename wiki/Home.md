@@ -12,6 +12,7 @@ maintenance rules, and troubleshooting notes.
 | [Skill Publishing](Skill-Publishing.md) | Publishing new or updated skills through the required gates |
 | [Referenced Skill Repositories](Referenced-Skill-Repositories.md) | Managing external repositories under `references/` |
 | [Maintenance Rules](Maintenance-Rules.md) | Repository layout, documentation freshness, and local update policy |
+| [Game Analysis Skills](Game-Analysis.md) | White-box game deconstruction, executable mechanism explanations, and Agent-ready learning delivery |
 
 ## Repository Facts
 

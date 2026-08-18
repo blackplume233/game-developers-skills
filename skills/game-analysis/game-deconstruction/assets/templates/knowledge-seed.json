@@ -1,0 +1,132 @@
+{
+  "schema_version": "1.0",
+  "concepts": [
+    {
+      "id": "concept:[stable-id]",
+      "name": "[概念名称]",
+      "aliases": ["[俗语]", "[工程术语]"],
+      "summary": "[一句话摘要]",
+      "plain_definition": "[不依赖游戏专名的定义]",
+      "engineering_identity": {
+        "static_config": "[资产/类型]",
+        "runtime_state": "[运行时对象/集合/实例]"
+      },
+      "not_this": ["[相邻但不同的系统]"],
+      "config_shape": "[真实对象树与引用形状]",
+      "explanation_contract_version": "1.1",
+      "decision_logic": {
+        "kind": "boolean_predicate",
+        "canonical": "[可复核谓词/公式/状态转移/映射]",
+        "terms": [
+          {
+            "symbol": "[符号]",
+            "meaning": "[含义]",
+            "source_locator": "[资产字段或运行时方法]",
+            "status": "confirmed",
+            "evidence_paths": ["[相对证据路径]"]
+          }
+        ],
+        "evaluation_order": ["[第一步]", "[第二步]"],
+        "short_circuit": "[短路/空值/默认行为]",
+        "limitations": ["[当前规则不能证明什么]"],
+        "next_probe": "[下一验证步骤]"
+      },
+      "runtime_sequence": [
+        {
+          "step_id": "[stable-step-id]",
+          "order": 1,
+          "trigger": "[触发条件]",
+          "inputs": ["[输入]"],
+          "operation": "[本步处理]",
+          "outputs": [
+            {
+              "value": "[输出]",
+              "consumer": "[消费者]",
+              "effect": "[消费者如何使用]",
+              "consumer_status": "confirmed",
+              "next_probe": "[消费者未知时填写；已确认可留空]"
+            }
+          ],
+          "status": "confirmed",
+          "evidence_paths": ["[相对证据路径]"],
+          "next_probe": "[未知时填写；已确认可留空]"
+        }
+      ],
+      "runtime_contract": {
+        "inputs": ["[输入]"],
+        "process": ["[处理]"],
+        "outputs": ["[输出]"],
+        "consumers": ["[消费者]"],
+        "update_timing": "[更新时机/预算]"
+      },
+      "tuning_contract": {
+        "availability": "present",
+        "items": [
+          {
+            "control_locator": "[资产字段]",
+            "current_value": "[当前原值]",
+            "value_status": "confirmed",
+            "control_stage": "[enablement | eligibility | selection | scheduling | execution | presentation | unknown]",
+            "change": "[增大/减小/切换/替换引用]",
+            "direct_effect": "[直接影响]",
+            "downstream_effect": "[下游影响]",
+            "tradeoff": "[体验/生产/性能代价]",
+            "effect_status": "confirmed",
+            "status": "confirmed",
+            "evidence_paths": ["[相对证据路径]"],
+            "next_probe": "[未知时填写；已确认可留空]"
+          }
+        ],
+        "reason": "",
+        "limitations": ["[调参边界]"],
+        "next_probe": ""
+      },
+      "decides": ["[直接决定的结果]"],
+      "does_not_decide": ["[不负责的结果]"],
+      "chain_position": {
+        "upstream": ["[上游]"],
+        "current": "[本层]",
+        "downstream": ["[下游]"],
+        "unknown_edges": [
+          {
+            "from": "[已确认起点]",
+            "to": "[待闭合终点]",
+            "missing_proof": "[缺少的调用/引用/处理器证据]",
+            "impact": "[该断点限制哪条结论]",
+            "next_probe": "[下一探针]",
+            "status": "unknown"
+          }
+        ]
+      },
+      "worked_examples": ["[当前 build 的真实实例]"],
+      "confusions": ["[常见混淆]"],
+      "status": "confirmed",
+      "confidence": "high",
+      "static_entities": [{"type": "[序列化类型]", "fields": ["[字段]"]}],
+      "fields_and_references": ["[字段/引用]"],
+      "runtime_methods": ["[方法或显式 unknown]"],
+      "self_build": {
+        "data_asset": "[自研数据资产]",
+        "runtime_service": "[自研服务]",
+        "interface": "[接口]",
+        "debug_trace": "[调试输出]",
+        "acceptance": "[验收条件]"
+      },
+      "limitations": ["[限制]"],
+      "next_probe": "[下一探针]",
+      "evidence_paths": ["[相对证据路径]"]
+    }
+  ],
+  "claims": [
+    {
+      "id": "claim:[stable-id]",
+      "statement": "[只表达一件事的原子断言]",
+      "status": "confirmed",
+      "confidence": "high",
+      "concept_ids": ["concept:[stable-id]"],
+      "limitations": ["[限制]"],
+      "next_probe": "[下一探针]",
+      "evidence_paths": ["[相对证据路径]"]
+    }
+  ]
+}

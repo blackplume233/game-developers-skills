@@ -45,6 +45,13 @@
       ]
     },
     {
+      "title": "Game Analysis",
+      "description": "Game Analysis 类技能。",
+      "skills": [
+        "game-deconstruction"
+      ]
+    },
+    {
       "title": "Game Development",
       "description": "游戏开发项目与扩展交付技能。",
       "skills": [

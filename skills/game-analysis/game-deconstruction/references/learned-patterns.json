@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "revision": 0,
+  "updated_at": null,
+  "policy": {
+    "min_support": 5,
+    "min_games": 3,
+    "min_confidence": 0.8,
+    "consensus_ratio": 0.8,
+    "contradictions_allowed": 0
+  },
+  "patterns": []
+}

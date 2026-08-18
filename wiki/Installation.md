@@ -47,6 +47,9 @@ npx skills add blackplume233/game-developers-skills --skill qa
 
 # Current project only: project-specific ship workflow
 npx skills add blackplume233/game-developers-skills --skill ship
+
+# Global white-box game deconstruction workflow
+npx skills add blackplume233/game-developers-skills --skill game-deconstruction -g -y
 ```
 
 Verify installed skills:

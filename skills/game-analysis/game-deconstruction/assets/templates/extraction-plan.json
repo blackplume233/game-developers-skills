@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "case": {
+    "game": "[游戏名称]",
+    "platform": "[平台]",
+    "app_id": "[应用ID]",
+    "build": "[build/版本]",
+    "focus": ["ai", "skills", "animation", "rendering"]
+  },
+  "source": {
+    "game_dir": "[只读安装目录]",
+    "archives": ["[归档路径或模式]"],
+    "access_mode": "copy-preferred|verified-read-only",
+    "pre_post_verification": "size-mtime|sha256"
+  },
+  "strategy": {
+    "mode": "catalog|selective|full|parser-direct",
+    "reason": "[选择理由]",
+    "estimated_entries": 0,
+    "estimated_output_bytes": 0,
+    "available_bytes": 0
+  },
+  "layers": [
+    {
+      "name": "base",
+      "precedence": 0,
+      "archive": "[基础归档]"
+    }
+  ],
+  "tools": [
+    {
+      "role": "catalog|extract|parse|preview|verify",
+      "name": "[工具名称]",
+      "release": "[release]",
+      "commit": "[commit]",
+      "source": "[作者仓库或官方发布页]",
+      "license": "[许可证]",
+      "sha256": "[下载物或可执行文件哈希]",
+      "build_support_evidence": "[当前游戏/build 支持依据]"
+    }
+  ],
+  "path_resolution": {
+    "list_source": "[路径表来源]",
+    "list_version": "[版本/哈希]",
+    "preserve_unknown": true
+  },
+  "selection": {
+    "paths": [],
+    "extensions": [],
+    "regex": "[定向提取正则]",
+    "domains": ["ai", "skills", "animation", "rendering"]
+  },
+  "output": {
+    "case_dir": "[游戏目录外的案例目录]",
+    "preserve_layers": true,
+    "manifest": "manifest.jsonl",
+    "logs": "logs/"
+  },
+  "verification": {
+    "repeat_extract": true,
+    "per_file_sha256": true,
+    "second_parser": "[第二解析器或结构来源]",
+    "reference_closure": true
+  },
+  "stop_conditions": [
+    "source_changed",
+    "output_inside_game_dir",
+    "unsupported_build",
+    "external_key_or_drm_bypass_required",
+    "space_insufficient",
+    "critical_parser_conflict"
+  ],
+  "fallback_tool_route": "[下一候选工具/固定源码/最小只读解析器]",
+  "rollback": "删除案例目录；原安装保持不变"
+}

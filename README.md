@@ -71,6 +71,12 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 | [project-wiki-maintainer](skills/dev-workflow/project-wiki-maintainer/) | 1.1.0 | 维护项目 Wiki 与 README，并提供文档新鲜度检查 |
 | [qa](skills/dev-workflow/qa/) | 2.0.0 | 通用 QA Engineer：真实操作验证、证据化报告、自动沉淀测试用例 |
 
+### Game Analysis（通用）
+
+| 技能 | 版本 | 说明 |
+|------|------|------|
+| [game-deconstruction](skills/game-analysis/game-deconstruction/) | 1.0.0 | 对自有或已授权游戏执行工具驱动的白盒解包与机制还原，并交付 WebBook、可追溯 Agent 知识库及 CLI/HTTP/MCP 入口 |
+
 ### Divination（通用）
 
 | 技能 | 版本 | 说明 |
@@ -97,11 +103,14 @@ npx skills add blackplume233/game-developers-skills \
   --skill codex-subagent --skill auto-goal --skill find-skills --skill skill-repo-manager \
   --skill shadcn-ui --skill ui-ux-pro-max --skill electron --skill tauri-v2 \
   --skill git-commit --skill guard --skill investigate --skill project-wiki-maintainer --skill qa \
-  --skill gua \
+  --skill game-deconstruction --skill gua \
   -g -y
 
 # 项目级安装通用 QA 技能
 npx skills add blackplume233/game-developers-skills --skill qa
+
+# 全局安装游戏白盒拆解技能
+npx skills add blackplume233/game-developers-skills --skill game-deconstruction -g -y
 
 # 项目级安装项目专用交付技能
 npx skills add blackplume233/game-developers-skills --skill ship
@@ -194,6 +203,12 @@ npx skills add blackplume233/game-developers-skills --skill '*' -g -y
     │       ├── SKILL.md
     │       ├── agents/
     │       └── scripts/        # README/Wiki 新鲜度检查
+    ├── game-analysis/          # 通用 - 游戏白盒拆解与机制学习
+    │   └── game-deconstruction/
+    │       ├── SKILL.md
+    │       ├── references/     # P0–P8、机制解释、Book/AKB 交付契约
+    │       ├── scripts/        # 解包编排、知识库、验证与经验学习
+    │       └── assets/         # 工作流、种子与报告模板
     ├── skill-management/       # 通用 - 技能管理
     │   ├── find-skills/
     │   │   ├── SKILL.md

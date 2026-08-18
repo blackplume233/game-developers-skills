@@ -1,0 +1,4 @@
+interface:
+  display_name: "游戏白盒解包拆解"
+  short_description: "白盒解包、机制还原、WebBook 与 Agent 知识库交付"
+  default_prompt: "使用 $game-deconstruction 按 P0–P8 门禁拆解本地游戏，把每个核心机制还原为真实配置、精确规则、运行序列、调参影响和结构化未知边，再生成同源 WebBook、Agent Knowledge Base 与可验证的一键交付。"

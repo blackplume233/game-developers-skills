@@ -2,6 +2,13 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.10.0] - 2026-08-18
+
+### Added
+
+- Added `game-deconstruction` v1.0.0 (`game-analysis`): a P0–P8, tool-first white-box workflow for authorized game assets, executable mechanism explanations, WebBook delivery, and an Agent-ready knowledge base with CLI, HTTP, OpenAPI, and MCP access.
+- Added the Game Analysis Wiki page and installation guidance.
+
 ## [1.9.0] - 2026-07-10
 
 ### Added

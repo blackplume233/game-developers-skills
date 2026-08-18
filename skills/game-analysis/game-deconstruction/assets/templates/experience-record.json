@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.2.0",
+  "learning_context": {
+    "identity": "game-designer",
+    "learning_goal": "[希望理解并迁移的游戏设计知识]",
+    "design_questions": [
+      "[这项机制解决了什么玩家体验或内容生产问题]"
+    ],
+    "authorized_materials": [
+      "runtime-observation",
+      "public-source"
+    ],
+    "output_use": "learning-and-prototyping"
+  },
+  "authorization_scope": "public",
+  "game": {
+    "name": "[游戏名称]",
+    "version": "[游戏版本]",
+    "platform": "[平台]",
+    "engine": "unknown"
+  },
+  "summary": "[本次拆解得到的主要结论，至少二十个字符]",
+  "domains": [
+    "ai",
+    "abilities-combat",
+    "animation",
+    "rendering",
+    "cross-system"
+  ],
+  "evidence_level": "E1",
+  "confidence": 0.8,
+  "outcome": "supported",
+  "network_safe": false,
+  "source_group": "[独立证据组 ID；同源转载或重复实验必须复用同一个值]",
+  "source_artifact_type": "reader-learning-report",
+  "source_report": "[本地报告路径或公开 URL]",
+  "observations": [
+    "[不混入解释的直接观察]"
+  ],
+  "lessons": [
+    {
+      "pattern_key": "[domain.stable-pattern-key]",
+      "rule": "[可跨案例验证、可证伪的规则]",
+      "scope": "[适用条件与不适用边界]",
+      "outcome": "supported",
+      "confidence": 0.8
+    }
+  ],
+  "designer_takeaways": [
+    "[玩家体验、设计规则、配置旋钮、生产成本或验证原型方面的结论]"
+  ]
+}
