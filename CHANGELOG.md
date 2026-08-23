@@ -13,6 +13,7 @@ All notable changes to this skill repository will be documented in this file.
 - Updated `obscura` v1.1.0 -> v1.2.0: add a `search.sh` one-click search script that searches DuckDuckGo/Bing, extracts structured results (`title\tURL`), decodes real URLs, auto-installs obscura, and URL-encodes Chinese keywords for Agent use.
 - Updated `obscura` v1.0.0 -> v1.1.0: add a Search section (DuckDuckGo lite / Bing / Google) with fetch, links, eval, parallel scrape, and URL-decoding tips for extracting search-engine results.
 - Updated `skill-repo-manager` v1.4.0 -> v1.5.0: 升级为路由式主文案（顶部 Dispatch 路由表分诊 Finder/Publisher 两线）；新增 Finder 主动按需检索——本地缓存优先、缓存缺失时问用户、用户不告知则自远端下载安装；新增 `refresh_cache.py` 本地缓存脚本；明确本地仓库路径跨设备可变，改以远端 URL 为稳定锚点，不写死任何本地绝对路径。
+- Updated `skill-repo-manager` v1.5.0 -> v1.5.1: Finder 自远端下载改为优先直接 `npx skills add <owner>/<repo> --skill <name> -g`, 仅当其失败时才回退手动 `git clone` 复制。
 
 ### Added
 

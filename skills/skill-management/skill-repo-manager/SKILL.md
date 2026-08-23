@@ -1,6 +1,6 @@
 ---
 name: skill-repo-manager
-version: 1.5.0
+version: 1.5.1
 description: >-
   路由式技能仓库管理技能。主文案即路由表, 分诊两类场景: ①能力缺口时主动按需
   检索技能——本地缓存优先、缓存缺失时问用户、用户不告知则自远端下载安装
@@ -77,14 +77,19 @@ temporary or user-selected workspace before editing.
 ## A3 自远端下载（优先级 2，用户不告知时）
 
 当 `cache.local_path` 为空、缓存缺失、且用户**没有提供本地路径**时, 仍可自行
-从远端完成检索与安装, 不阻塞:
+从远端完成下载与安装, 不阻塞。**优先直接用 `npx skills add` 从远端安装**, 无需
+自建 clone/复制逻辑:
 
-1. 以远端锚点 `github.com/blackplume233/game-developers-skills` 列出技能清单:
-   - 已有本地克隆 → 直接扫 `skills/**/SKILL.md`（见 §A6）
-   - 无克隆 → `git ls-remote` 确认可达, 或 `git clone --depth 1 <url> <tmp>` 后扫描
-2. 匹配到目标技能后, 安装到当前设备的技能目录 `~/.agents/skills/<name>/`:
-   - 从克隆里复制技能目录, 或用 `npx skills add blackplume233/game-developers-skills --skill <name> -g`
-3. 装完更新缓存 (`installed: true`, `local_path` 记录本次克隆/仓库路径)
+1. 用缓存清单（见 §A6）或 `npx skills find` 确定目标技能名 `<name>`
+2. 直接下载并安装到当前设备全局技能目录:
+   ```bash
+   npx skills add blackplume233/game-developers-skills --skill <name> -g -y
+   ```
+   该命令由 Skills CLI 从远端仓库拉取并安装到 `~/.agents/skills/<name>/`,
+   不经由手动 clone/复制
+3. 仅当 `npx skills add` 因私有仓库/TLS/默认分支失败时, 才回退手动方式:
+   `git clone --depth 1 <url> <tmp>` 后复制技能目录到 `~/.agents/skills/<name>/`
+4. 装完更新缓存 (`installed: true`, `local_path` 记录仓库路径)
 
 ## A4 问用户兜底（优先级 3）
 

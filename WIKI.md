@@ -30,7 +30,7 @@ surface instead of one growing document.
 
 ## Recent Additions
 
-- `skill-repo-manager` v1.5.0: 升级为路由式主文案（Dispatch 路由表分诊 Finder/Publisher）；Finder 主动按需检索技能——本地缓存优先、缺失问用户、用户不告知则自远端下载安装；新增 `refresh_cache.py` 本地缓存脚本；以远端 URL 为稳定锚点、不写死本地绝对路径。
+- `skill-repo-manager` v1.5.1: 升级为路由式主文案（Dispatch 路由表分诊 Finder/Publisher）；Finder 主动按需检索技能——本地缓存优先、缺失问用户、用户不告知则自远端下载安装；新增 `refresh_cache.py` 本地缓存脚本；以远端 URL 为稳定锚点、不写死本地绝对路径。
 - `obscura` v1.2.1 (Dev Workflow): Rust 开源无头浏览器技能，网页抓取/截图/PDF/AI 自动化/搜索（含一键 `search.sh`），内置一键安装脚本 `install.sh`，见 [skills/dev-workflow/obscura](skills/dev-workflow/obscura/)。
 
 ## Maintenance Contract
