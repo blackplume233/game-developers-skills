@@ -2,6 +2,17 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.11.0] - 2026-08-23
+
+### Added
+
+- **Dev Workflow** (1 skill):
+  - `obscura` v1.0.0 — Rust 开源无头浏览器技能，用于网页抓取、内容提取、截图、PDF 导出和 AI Agent 自动化，支持 V8 真实 JS 渲染与 CDP，兼容 Puppeteer/Playwright，内置一键安装脚本 `install.sh`（含 stealth/no-render 变体）
+
+### Changed
+
+- README: 新增 Dev Workflow 分类下的 `obscura` 技能与安装命令
+
 ## [1.10.0] - 2026-08-18
 
 ### Added

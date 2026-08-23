@@ -28,6 +28,10 @@ surface instead of one growing document.
 | [skills.sh 收录与页面维护](wiki/SkillsSH-Listing.md) | 普通个人仓库收录、页面分组、遥测触发与缓存复查 |
 | [Game Analysis Skills](wiki/Game-Analysis.md) | 游戏白盒拆解技能的适用范围、机制解释契约、安装与交付边界 |
 
+## Recent Additions
+
+- `obscura` v1.0.0 (Dev Workflow): Rust 开源无头浏览器技能，网页抓取/截图/PDF/AI 自动化，内置一键安装脚本 `install.sh`，见 [skills/dev-workflow/obscura](skills/dev-workflow/obscura/)。
+
 ## Maintenance Contract
 
 Keep `README.md`, this `WIKI.md`, and the relevant `wiki/*.md` page in sync
