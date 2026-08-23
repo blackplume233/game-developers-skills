@@ -4,7 +4,7 @@ AI Agent 技能私有仓库，兼容 [skills.sh](https://skills.sh/) / `npx skil
 
 ## 必装技能
 
-首次使用本仓库？建议先安装 **skill-repo-manager**，它是管理本仓库的核心技能——支持搜索、安装、发布技能，并在每次上传时自动执行版本校验和 AI 隐私审查。
+首次使用本仓库？建议先安装 **skill-repo-manager**，它是管理本仓库的核心技能——支持搜索、安装、发布技能，并在每次上传时自动执行版本校验和 AI 隐私审查。它还是路由式技能：遇到能力缺口时会主动按需检索技能（本地缓存优先、缺失问用户、用户不告知则自远端下载安装）。
 
 ```bash
 npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -g -y
@@ -45,7 +45,7 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 | 技能 | 版本 | 说明 |
 |------|------|------|
 | [find-skills](skills/skill-management/find-skills/) | 1.1.0 | 从本仓库、引用仓库和 skills.sh 生态发现和安装技能 |
-| [skill-repo-manager](skills/skill-management/skill-repo-manager/) | 1.4.0 | 默认指向本私有仓库，管理搜索、安装、引用外部技能仓库、README/Wiki 同步和发布（含版本校验+AI 隐私审查） |
+| [skill-repo-manager](skills/skill-management/skill-repo-manager/) | 1.5.0 | 路由式技能仓库管理：能力缺口时主动按需检索（本地缓存优先/缺失问用户/自远端下载）；管理搜索、安装、引用外部技能仓库、README/Wiki 同步和发布（含版本校验+AI 隐私审查） |
 
 ### Design（通用）
 

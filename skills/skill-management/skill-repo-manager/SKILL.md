@@ -1,23 +1,33 @@
 ---
 name: skill-repo-manager
-version: 1.4.0
+version: 1.5.0
 description: >-
-  Manage a private Skill repository: search (local repo + skills.sh),
-  install (to any agent directory), reference external skill repositories as
-  git submodules, keep README and Wiki synchronized for every repository
-  change, publish (version check + AI privacy audit + git push), and maintain
-  ordinary personal-repository listings on skills.sh. Triggers
-  on: "manage skills", "upload skill", "publish skill", "skill search",
-  "skill repo", "skill upload", "reference skill repo", "update wiki",
-  "技能仓库", "上传技能", "发布技能", "技能搜索", "引用技能仓库",
-  "skills.sh 收录", "skills.sh.json", "技能页面分组".
+  路由式技能仓库管理技能。主文案即路由表, 分诊两类场景: ①能力缺口时主动按需
+  检索技能——本地缓存优先、缓存缺失时问用户、用户不告知则自远端下载安装
+  (Finder, §A); ②技能仓库的搜索/安装/引用外部仓库/发布/README-Wiki 同步/
+  skills.sh 收录 (Publisher, §B)。Trigs on: "技能仓库", "上传技能", "发布技能",
+  "技能搜索", "引用技能仓库", "update wiki", "skills.sh 收录", "skills.sh.json",
+  "技能页面分组", 以及能力缺口类请求——"我需要 X 技能", "帮我找个做 X 的技能",
+  "你会不会做 X", "给我装一个 X 技能", "缓存技能", "下载技能", "skill cache",
+  "skill repo".
 ---
 
-# Skill Repo Manager
+# Skill Repo Manager（路由式）
 
-Manages your private Skill repository. Activates when you need to search,
-install, reference external skill repositories, update repository docs, or
-publish Skills.
+本技能是**路由式主文案**：正文以「路由表」开头。收到请求后**先查路由表分诊**，
+再进入对应章节执行，不要平铺全部逻辑。
+
+## 🧭 路由表（Dispatch）
+
+按用户意图路由到对应章节：
+
+| 用户意图 | 路由 | 章节 |
+|---------|------|------|
+| 需要某能力 / 找技能 / 装技能 / "你会不会做 X" | → Finder | §A |
+| 缓存刷新 / 自远端下载 / 换设备重建缓存 | → Finder | §A |
+| 发布技能 / 版本检查 / 隐私审计 / push | → Publisher | §B |
+| 引用外部技能仓库 (submodule) | → Publisher | §B |
+| 仓库文档同步 (README/Wiki) / skills.sh 收录 | → Publisher | §B |
 
 ## Default Repository
 
@@ -39,67 +49,108 @@ temporary or user-selected workspace before editing.
 - Repository cloned locally (path referred to as `$REPO`); by default this is
   `blackplume233/game-developers-skills`
 - Node.js installed (for `npx skills`)
-- Git push access configured
+- Git push access configured (only needed for §B Publisher)
+- **本地缓存**: `~/.agents/skills/.skill-repo-cache.json` — Finder 按需检索的
+  本地索引, 各设备自维护。**本地仓库路径跨设备可变, 远端 URL 才是稳定锚点**;
+  本技能不写死任何本地绝对路径。
 
-## Operation 1: Search
+---
 
-### 1.1 Local Repository Search
+# §A Finder：主动按需检索技能（使用者向）
 
-1. Recursively scan `$REPO/skills/` for all `SKILL.md` files
-2. Parse YAML frontmatter (`name`, `version`, `description`) from each
-3. Match the user's keyword against name and description
-4. Output in this format:
+## A1 何时触发
+
+当用户的任务需要某项能力、而当前**未安装对应技能**时, 主动走本节。典型信号:
+用户明确要某技能、或任务域明显有现成技能（做 PPT → `pptx`, 抓网页 → `obscura`,
+做游戏 → `game-deconstruction` 等）。
+
+## A2 本地缓存优先（优先级 1）
+
+1. 读取缓存 `~/.agents/skills/.skill-repo-cache.json`
+2. 在 `cache.skills` 中按 `name` 和 `description` 匹配用户需求
+3. 命中且 `installed: true` → 直接告知用户已装, 结束
+4. 命中但 `installed: false` → 用 §A5 的安装命令从 `cache.local_path` 安装,
+   装完把该项 `installed` 置为 `true` 并写回缓存
+
+缓存不存在 → 走 §A4（问用户）或 §A3（远端自下载）。
+
+## A3 自远端下载（优先级 2，用户不告知时）
+
+当 `cache.local_path` 为空、缓存缺失、且用户**没有提供本地路径**时, 仍可自行
+从远端完成检索与安装, 不阻塞:
+
+1. 以远端锚点 `github.com/blackplume233/game-developers-skills` 列出技能清单:
+   - 已有本地克隆 → 直接扫 `skills/**/SKILL.md`（见 §A6）
+   - 无克隆 → `git ls-remote` 确认可达, 或 `git clone --depth 1 <url> <tmp>` 后扫描
+2. 匹配到目标技能后, 安装到当前设备的技能目录 `~/.agents/skills/<name>/`:
+   - 从克隆里复制技能目录, 或用 `npx skills add blackplume233/game-developers-skills --skill <name> -g`
+3. 装完更新缓存 (`installed: true`, `local_path` 记录本次克隆/仓库路径)
+
+## A4 问用户兜底（优先级 3）
+
+当本地缓存、远端自下载都拿不到目标技能时, **明确问用户**, 不要自行猜测:
+- 请用户提供该技能（本地路径 / 远端 URL / 源码目录）;
+- 或确认"当前没有现成技能, 先用通用能力直接完成"。
+
+用户不告知也不影响继续: 始终可回退到 §A3 的自下载尝试。
+
+## A5 检索与安装手段（Finder 通用）
+
+### 本地仓库检索
+
+1. 递归扫描 `$REPO/skills/` 所有 `SKILL.md`, 解析 frontmatter (`name`,
+   `version`, `description`)
+2. 按关键词匹配 name 和 description
+3. 输出格式:
 
 ```
 [category] name vX.Y.Z — description
   path: skills/<category>/<skill-name>/
 ```
 
-### 1.2 skills.sh Marketplace Search
+### skills.sh 市场检索
 
 ```bash
 npx skills find "<keyword>"
 ```
 
-Present results. If the user wants to install, proceed to Operation 2.
-
-### 1.3 List Installed Skills
+### 从私有仓库安装
 
 ```bash
-npx skills list          # current project
-npx skills ls -g         # global (user-level)
-npx skills ls -a cursor  # filter by agent
-```
-
-## Operation 2: Install
-
-### 2.1 From Private Repository
-
-```bash
-# Install specific skill globally from the default repository
 npx skills add blackplume233/game-developers-skills --skill <name> -g
-
-# Install to current project from the default repository
-npx skills add blackplume233/game-developers-skills --skill <name>
-
-# Install all skills from the default repository
-npx skills add blackplume233/game-developers-skills --skill '*' -g -y
+npx skills add blackplume233/game-developers-skills --skill '*' -g -y   # 全量
 ```
 
-### 2.2 From skills.sh Marketplace
+### 从 skills.sh 市场安装
 
 ```bash
 npx skills add <owner>/<repo> --skill <name> -g
 ```
 
-### 2.3 Post-install Verification
+### 安装后验证
 
-After installing, verify that SKILL.md exists in the target directory:
+确认目标目录存在 `SKILL.md`:
 - Cursor: `~/.cursor/skills/<name>/SKILL.md`
 - Claude: `~/.claude/skills/<name>/SKILL.md`
 - Agents: `~/.agents/skills/<name>/SKILL.md`
 
-## Operation 3: Publish
+## A6 缓存维护
+
+- **刷新缓存**: 在仓库根运行
+  ```bash
+  python skills/skill-management/skill-repo-manager/scripts/refresh_cache.py
+  ```
+  可选 `--repo-root <path>` / `--repo-url <url>` / `--cache-out <path>`。
+  脚本重扫 `skills/**/SKILL.md` 生成清单, 保留历史 `installed` 状态。
+- **换设备/首用**: 缓存不存在时, 先让用户提供仓库本地路径或远端 URL 生成一次,
+  之后该设备自维护; 用户不提供则回退 §A3 远端自下载。
+- **手动修正**: 缓存是普通 JSON, 可直接编辑。
+
+---
+
+# §B Publisher：技能仓库维护（作者向）
+
+## Operation 1: Publish
 
 The most critical operation. Follow these five steps strictly in order.
 Do NOT skip or reorder any step.
@@ -261,13 +312,13 @@ Wiki. Use `project-wiki-maintainer` for this gate.
 1. `git push origin <current-branch>`
 2. Remind user to run `npx skills update` on other machines
 
-## Operation 4: Reference External Skill Repository
+## Operation 2: Reference External Skill Repository
 
 Use this when the user gives a Git URL or local repository path and asks to
 make its skills discoverable from this repository without copying the source
 files.
 
-### 4.1 Add as a git submodule
+### 2.1 Add as a git submodule
 
 Run the helper from the target skill repository root:
 
@@ -295,7 +346,7 @@ For local repository paths, the script uses Git's per-command
 `protocol.file.allow=always` setting so local-path submodules work on modern
 Git installations.
 
-### 4.2 Verify discovery through find-skills
+### 2.2 Verify discovery through find-skills
 
 After adding the reference, run:
 
@@ -313,7 +364,7 @@ If the expected skill is not listed, inspect whether the referenced repository
 contains valid `SKILL.md` frontmatter with at least `name`, `version`, and
 `description`.
 
-### 4.3 Commit scope
+### 2.3 Commit scope
 
 When publishing a new reference, stage only the submodule metadata and any
 skill documentation updates:
@@ -325,17 +376,17 @@ git add .gitmodules references/<reference-name> skills/skill-management/skill-re
 Do not vendor-copy the referenced repository into `skills/`; keep it as a
 submodule so ownership and upstream history remain intact.
 
-## Operation 5: skills.sh 普通仓库收录与页面定制
+## Operation 3: skills.sh 普通仓库收录与页面定制
 
 用于个人或社区仓库的普通收录。不要把它描述成 `Official` 申请：`Official`
 面向技术产品的官方组织，`skills.sh.json` 只控制已收录仓库页面的分组展示。
 
-### 5.1 判断收录状态
+### 3.1 判断收录状态
 
 访问 `https://www.skills.sh/<owner>/<repo>`。页面存在即表示仓库已被普通收录；
 技能数量不完整通常表示遥测尚未见到所有技能或页面缓存尚未刷新。
 
-### 5.2 生成并校验仓库页面配置
+### 3.2 生成并校验仓库页面配置
 
 在仓库根目录执行：
 
@@ -349,7 +400,7 @@ python skills/skill-management/skill-repo-manager/scripts/sync_skills_sh.py --ch
 生成后仍需人工确认分组标题、描述和技能 slug 是否符合页面预期；页面已经生成过
 URL 时，优先采用 URL 中的 slug。
 
-### 5.3 发布与触发发现
+### 3.3 发布与触发发现
 
 将 `skills.sh.json` 与 README、Wiki、CHANGELOG 一起提交并推送。推送成功后运行：
 
@@ -367,13 +418,15 @@ skills.sh 页面有缓存，不能把“推送后立即未更新”判断为失�
 复查；如果持续不更新，再核对公开仓库、默认分支、合法 `SKILL.md`、实际安装输出
 以及 `skills.sh.json` 是否有效。
 
-### 5.4 配置边界
+### 3.4 配置边界
 
 - `skills.sh.json` 必须位于 GitHub 仓库根目录且为合法 JSON。
 - `groupings` 至少包含一个有效分组；未列出的技能进入 `Other skills`。
 - 配置只影响 skills.sh 页面展示，不改变 CLI 安装行为或 `SKILL.md` 内容。
 - 普通收录与排行榜由 CLI 匿名安装遥测驱动，无需提交 Official 申请。
 - 不承诺缓存刷新时间，也不要通过重复安装伪造热度。
+
+---
 
 ## Important Rules
 
@@ -385,4 +438,7 @@ skills.sh 页面有缓存，不能把“推送后立即未更新”判断为失�
 - NEVER copy a referenced external repository into this repo when the user
   asked for a reference/submodule
 - NEVER claim that `skills.sh.json` grants Official status; it only customizes an ordinary repo page
+- **Finder 永不写死本地绝对路径**: 本地路径跨设备可变, 一律以远端 URL 为锚点,
+  本地只通过缓存/探测/用户提供定位
+- **缺失即问用户**: 缓存与远端都找不到时, 明确询问用户, 不要自行猜测安装
 - When in doubt about privacy, flag as HIGH and ask the user
