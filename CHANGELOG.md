@@ -4,6 +4,10 @@ All notable changes to this skill repository will be documented in this file.
 
 ## [1.11.0] - 2026-08-23
 
+### Fixed
+
+- `obscura` v1.2.1: `search.sh` now filters out DuckDuckGo/Bing sponsored ad links (y.js / ad_domain / "more info") so search results contain only organic entries.
+
 ### Changed
 
 - Updated `obscura` v1.1.0 -> v1.2.0: add a `search.sh` one-click search script that searches DuckDuckGo/Bing, extracts structured results (`title\tURL`), decodes real URLs, auto-installs obscura, and URL-encodes Chinese keywords for Agent use.

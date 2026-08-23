@@ -1,6 +1,6 @@
 ---
 name: obscura
-version: 1.2.0
+version: 1.2.1
 description: 使用 Obscura —— 一个用 Rust 编写的轻量开源无头浏览器（headless browser）—— 进行网页抓取、内容提取、截图、PDF 导出和 AI Agent 自动化。Obscura 支持 V8 真实 JS 渲染、Chrome DevTools Protocol（CDP），可作为 headless Chrome 的直接替代品对接 Puppeteer/Playwright。当用户需要抓网页、爬数据、抓取动态渲染内容、网页截图、防反爬、导出 PDF、或让 AI Agent 浏览/操作网页时使用。本技能会自动检测并安装 obscura 二进制。
 ---
 

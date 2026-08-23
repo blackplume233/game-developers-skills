@@ -81,8 +81,8 @@ build_eval() {
     # Bing：<li class="b_algo"><h2><a>
     eval_expr="Array.from(document.querySelectorAll('li.b_algo h2 a')).slice(0,${limit}).map(a=>a.textContent.trim()+'\\t'+a.href).join('\\n')"
   else
-    # DuckDuckGo lite：.result-link，uddg 参数藏真实地址，需解码
-    eval_expr="Array.from(document.querySelectorAll('.result-link')).slice(0,${limit}).map(a=>{var m=a.href.match(/uddg=([^&]+)/);return a.textContent.trim()+'\\t'+(m?decodeURIComponent(m[1]):a.href)}).join('\\n')"
+    # DuckDuckGo lite：.result-link，uddg 参数藏真实地址，需解码；过滤广告（y.js / ad_domain）
+    eval_expr="Array.from(document.querySelectorAll('.result-link')).map(a=>{var m=a.href.match(/uddg=([^&]+)/);return {t:a.textContent.trim(),u:(m?decodeURIComponent(m[1]):a.href),h:a.href}}).filter(r=>r.t!=='more info'&&!r.h.includes('y.js')&&!r.h.includes('ad_domain')).slice(0,${limit}).map(r=>r.t+'\\t'+r.u).join('\\n')"
   fi
 }
 
