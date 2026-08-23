@@ -6,6 +6,7 @@ All notable changes to this skill repository will be documented in this file.
 
 ### Changed
 
+- Updated `obscura` v1.1.0 -> v1.2.0: add a `search.sh` one-click search script that searches DuckDuckGo/Bing, extracts structured results (`title\tURL`), decodes real URLs, auto-installs obscura, and URL-encodes Chinese keywords for Agent use.
 - Updated `obscura` v1.0.0 -> v1.1.0: add a Search section (DuckDuckGo lite / Bing / Google) with fetch, links, eval, parallel scrape, and URL-decoding tips for extracting search-engine results.
 
 ### Added

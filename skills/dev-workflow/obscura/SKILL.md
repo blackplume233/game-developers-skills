@@ -1,6 +1,6 @@
 ---
 name: obscura
-version: 1.1.0
+version: 1.2.0
 description: 使用 Obscura —— 一个用 Rust 编写的轻量开源无头浏览器（headless browser）—— 进行网页抓取、内容提取、截图、PDF 导出和 AI Agent 自动化。Obscura 支持 V8 真实 JS 渲染、Chrome DevTools Protocol（CDP），可作为 headless Chrome 的直接替代品对接 Puppeteer/Playwright。当用户需要抓网页、爬数据、抓取动态渲染内容、网页截图、防反爬、导出 PDF、或让 AI Agent 浏览/操作网页时使用。本技能会自动检测并安装 obscura 二进制。
 ---
 
@@ -164,6 +164,17 @@ obscura fetch --file urls.txt --concurrency 10
 ```
 
 ### 搜索网页（搜索引擎结果）
+
+> **⭐ 快速路径（推荐 Agent 用）**：直接调用同目录的 `search.sh` 一键脚本，自动完成搜索 + 结果提取 + 真实 URL 解码，输出 `标题\tURL` 结构（Tab 分隔，易解析）：
+> ```bash
+> bash search.sh "关键词"              # 搜索，默认前 5 条
+> bash search.sh --limit 10 "关键词"   # 指定条数
+> bash search.sh "kw1" "kw2"          # 多关键词依次搜索
+> bash search.sh --engine bing "关键词" # 换 Bing（返回跳转链接）
+> bash search.sh --stealth "关键词"     # 反检测（被拦时用）
+> bash search.sh --output out.tsv "关键词" # 结果写文件
+> ```
+> 脚本自动检测并安装 obscura（未装则调 `install.sh`），中文关键词自动 URL 编码。适合 Agent 快速检索、喂给下游 AI 分析。
 
 Obscura 不是搜索引擎，但它能访问搜索引擎并抓取、提取、解析搜索结果，适合轻量检索 + AI Agent 自动化。**DuckDuckGo lite 最友好（无需 JS 也能抓）；Bing 需 JS 渲染；Google 反爬强建议 stealth + 代理。**
 
