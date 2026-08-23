@@ -45,7 +45,7 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 | 技能 | 版本 | 说明 |
 |------|------|------|
 | [find-skills](skills/skill-management/find-skills/) | 1.1.0 | 从本仓库、引用仓库和 skills.sh 生态发现和安装技能 |
-| [skill-repo-manager](skills/skill-management/skill-repo-manager/) | 1.5.1 | 路由式技能仓库管理：能力缺口时主动按需检索（本地缓存优先/缺失问用户/自远端下载）；管理搜索、安装、引用外部技能仓库、README/Wiki 同步和发布（含版本校验+AI 隐私审查） |
+| [skill-repo-manager](skills/skill-management/skill-repo-manager/) | 1.5.2 | 路由式技能仓库管理：能力缺口时主动按需检索（本地缓存优先/缺失问用户/自远端下载）；管理搜索、安装、引用外部技能仓库、README/Wiki 同步和发布（含版本校验+AI 隐私审查） |
 
 ### Design（通用）
 

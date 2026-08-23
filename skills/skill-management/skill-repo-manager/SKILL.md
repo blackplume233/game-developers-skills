@@ -1,6 +1,6 @@
 ---
 name: skill-repo-manager
-version: 1.5.1
+version: 1.5.2
 description: >-
   路由式技能仓库管理技能。主文案即路由表, 分诊两类场景: ①能力缺口时主动按需
   检索技能——本地缓存优先、缓存缺失时问用户、用户不告知则自远端下载安装
@@ -72,7 +72,9 @@ temporary or user-selected workspace before editing.
 4. 命中但 `installed: false` → 用 §A5 的安装命令从 `cache.local_path` 安装,
    装完把该项 `installed` 置为 `true` 并写回缓存
 
-缓存不存在 → 走 §A4（问用户）或 §A3（远端自下载）。
+缓存不存在或**未命中** → 进入查询 fall back：见 §A5 先做本地仓库扫描,
+仍未命中则 `npx skills find <keyword>` 搜索确定技能名, 找到后按 §A3/§A5 安装;
+都找不到 → 走 §A4（问用户）或回退 §A3（自远端下载）。
 
 ## A3 自远端下载（优先级 2，用户不告知时）
 
@@ -113,11 +115,17 @@ temporary or user-selected workspace before editing.
   path: skills/<category>/<skill-name>/
 ```
 
-### skills.sh 市场检索
+### 查询 fall back：`npx skills find`（确定技能名）
+
+当本地缓存未命中、本地仓库扫描也找不到时, 用 `npx skills find` 搜索确定
+要装哪个技能, 再安装:
 
 ```bash
 npx skills find "<keyword>"
 ```
+
+`npx skills find` 是本技能**确定目标技能名 `<name>` 的查询兜底**: 它同时覆盖
+本地仓库与 skills.sh 市场。找到后, 用 §A3 的 `npx skills add` 下载安装。
 
 ### 从私有仓库安装
 
