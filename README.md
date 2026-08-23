@@ -70,7 +70,7 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 | [investigate](skills/dev-workflow/investigate/) | 1.0.0 | 系统性根因调查方法论（假设→验证→根因→修复建议） |
 | [project-wiki-maintainer](skills/dev-workflow/project-wiki-maintainer/) | 1.1.0 | 维护项目 Wiki 与 README，并提供文档新鲜度检查 |
 | [qa](skills/dev-workflow/qa/) | 2.0.0 | 通用 QA Engineer：真实操作验证、证据化报告、自动沉淀测试用例 |
-| [obscura](skills/dev-workflow/obscura/) | 1.0.0 | Rust 开源无头浏览器，网页抓取/截图/PDF/AI 自动化，内置一键安装脚本 |
+| [obscura](skills/dev-workflow/obscura/) | 1.1.0 | Rust 开源无头浏览器，网页抓取/截图/PDF/AI 自动化/搜索，内置一键安装脚本 |
 
 ### Game Analysis（通用）
 

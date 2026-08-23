@@ -1,6 +1,6 @@
 ---
 name: obscura
-version: 1.0.0
+version: 1.1.0
 description: 使用 Obscura —— 一个用 Rust 编写的轻量开源无头浏览器（headless browser）—— 进行网页抓取、内容提取、截图、PDF 导出和 AI Agent 自动化。Obscura 支持 V8 真实 JS 渲染、Chrome DevTools Protocol（CDP），可作为 headless Chrome 的直接替代品对接 Puppeteer/Playwright。当用户需要抓网页、爬数据、抓取动态渲染内容、网页截图、防反爬、导出 PDF、或让 AI Agent 浏览/操作网页时使用。本技能会自动检测并安装 obscura 二进制。
 ---
 
@@ -163,6 +163,37 @@ obscura scrape https://example.com --quiet --format json
 obscura fetch --file urls.txt --concurrency 10
 ```
 
+### 搜索网页（搜索引擎结果）
+
+Obscura 不是搜索引擎，但它能访问搜索引擎并抓取、提取、解析搜索结果，适合轻量检索 + AI Agent 自动化。**DuckDuckGo lite 最友好（无需 JS 也能抓）；Bing 需 JS 渲染；Google 反爬强建议 stealth + 代理。**
+
+```bash
+# ① 抓搜索结果纯文本
+obscura fetch "https://lite.duckduckgo.com/lite/?q=关键词" --dump text
+
+# ② 提取结果链接（含标题）
+obscura fetch "https://lite.duckduckgo.com/lite/?q=关键词" --dump links
+
+# ③ eval 提取结构化结果（标题 | URL，适合喂给 AI）
+obscura fetch "https://lite.duckduckgo.com/lite/?q=关键词" \
+  --eval "Array.from(document.querySelectorAll('.result-link')).slice(0,5).map(a=>a.textContent.trim()+' | '+a.href).join('\n')"
+
+# ④ 并行搜索多关键词
+obscura scrape \
+  "https://lite.duckduckgo.com/lite/?q=keyword1" \
+  "https://lite.duckduckgo.com/lite/?q=keyword2" \
+  --concurrency 5 --quiet \
+  --eval "Array.from(document.querySelectorAll('.result-link')).slice(0,3).map(a=>a.textContent.trim()).join('\n')"
+
+# ⑤ Bing（需 JS 渲染，等待网络空闲）
+obscura fetch "https://www.bing.com/search?q=关键词" --dump text --wait-until networkidle0
+```
+
+> **真实 URL 解码**：DuckDuckGo lite 的结果是跳转链接（`https://duckduckgo.com/l/?uddg=<urlencoded>`），真实地址藏在 `uddg` 参数里，需 URL-decode 才能拿到。可用 Python 解码：
+> ```bash
+> python3 -c "import sys,urllib.parse;print(urllib.parse.unquote(sys.argv[1].split('uddg=')[1]))" "<跳转链接>"
+> ```
+
 ### 代理 / 反检测
 ```bash
 # 走 HTTP/SOCKS 代理
@@ -201,6 +232,7 @@ export OBSCURA_ALLOW_PRIVATE_NETWORK=1
 | 截图 | `obscura fetch URL --screenshot out.png` |
 | 导出 PDF | 走 CDP server + Puppeteer `page.pdf()` |
 | 批量抓取 | `obscura scrape url1 url2 --concurrency 25 --format json` |
+| 搜索网页 | `obscura fetch "https://lite.duckduckgo.com/lite/?q=关键词" --dump text`（Bing/Google 见上） |
 | 反爬/反检测 | `obscura --stealth fetch URL` 或装 stealth 变体 |
 | 走代理 | `obscura --proxy socks5://... fetch URL` |
 | 对接 Playwright | `obscura serve --port 9222` + connectOverCDP |

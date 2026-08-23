@@ -30,7 +30,7 @@ surface instead of one growing document.
 
 ## Recent Additions
 
-- `obscura` v1.0.0 (Dev Workflow): Rust 开源无头浏览器技能，网页抓取/截图/PDF/AI 自动化，内置一键安装脚本 `install.sh`，见 [skills/dev-workflow/obscura](skills/dev-workflow/obscura/)。
+- `obscura` v1.1.0 (Dev Workflow): Rust 开源无头浏览器技能，网页抓取/截图/PDF/AI 自动化/搜索，内置一键安装脚本 `install.sh`，见 [skills/dev-workflow/obscura](skills/dev-workflow/obscura/)。
 
 ## Maintenance Contract
 

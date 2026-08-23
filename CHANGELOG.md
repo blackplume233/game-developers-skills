@@ -4,6 +4,10 @@ All notable changes to this skill repository will be documented in this file.
 
 ## [1.11.0] - 2026-08-23
 
+### Changed
+
+- Updated `obscura` v1.0.0 -> v1.1.0: add a Search section (DuckDuckGo lite / Bing / Google) with fetch, links, eval, parallel scrape, and URL-decoding tips for extracting search-engine results.
+
 ### Added
 
 - **Dev Workflow** (1 skill):
