@@ -2,6 +2,12 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.12.0] - 2026-08-25
+
+### Changed
+
+- Updated `qa` v2.0.0 -> v2.1.0: 黑盒测试执行的每一步操作必须是真实用户能自行复现的动作，不能用内部旁路（改库、内部调试接口、跳过鉴权）代替；正式操作真实入口前必须先写好用户可复现的测试方案（步骤 + 预期结果），`explore` 模式至少先写最小 charter；强调每一个执行的操作都要即时记录，不能遗漏。
+
 ## [1.11.0] - 2026-08-23
 
 ### Fixed

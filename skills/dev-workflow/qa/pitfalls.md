@@ -29,6 +29,12 @@ Text checks are useful, but UI copy changes often. Prefer assertions that combin
 - relevant logs or API response
 - stable accessibility labels or test ids when available
 
+## Black-Box Actions Must Be User-Reproducible
+
+Every action executed as part of black-box verification must be something a real user could do themselves through the UI, CLI, or a public API — do not substitute a direct database edit, an internal debug endpoint, or a skipped-auth shortcut for the user action it's meant to verify. White-box reads (DB queries, internal state, logs) are fine for root-causing a failure afterward, but they are diagnostic evidence, not a step in the user-facing scenario.
+
+Write the plan before touching the real target: `run`/`create`/`loop` need a scenario file (steps + expected results) in hand first; `explore` needs at minimum a short charter (goal, planned steps, expected signal) logged before the first real operation. Do not improvise steps and back-fill the plan afterward — that erases the distinction between what was expected and what was merely observed.
+
 ## Store The Regression Case
 
 When a defect is found and fixed, immediately save a regression case. The case should include:
