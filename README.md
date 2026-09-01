@@ -47,6 +47,12 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 | [find-skills](skills/skill-management/find-skills/) | 1.1.0 | 从本仓库、引用仓库和 skills.sh 生态发现和安装技能 |
 | [skill-repo-manager](skills/skill-management/skill-repo-manager/) | 1.5.2 | 路由式技能仓库管理：能力缺口时主动按需检索（本地缓存优先/缺失问用户/自远端下载）；管理搜索、安装、引用外部技能仓库、README/Wiki 同步和发布（含版本校验+AI 隐私审查） |
 
+### Content Creation（通用）
+
+| 技能 | 版本 | 说明 |
+|------|------|------|
+| [dai-cat-knowledge-comic](skills/content-creation/dai-cat-knowledge-comic/) | 1.1.0 | 将已核实的知识主题改编为呆猫中文科普漫画，生成角色锁定、脚本、分镜、绘图提示词、文字层与质量检查；参考图由用户按任务提供或授权 |
+
 ### Design（通用）
 
 | 技能 | 版本 | 说明 |
@@ -104,7 +110,7 @@ npx skills add blackplume233/game-developers-skills \
   --skill codex-subagent --skill auto-goal --skill find-skills --skill skill-repo-manager \
   --skill shadcn-ui --skill ui-ux-pro-max --skill electron --skill tauri-v2 \
   --skill git-commit --skill guard --skill investigate --skill project-wiki-maintainer --skill qa \
-  --skill game-deconstruction --skill obscura --skill gua \
+  --skill game-deconstruction --skill obscura --skill gua --skill dai-cat-knowledge-comic \
   -g -y
 
 # 项目级安装通用 QA 技能
@@ -112,6 +118,9 @@ npx skills add blackplume233/game-developers-skills --skill qa
 
 # 全局安装游戏白盒拆解技能
 npx skills add blackplume233/game-developers-skills --skill game-deconstruction -g -y
+
+# 全局安装呆猫知识漫画技能
+npx skills add blackplume233/game-developers-skills --skill dai-cat-knowledge-comic -g -y
 
 # 项目级安装项目专用交付技能
 npx skills add blackplume233/game-developers-skills --skill ship
@@ -180,6 +189,12 @@ npx skills add blackplume233/game-developers-skills --skill '*' -g -y
     ├── agent-orchestration/    # 通用 - Agent 编排
     │   ├── codex-subagent/
     │   └── auto-goal/
+    ├── content-creation/        # 通用 - 内容创作
+    │   └── dai-cat-knowledge-comic/
+    │       ├── SKILL.md
+    │       ├── references/     # 角色、口癖、来源与质量门槛
+    │       ├── assets/         # 需求模板（不分发游戏截图）
+    │       └── scripts/        # Skill 包完整性校验
     ├── design/                 # 通用 - UI/UX 设计
     │   ├── shadcn-ui/
     │   └── ui-ux-pro-max/

@@ -11,6 +11,13 @@
       ]
     },
     {
+      "title": "Content Creation",
+      "description": "Content Creation 类技能。",
+      "skills": [
+        "dai-cat-knowledge-comic"
+      ]
+    },
+    {
       "title": "Design",
       "description": "UI、UX 与应用设计技能。",
       "skills": [

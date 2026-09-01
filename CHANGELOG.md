@@ -2,6 +2,20 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.13.1] - 2026-09-01
+
+### Changed
+
+- Updated `dai-cat-knowledge-comic` v1.0.0 -> v1.1.0: treats user-supplied original references as the highest-priority visual source; locks the front torso as one continuous closed mustard-yellow covering with no exposed/light belly, hem, waistline, or opening; preserves that color structure under wetness and lighting; and preflights image/mask dimensions before image-to-image generation.
+- README and Wiki now document the v1.1.0 visual-consistency and mask-size safeguards.
+
+## [1.13.0] - 2026-09-01
+
+### Added
+
+- Added `dai-cat-knowledge-comic` v1.0.0 (`content-creation`): turns a verified knowledge topic into a Chinese four-panel, six-panel, eight-panel, or vertical educational comic with a consistent Dai Cat-inspired fan-art character, community-style “老大/喵” dialogue, separated artwork/text layers, source tracking, and visual/knowledge quality gates.
+- The public skill links to official character information but does not redistribute game screenshots; users provide or authorize visual references per task.
+
 ## [1.12.0] - 2026-08-25
 
 ### Changed

@@ -30,6 +30,7 @@ surface instead of one growing document.
 
 ## Recent Additions
 
+- `dai-cat-knowledge-comic` v1.1.0 (Content Creation): 将核实后的知识主题改编为呆猫中文科普漫画，提供角色锁定、教学脚本、分镜、绘图提示词、文字层与质量门槛；新增参考优先级、正面黄色躯干连续包覆硬约束及蒙版尺寸预检；公开仓库只保留官方资料链接，角色参考图由用户按任务提供或授权，不分发游戏截图。
 - `skill-repo-manager` v1.5.2: 升级为路由式主文案（Dispatch 路由表分诊 Finder/Publisher）；Finder 主动按需检索技能——本地缓存优先、缺失问用户、用户不告知则自远端下载安装；新增 `refresh_cache.py` 本地缓存脚本；以远端 URL 为稳定锚点、不写死本地绝对路径。
 - `obscura` v1.2.1 (Dev Workflow): Rust 开源无头浏览器技能，网页抓取/截图/PDF/AI 自动化/搜索（含一键 `search.sh`），内置一键安装脚本 `install.sh`，见 [skills/dev-workflow/obscura](skills/dev-workflow/obscura/)。
 
