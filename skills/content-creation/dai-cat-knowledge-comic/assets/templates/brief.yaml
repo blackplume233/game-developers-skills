@@ -1,0 +1,25 @@
+topic: "要讲解的知识主题"
+audience: "普通成年人"
+format: "6格"
+aspect_ratio: "4:5"
+tone: "呆萌、认真、轻微反差梗"
+output: "全套"
+knowledge_goal: "读完后，读者能够……"
+must_include: []
+must_avoid: []
+source_policy:
+  web_verify: true
+  minimum_independent_sources: 2
+  prefer_primary_sources: true
+visual:
+  style: "柔和3D绘本漫画，保留游戏玩偶质感"
+  character_consistency: "high"
+  text_in_image: false
+  references: [] # 由用户在当前任务中提供或明确授权使用，不随公开 Skill 分发
+catchphrases:
+  address_reader_as: "老大"
+  sentence_particle: "喵"
+  density: "适量，不逐句追加"
+footer:
+  include_sources: true
+  fanwork_notice: "同人创作；角色原型及相关权利归原权利方所有。"

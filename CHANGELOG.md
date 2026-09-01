@@ -2,6 +2,13 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.13.0] - 2026-09-01
+
+### Added
+
+- Added `dai-cat-knowledge-comic` v1.0.0 (`content-creation`): turns a verified knowledge topic into a Chinese four-panel, six-panel, eight-panel, or vertical educational comic with a consistent Dai Cat-inspired fan-art character, community-style “老大/喵” dialogue, separated artwork/text layers, source tracking, and visual/knowledge quality gates.
+- The public skill links to official character information but does not redistribute game screenshots; users provide or authorize visual references per task.
+
 ## [1.12.0] - 2026-08-25
 
 ### Changed
