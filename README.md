@@ -51,7 +51,7 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 
 | 技能 | 版本 | 说明 |
 |------|------|------|
-| [dai-cat-knowledge-comic](skills/content-creation/dai-cat-knowledge-comic/) | 1.0.0 | 将已核实的知识主题改编为呆猫中文科普漫画，生成角色锁定、脚本、分镜、绘图提示词、文字层与质量检查；参考图由用户按任务提供或授权 |
+| [dai-cat-knowledge-comic](skills/content-creation/dai-cat-knowledge-comic/) | 1.1.0 | 将已核实的知识主题改编为呆猫中文科普漫画，生成角色锁定、脚本、分镜、绘图提示词、文字层与质量检查；参考图由用户按任务提供或授权 |
 
 ### Design（通用）
 

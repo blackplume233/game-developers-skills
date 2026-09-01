@@ -16,6 +16,14 @@ visual:
   character_consistency: "high"
   text_in_image: false
   references: [] # 由用户在当前任务中提供或明确授权使用，不随公开 Skill 分发
+  reference_priority: "用户原始参考图 > 已确认 Character Lock > 上一版生成稿 > 风格描述"
+  image_input_policy:
+    normalize_dimensions_before_masking: true
+    mask_must_match_each_input: true
+  torso_lock:
+    continuous_mustard_yellow_front: true
+    forbid_exposed_or_light_belly: true
+    preserve_color_blocks_when_wet: true
 catchphrases:
   address_reader_as: "老大"
   sentence_particle: "喵"

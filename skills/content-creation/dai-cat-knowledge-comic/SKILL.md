@@ -1,6 +1,6 @@
 ---
 name: dai-cat-knowledge-comic
-version: 1.0.0
+version: 1.1.0
 description: 使用用户提供的呆猫参考图与官方资料链接，把任意知识主题改编成中文知识漫画。先检索核实知识，再生成角色卡、教学脚本、分镜、逐格绘图提示词与成品漫画；强调呆猫形象一致、口癖“老大/喵”适量、知识准确、文字后期排版。适用于“让呆猫讲知识”“生成呆猫科普漫画”“做四格/条漫/知识卡漫”“把文章改成呆猫漫画”等请求。
 ---
 
@@ -59,7 +59,9 @@ description: 使用用户提供的呆猫参考图与官方资料链接，把任�
 
 完整读取 [character-bible.md](references/character-bible.md)。优先让用户在当前任务中提供其有权使用的正面、背面、近景、动作和互动参考图；若只提供部分视角，就只锁定可观察特征，并把其余部分标为未知。官方页面链接只用于核实身份与设定，不能假装成已取得的本地视觉素材。
 
-用 Gemini 同时观察当前任务获得的全部参考图，先形成当次任务的 `Character Lock`：轮廓、颜色、面部、服饰、比例、材质、禁止漂移项。不要分别反推多套提示词；所有参考图共同约束同一角色。
+用 Gemini 同时观察当前任务获得的全部参考图，先形成当次任务的 `Character Lock`：轮廓、颜色、面部、服饰、比例、材质、禁止漂移项。不要分别反推多套提示词；所有原始参考图共同约束同一角色。
+
+参考优先级固定为：**用户原始参考图 > 已确认的 Character Lock > 上一版生成稿 > 风格描述**。上一版成图只能提供故事、构图或修图区域，不得覆盖原图中的角色结构。若原图与生成稿冲突，始终服从原图。
 
 若用户没有提供图像，可依据角色圣经生成原创简化同人形象或只交付脚本/提示词，但必须明确：未完成逐图视觉核验，不能声称精确复现游戏资产。
 
@@ -119,9 +121,18 @@ no_text_render: true
 
 原因：图像模型常把汉字画错；知识漫画不能让错字进入成品。
 
+绘图前先执行输入预检：
+
+- 记录每张参考图和蒙版的像素尺寸。
+- 使用蒙版时，蒙版必须匹配图像工具要求的输入尺寸；不同尺寸的参考图不得直接共用同一蒙版。
+- 若“原始小参考图 + 大尺寸旧漫画”混合输入会造成尺寸冲突，优先只传原始参考图，把旧漫画的故事和构图改写为文本提示；或者先复制并归一化全部输入后再调用。
+- 不因工具报错而移除原始角色参考、降低角色约束或静默换模型。
+
 绘图时：
 
 - 每格都引用同一 `Character Lock` 和当次任务中获得的全部参考图，不用“差不多的蓝猫”替代。
+- **正面躯干硬约束**：领巾下方至下腹/双腿之间必须保持一整块连续、封闭的暖黄色/芥末黄色包覆；奶油色只属于脸盘和口鼻。禁止裸腹、浅色肚皮、腹部补丁、露脐、开襟、衣摆、腰线、裤腰和皮肤—服装分界。
+- 湿水、受热、逆光或运动只能改变材质光泽与明暗，不得改变正面躯干色块。至少保留一个无遮挡正面格用于验收。
 - 能用角色参考/图生图/角色一致性功能时必须开启；记录所用模型和参数。
 - 优先逐格生成，再统一拼版；如果模型支持稳定多格布局，也必须逐格检查。
 - 角色不要被气泡、裁切线或页边遮掉头耳、脸和关键动作。
@@ -134,6 +145,9 @@ no_text_render: true
 no character redesign, no different ear shape, no long realistic fur,
 no changed scarf color, no extra limbs or tails, no human hands,
 no deformed face, no tiny pupils, no photorealistic cat replacement,
+no exposed belly, no bare abdomen, no cream or white belly, no belly patch,
+no oval belly marking, no navel, no crop top, no open shirt, no shirt hem,
+no waistline, no pants waist, no skin-clothing boundary, no torso opening,
 no gibberish text, no watermark, no logo, no duplicated character unless requested
 ```
 
@@ -143,7 +157,7 @@ no gibberish text, no watermark, no logo, no duplicated character unless request
 
 1. 知识事实与来源一致。
 2. 六格顺序自然，不看解释也能读懂。
-3. 呆猫五个锚点稳定：头套轮廓、奶油脸盘、大黑眼、黄色身体、蓝色领巾/头套。
+3. 呆猫六个锚点稳定：头套轮廓、奶油脸盘、大黑眼、**连续封闭的黄色正面躯干**、短四肢、蓝色领巾/头套。
 4. 口癖不过量，“老大”和“喵”自然。
 5. 全部中文由文字层生成，字号足够，气泡指向明确。
 6. 结论没有被笑点、拟人或视觉隐喻歪曲。

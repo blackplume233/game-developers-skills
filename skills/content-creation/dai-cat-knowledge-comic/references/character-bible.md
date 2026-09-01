@@ -67,6 +67,24 @@ identical silhouette and facial geometry across all panels, original fan-art ren
 玩偶般短绒材质、神情清澈而呆，每格的轮廓、面部几何、色块与比例一致。
 ```
 
+## 正面躯干硬约束
+
+用户参考图确认后，必须把以下约束加入每格 `Character Lock`，且其优先级高于画风、情绪、动作和上一版生成稿：
+
+- 颈部以下的正面胸腹到双腿之间，是**完整、连续、封闭的芥末黄/暖黄色包覆结构**。
+- 奶油白/浅米色只用于脸盘与口鼻，不能延伸成胸毛、肚皮或腹部补丁。
+- 不出现裸腹、露脐、浅色椭圆肚皮、开襟、短上衣下摆、腰线、裤腰或衣服与皮肤分界。
+- 泼水、淋雨、受热、逆光等状态只能改变材质的光泽、明暗和附着效果，不能改变色块结构或让腹部显露。
+- 正面格必须能看到从领巾下方延续到底部的黄色整体；若被道具遮挡，至少另设一个无遮挡正面校验格。
+
+```text
+The front torso below the neckerchief is one continuous, closed mustard-yellow
+covering from chest through lower abdomen to between the legs. Cream belongs only
+to the face opening and muzzle. Never expose or invent a belly, belly patch, navel,
+shirt opening, hem, waistline, pants waist, or skin-clothing boundary. Wetness and
+lighting may change sheen and value only, never the color-block structure.
+```
+
 ## 禁止漂移
 
 - 不变成普通暹罗猫、柴郡猫、蓝猫表情包或人形猫娘。

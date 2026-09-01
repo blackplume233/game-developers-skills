@@ -43,7 +43,17 @@ def main() -> int:
                 if not re.search(rf"^{field}:\s*\S", metadata, re.MULTILINE):
                     errors.append(f"SKILL.md: missing frontmatter field {field}")
 
-        required_terms = ["Gemini", "老大", "喵", "小苗", "同人创作", REFERENCE_NOTICE]
+        required_terms = [
+            "Gemini",
+            "老大",
+            "喵",
+            "小苗",
+            "同人创作",
+            REFERENCE_NOTICE,
+            "正面躯干硬约束",
+            "蒙版必须匹配",
+            "no exposed belly",
+        ]
         for term in required_terms:
             if term not in text:
                 errors.append(f"SKILL.md: missing required policy term {term}")

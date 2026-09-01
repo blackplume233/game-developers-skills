@@ -2,6 +2,13 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.13.1] - 2026-09-01
+
+### Changed
+
+- Updated `dai-cat-knowledge-comic` v1.0.0 -> v1.1.0: treats user-supplied original references as the highest-priority visual source; locks the front torso as one continuous closed mustard-yellow covering with no exposed/light belly, hem, waistline, or opening; preserves that color structure under wetness and lighting; and preflights image/mask dimensions before image-to-image generation.
+- README and Wiki now document the v1.1.0 visual-consistency and mask-size safeguards.
+
 ## [1.13.0] - 2026-09-01
 
 ### Added
