@@ -13,6 +13,7 @@ REQUIRED_FILES = [
     "references/character-bible.md",
     "references/voice-and-catchphrases.md",
     "references/quality-checklist.md",
+    "references/spirit-and-rendering.md",
     "references/sources.md",
     "assets/templates/brief.yaml",
 ]
@@ -50,9 +51,16 @@ def main() -> int:
             "小苗",
             "同人创作",
             REFERENCE_NOTICE,
-            "正面躯干硬约束",
+            "官方色块硬约束",
             "蒙版必须匹配",
-            "no exposed belly",
+            "no yellow torso",
+            "no neckerchief",
+            "神韵校准门",
+            "每轮只改一个变量",
+            "商品摄影中的毛绒公仔",
+            "固定脸谱硬约束",
+            "脸盘外",
+            "球形圆手硬约束",
         ]
         for term in required_terms:
             if term not in text:

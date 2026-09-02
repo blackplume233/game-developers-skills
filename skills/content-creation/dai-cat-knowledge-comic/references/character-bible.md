@@ -35,7 +35,7 @@
 
 ### 色彩与服装
 
-- 头套、脸盘、躯干、四肢和领巾的主色。
+- 猫耳头套、脸盘、躯干、圆手、短脚和背后尾部结构的主色。
 - 色块边界与材质：织物、短绒、塑料或其他表现。
 - 颈部系结、背面结构及任何稳定配件。
 
@@ -50,58 +50,91 @@
 
 ```text
 Same single Dai Cat-inspired Palico fan-art mascot in every panel,
-oversized indigo-blue cat hood with two tall triangular ears, large cream circular
-face opening, two huge round glossy black eyes with tiny highlights, small cream
-muzzle and simple dark cat nose and mouth, mustard-yellow round body and very short
-limbs, indigo-blue neckerchief tied at the back, chibi toy-like proportions,
-soft short-fabric mascot material, innocent blank expression, consistent colors,
-identical silhouette and facial geometry across all panels, original fan-art rendering.
+oversized subdued periwinkle-indigo cat-eared hood continuous with a compact blue
+pear-shaped torso, warm ivory oval face opening, warm ivory spherical mitten paws
+and short rounded feet, two oversized flat black circular eye graphics with thick
+irregular rings and bold white crescent highlights, one continuous thick curled
+black cat-mouth mark, no separate nose or realistic muzzle, no yellow body and no
+neckerchief, matte very-short-pile game-plush material, innocent attentive blank
+expression, identical silhouette, color blocks and facial geometry across panels.
 ```
 
 ## 中文角色锁定词
 
 ```text
-同一只原创简化同人呆猫贯穿所有画格：蓝紫色巨大猫头套、两只高尖三角耳、
-奶油白圆形脸盘、两只巨大圆润黑眼与微小高光、浅奶油色小口鼻、
-芥末黄色圆身体和短四肢、颈部蓝色领巾并在背后打结；头大身小、
-玩偶般短绒材质、神情清澈而呆，每格的轮廓、面部几何、色块与比例一致。
+同一只原创简化同人呆猫贯穿所有画格：低饱和蓝紫/靛蓝猫耳头套与紧凑梨形躯干连成一体，
+暖米白椭圆脸盘、球形圆手和短圆脚；两只巨大黑色圆眼图形带粗环与大胆白色弧形高光，
+嘴是连续粗黑卷曲猫嘴，不画独立鼻子或写实口鼻；没有黄色身体，也没有蓝色领巾或后结。
+材质是哑光极短绒游戏玩偶块面，神情清澈、认真而略呆；每格轮廓、脸谱、色块与比例一致。
 ```
 
-## 正面躯干硬约束
+## 官方色块与脸谱硬约束
 
-用户参考图确认后，必须把以下约束加入每格 `Character Lock`，且其优先级高于画风、情绪、动作和上一版生成稿：
+用户提供或授权的官方五视图确认后，必须把以下约束加入每格 `Character Lock`，且其优先级高于画风、情绪、动作和上一版生成稿：
 
-- 颈部以下的正面胸腹到双腿之间，是**完整、连续、封闭的芥末黄/暖黄色包覆结构**。
-- 奶油白/浅米色只用于脸盘与口鼻，不能延伸成胸毛、肚皮或腹部补丁。
-- 不出现裸腹、露脐、浅色椭圆肚皮、开襟、短上衣下摆、腰线、裤腰或衣服与皮肤分界。
-- 泼水、淋雨、受热、逆光等状态只能改变材质的光泽、明暗和附着效果，不能改变色块结构或让腹部显露。
-- 正面格必须能看到从领巾下方延续到底部的黄色整体；若被道具遮挡，至少另设一个无遮挡正面校验格。
+- 猫耳头套与正面躯干是一体的蓝紫/靛蓝结构；不得把身体改成黄色、橙色、奶油色或独立上衣。
+- 暖米白只用于脸盘、球形圆手、短圆脚和官方参考可见的下缘/后部结构；不得发明椭圆肚皮。
+- 球形圆手是前肢的主要可见结构，直接贴近蓝色躯干；连接极短或隐藏。不得生成长上臂/前臂、肘部、手腕、手掌、手指或人类抓握结构。
+- 不存在蓝色领巾、围巾、后结或飘带；背后深色长条按尾部/装备结构处理，不画成围巾结。
+- 双眼按官方平面图形处理：黑色圆块/粗圆环与白色弧形高光；嘴为连续卷曲黑线。
+- 不出现独立鼻子、Y 形口、写实口鼻、玻璃珠眼、睫毛、眉毛、彩色虹膜或人类笑脸。
+- 泼水、淋雨、受热、逆光等状态只能改变材质的光泽、明暗和附着效果，不能改变色块与脸谱结构。
 
 ```text
-The front torso below the neckerchief is one continuous, closed mustard-yellow
-covering from chest through lower abdomen to between the legs. Cream belongs only
-to the face opening and muzzle. Never expose or invent a belly, belly patch, navel,
-shirt opening, hem, waistline, pants waist, or skin-clothing boundary. Wetness and
-lighting may change sheen and value only, never the color-block structure.
+The cat-eared hood and front torso are one continuous subdued periwinkle-indigo
+soft form. Warm ivory is reserved for the oval face opening, spherical mitten paws
+and short rounded feet. No yellow body, neckerchief, scarf knot or ribbon. The face
+uses flat black circular eye graphics with thick rings and bold white crescents plus
+one continuous curled black mouth mark; no separate nose, realistic muzzle, Y mouth
+or glass eyeballs. Lighting may change sheen and value only, never these identity blocks.
 ```
 
 ## 禁止漂移
 
 - 不变成普通暹罗猫、柴郡猫、蓝猫表情包或人形猫娘。
 - 不增加头发、衣裤、鞋、手套、盔甲或未要求的饰品。
-- 不随分镜改变耳朵、眼睛、脸盘、身体和领巾的基础设计。
+- 不随分镜改变耳朵、眼睛、脸盘、蓝色连体身体、圆手和短脚的基础设计。
+- 不因“伸手、爬行、举起、拉扯、指向”等动词把球形圆手拉成长手臂；需要触达时让身体整体靠近道具。
 - 不画成长毛、真实胡须密布、写实爪掌或肌肉四肢。
-- 不随情绪改变基础眼色；严肃表情可调整眉部或眼睑，但保留大黑眼锚点。
+- 不随情绪改变眼睛开合、视线、白色弧形高光、嘴角或口型；脸谱在所有画格中保持同一张固定贴图。
 - 默认每格只有一只呆猫；教学需要分身时必须明确标注“示意分身”。
 
-## 表情库
+## 固定脸谱下的动作库
 
-- **默认呆脸**：大眼直视，嘴部轻微上扬或中性。
-- **提问**：头部小幅倾斜，一手举起，眼睛保持圆。
-- **恍然大悟**：身体前倾，双手张开，可加小灯泡图标。
-- **认真解释**：手持指示棒或指向图解，脸仍保持呆萌。
-- **踩坑惊慌**：短腿腾空、手臂张开；不把脸拉成恐怖写实形变。
-- **严肃纠偏**：降低嘴角、轻压眼睑，但仍能一眼识别为同一角色。
+所有动作先移动躯干和道具，再摆放两个贴近身体的球形圆手。圆手只能以托、夹、抱、推等无手指接触方式表达动作。
+
+- **默认呆脸**：所有场景使用同一双圆眼、同一白弧高光和同一卷曲猫嘴。
+- **提问**：头部整体小幅倾斜，一手举起；脸谱不变，头套外可放一个问号。
+- **恍然大悟**：身体前倾或双手张开；脸谱不变，头套外可放一个小灯泡。
+- **认真解释**：手持指示棒、挺直身体并指向图解；脸谱不变。
+- **踩坑惊慌**：身体后仰、短腿腾空、圆手抱紧道具；脸谱不变，角色外可放汗滴或速度线。
+- **严肃纠偏**：身体站直、双手抱板或用指示棒敲重点；脸谱不变，角色外可放一条短冲击线。
+
+## 神韵锁定
+
+“呆”不是没有意图的空脸，也不是标准商品照式可爱。每张图先写清角色此刻认真想完成什么，再选择表情和动作。
+
+稳定神韵由四层共同组成：
+
+1. **清澈**：大黑眼、粗环、白色弧形高光和卷曲猫嘴完全固定；不改变开合、朝向或嘴形，也不加彩色瞳孔、睫毛或人类眉毛。
+2. **认真**：视线、头部朝向和手中道具必须指向同一个行动目标。
+3. **笨拙**：短身体通过轻微内扣、重心偏移、道具小角度倾斜或肩膀收紧表现努力；不能变成流畅英雄姿势。
+4. **克制**：嘴部不变化；笑点来自“固定呆脸、认真程度与小身体”的反差，不靠大笑、吐舌、露齿、嚎哭或恐怖变形。
+
+## 外围动漫特效
+
+- 可用：问号、感叹号、汗滴、星光、灯泡、火焰、速度线、冲击线、晕眩星星。
+- 特效只位于脸盘外、头套外或角色周围，不进入脸盘、不覆盖五官、不伪装成眉毛或眼泪。
+- 每格最多一种主特效；去掉特效后，肢体动作仍应能表达大致意图。
+
+允许 2–5° 的头部微倾、极轻微左右不对称和一处动作失衡。每格最多使用一个高能情绪信号，避免同时歪头、跳跃、星星眼、张嘴和夸张速度线。
+
+## 渲染锁定
+
+- 推荐：游戏内角色模型般的块面、哑光软织物、少量大褶皱、关节压缩、柔和环境遮蔽、克制高光。
+- 织纹只在局部近处可见，不能像沙发布一样均匀铺满脸、头套和身体。
+- 禁止：毛绒商品照、长绒玩具、黏土手办、亮面塑料、过度皮克斯化、摄影棚产品精修感。
+- 灯光服务于识别轮廓和表情，不用强轮廓光、舞台烟雾或电影级炫光替代角色神韵。
 
 ## 场景适配
 

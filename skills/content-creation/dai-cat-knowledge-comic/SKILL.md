@@ -1,6 +1,6 @@
 ---
 name: dai-cat-knowledge-comic
-version: 1.1.0
+version: 1.3.2
 description: 使用用户提供的呆猫参考图与官方资料链接，把任意知识主题改编成中文知识漫画。先检索核实知识，再生成角色卡、教学脚本、分镜、逐格绘图提示词与成品漫画；强调呆猫形象一致、口癖“老大/喵”适量、知识准确、文字后期排版。适用于“让呆猫讲知识”“生成呆猫科普漫画”“做四格/条漫/知识卡漫”“把文章改成呆猫漫画”等请求。
 ---
 
@@ -19,10 +19,10 @@ description: 使用用户提供的呆猫参考图与官方资料链接，把任�
 
 ## 模型路由
 
-1. **识图、参考图归纳、角色一致性检查**：必须优先使用 Gemini 视觉模型，并把用户在当前任务中提供或明确授权使用的参考图直接传入；不得仅凭文件名猜测，也不得擅自下载、转载第三方截图。
+1. **识图、参考图归纳、角色一致性检查**：优先使用 Gemini 视觉模型；Gemini 不可用时，可使用宿主内置的等价视觉检查工具，但必须记录实际工具并披露替代，不得静默声称“Gemini 已核验”。把用户在当前任务中提供或明确授权使用的参考图直接传入；不得仅凭文件名猜测，也不得擅自下载、转载第三方截图。
 2. **普通文本整理与机械格式转换**：使用便宜的快速文本模型。
 3. **整体教学结构、知识取舍与最终审校**：由主 Agent 完成。
-4. 若 Gemini 或图像生成能力不可用，明确说明缺失能力；仍可交付脚本与提示词，但不得声称已完成视觉核验或成品图。
+4. 若没有任何可看图的视觉能力，明确说明缺失能力；仍可交付脚本与提示词，但不得声称已完成视觉核验。若只有 Gemini 不可用，准确写明所用替代视觉工具。
 5. 禁止静默更换模型。
 
 ## 输入
@@ -57,13 +57,25 @@ description: 使用用户提供的呆猫参考图与官方资料链接，把任�
 
 ### 2. 读取角色参考
 
-完整读取 [character-bible.md](references/character-bible.md)。优先让用户在当前任务中提供其有权使用的正面、背面、近景、动作和互动参考图；若只提供部分视角，就只锁定可观察特征，并把其余部分标为未知。官方页面链接只用于核实身份与设定，不能假装成已取得的本地视觉素材。
+完整读取 [character-bible.md](references/character-bible.md)。优先让用户在当前任务中提供其有权使用的正面、背面、近景、动作和互动参考图；若只提供部分视角，就只锁定可观察特征，并把其余部分标为未知。用户明确授权下载原图时，只从 [sources.md](references/sources.md) 登记的官方/第一方页面或其官方媒体 CDN 下载到任务本地分析目录；记录来源、像素尺寸与下载日期，不提交、打包或再分发这些截图。
 
-用 Gemini 同时观察当前任务获得的全部参考图，先形成当次任务的 `Character Lock`：轮廓、颜色、面部、服饰、比例、材质、禁止漂移项。不要分别反推多套提示词；所有原始参考图共同约束同一角色。
+用选定的视觉模型/工具同时观察当前任务获得的全部参考图，先形成当次任务的 `Character Lock`：轮廓、颜色、面部、服饰、比例、材质、禁止漂移项。不要分别反推多套提示词；所有原始参考图共同约束同一角色，并记录实际使用的是 Gemini 还是替代工具。
 
 参考优先级固定为：**用户原始参考图 > 已确认的 Character Lock > 上一版生成稿 > 风格描述**。上一版成图只能提供故事、构图或修图区域，不得覆盖原图中的角色结构。若原图与生成稿冲突，始终服从原图。
 
-若用户没有提供图像，可依据角色圣经生成原创简化同人形象或只交付脚本/提示词，但必须明确：未完成逐图视觉核验，不能声称精确复现游戏资产。
+若用户没有提供或授权图像，可依据角色圣经生成原创简化同人形象或只交付脚本/提示词，但必须明确：未完成逐图视觉核验，不能声称精确复现游戏资产。
+
+### 2.1 神韵校准门
+
+完整读取 [spirit-and-rendering.md](references/spirit-and-rendering.md)。在生成多格漫画前，先判断是否已有通过验收的单角色锚点图：
+
+- 有用户原始参考图：先生成或确认一张单角色、全身、无遮挡的校准稿，再进入分镜。
+- 没有原始参考图：仍先做校准稿，但只能检查内部一致性；必须标注“未完成原图相似度核验”。
+- 校准稿优先选择能暴露神韵的轻动作，例如认真端物、倾听或准备帮忙；不要用标准站姿商品照代替。
+- 角色神韵定义为：**清澈而略呆的眼神、认真可靠的意图、短小身体带来的轻微笨拙，以及克制表情形成的反差**。不是大笑、卖萌五官或夸张惊慌。
+- 先做身份阻塞检查：蓝色连体头套/躯干、米白脸盘/圆手/短脚、官方平面眼嘴、无黄色身体、无领巾；身份失败时先修身份，不进入风格微调。
+- 校准失败时，按“身份结构 → 材质 → 比例 → 肢体动作与外围特效”的顺序逐轮修正；每轮只改一个变量，并重复所有身份硬约束。
+- 默认最多 4 轮；同一维度连续两轮无可见改善时提前停止。停止后报告剩余偏差，不继续随机抽卡。
 
 ### 3. 设计教学节奏
 
@@ -131,37 +143,51 @@ no_text_render: true
 绘图时：
 
 - 每格都引用同一 `Character Lock` 和当次任务中获得的全部参考图，不用“差不多的蓝猫”替代。
-- **正面躯干硬约束**：领巾下方至下腹/双腿之间必须保持一整块连续、封闭的暖黄色/芥末黄色包覆；奶油色只属于脸盘和口鼻。禁止裸腹、浅色肚皮、腹部补丁、露脐、开襟、衣摆、腰线、裤腰和皮肤—服装分界。
-- 湿水、受热、逆光或运动只能改变材质光泽与明暗，不得改变正面躯干色块。至少保留一个无遮挡正面格用于验收。
+- **官方色块硬约束**：猫耳头套与正面躯干是一体的低饱和蓝紫/靛蓝软质结构；米白只用于脸盘、球形圆手与短脚。禁止黄色身体、黄色四肢、蓝色领巾/后结、浅色肚皮、服装开襟与腰线。
+- **球形圆手硬约束**：米白前肢的主要可见结构是直接贴近蓝色躯干的球形/短椭球形圆手；连接极短或隐藏。禁止长管状手臂、清晰上臂/前臂、肘部、手腕、手掌、手指和人类关节。需要够远时移动整个身体或道具，不能拉长前肢。
+- **固定脸谱硬约束**：双眼的粗黑圆环/圆块、白色弧形高光、开合程度与朝向，以及连续粗黑卷曲猫嘴，在所有情绪和动作中都视为同一张固定贴图。禁止用眼睛开合、视线、嘴角或口型表达情绪；禁止独立鼻子、写实口鼻、Y 形嘴、玻璃珠眼、睫毛、眉毛、闭眼笑、怒眼和张嘴。
+- 湿水、受热、逆光或运动只能改变材质光泽与明暗，不得改变上述色块和脸谱。至少保留一个无遮挡正面格用于验收。
 - 能用角色参考/图生图/角色一致性功能时必须开启；记录所用模型和参数。
 - 优先逐格生成，再统一拼版；如果模型支持稳定多格布局，也必须逐格检查。
 - 角色不要被气泡、裁切线或页边遮掉头耳、脸和关键动作。
 - 抽象机制使用简洁箭头、剖面、小图标和对比，不堆满写实背景。
 - 画面不得残留乱码、伪文字、水印或错误商标。
+- 渲染优先使用克制的游戏资产感：哑光软织物块面、少量大褶皱、轻微关节压缩、柔和环境遮蔽；微观织纹只作局部提示，不能均匀覆盖全身。
+- 禁止把角色渲染成商品摄影中的毛绒公仔、黏土玩偶、亮面塑料或 Pixar/Disney 式通用 3D 萌物。
+- 情绪只能由头部整体朝向、身体重心、肩膀、圆手和短脚、道具关系、构图与外围动漫特效表达；脸盘内五官不参与变化。
+- 允许问号、感叹号、汗滴、星光、灯泡、火焰、速度线或晕眩星星等动漫特效，但特效只能位于脸盘外、头套外或角色周围，不能覆盖、替换或牵引五官；每格最多一种主特效。
 
 通用负面约束：
 
 ```text
 no character redesign, no different ear shape, no long realistic fur,
-no changed scarf color, no extra limbs or tails, no human hands,
-no deformed face, no tiny pupils, no photorealistic cat replacement,
-no exposed belly, no bare abdomen, no cream or white belly, no belly patch,
-no oval belly marking, no navel, no crop top, no open shirt, no shirt hem,
-no waistline, no pants waist, no skin-clothing boundary, no torso opening,
+no yellow torso, no yellow limbs, no neckerchief, no scarf knot or ribbon,
+no extra limbs or tails, no elongated arms, no tubular forearms, no elbows,
+no wrists, no palms, no fingers, no human hands, no articulated arm joints,
+keep ivory paws spherical and close to the blue torso, no deformed face,
+no separate nose, no realistic muzzle, no Y-shaped mouth, no glass eyeballs,
+no changed eye direction, no changed eyelids, no closed-eye smile, no angry eyes,
+no changed mouth curve, no open mouth, no eyelashes, no eyebrows,
+no facial overlays or effects inside the face opening, no photorealistic cat replacement,
+no belly patch, no navel, no open shirt, no shirt hem, no waistline,
+no pants waist, no skin-clothing boundary, no torso opening,
 no gibberish text, no watermark, no logo, no duplicated character unless requested
 ```
 
 ### 7. 拼版与验收
 
-完整读取 [quality-checklist.md](references/quality-checklist.md)。至少检查：
+完整读取 [quality-checklist.md](references/quality-checklist.md) 与 [spirit-and-rendering.md](references/spirit-and-rendering.md)。至少检查：
 
 1. 知识事实与来源一致。
 2. 六格顺序自然，不看解释也能读懂。
-3. 呆猫六个锚点稳定：头套轮廓、奶油脸盘、大黑眼、**连续封闭的黄色正面躯干**、短四肢、蓝色领巾/头套。
+3. 呆猫六个锚点稳定：蓝色连体猫耳头套/躯干、米白脸盘、粗黑圆眼与白弧高光、连续卷曲猫嘴、米白圆手/短脚、紧凑梨形比例。
 4. 口癖不过量，“老大”和“喵”自然。
 5. 全部中文由文字层生成，字号足够，气泡指向明确。
 6. 结论没有被笑点、拟人或视觉隐喻歪曲。
 7. 公开发布版有同人声明与资料来源。
+8. 材质不是均匀毛绒/塑料商品感；神韵来自固定呆脸与认真笨拙动作的反差，而不是通用可爱表情。
+9. 遮住身体看九格时，脸谱应近似同一张固定贴图；遮住脸部时，仍能从肢体、道具和外围特效读出动作意图。
+10. 米白圆手保持球形并贴近躯干，没有长前臂、肘部、手腕或手指；远距离动作由身体位移完成。
 
 不通过就只重做有问题的格，不让模型重新随机整页导致角色漂移。
 
@@ -170,7 +196,7 @@ no gibberish text, no watermark, no logo, no duplicated character unless request
 - 版式：单页 6 格，2 列 × 3 行，阅读顺序从左到右、从上到下。
 - 比例：4:5，建议 2048 × 2560；手机长图可用 9:16。
 - 风格：柔和 3D 绘本漫画，保留参考图的游戏玩偶质感；粗而圆润的轮廓、低噪点背景、清晰表情。
-- 色彩：蓝紫头套与领巾、奶油色脸与口鼻、黄色身体为主；知识图示使用青、橙两种强调色。
+- 色彩：低饱和蓝紫/靛蓝连体头套与躯干、暖米白脸盘/圆手/短脚、黑白脸谱；知识图示使用青、橙两种强调色。
 - 气泡：白底深蓝描边，圆角；旁白框用浅米黄；危险/误区用柔和橙红，不使用刺眼纯红大面积铺底。
 - 页眉：`呆猫讲知识｜{主题}`。
 - 页脚：`资料：{短来源}｜同人创作；角色原型及相关权利归原权利方所有。`
@@ -187,6 +213,7 @@ no gibberish text, no watermark, no logo, no duplicated character unless request
 6. **文字层清单**：按格编号列出所有最终汉字，便于无错字排版。
 7. **成品或能力声明**：有图像工具则输出并检查成品；没有则明确停在可执行提示词包。
 8. **自检报告**：只列事实、角色、文字、版式四项的通过/需修正结果。
+9. **神韵校准记录**：列出每轮只修改的变量、观察到的偏差、停止原因；缺少原图时明确标注相似度未核验。
 
 ## 不要这样做
 
@@ -201,6 +228,7 @@ no gibberish text, no watermark, no logo, no duplicated character unless request
 ## 资源
 
 - 角色视觉：[character-bible.md](references/character-bible.md)
+- 神韵、渲染与迭代提示词：[spirit-and-rendering.md](references/spirit-and-rendering.md)
 - 口癖与对白：[voice-and-catchphrases.md](references/voice-and-catchphrases.md)
 - 质量门槛：[quality-checklist.md](references/quality-checklist.md)
 - 来源台账：[sources.md](references/sources.md)

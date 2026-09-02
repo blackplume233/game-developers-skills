@@ -12,17 +12,29 @@ source_policy:
   minimum_independent_sources: 2
   prefer_primary_sources: true
 visual:
-  style: "柔和3D绘本漫画，保留游戏玩偶质感"
+  style: "克制的游戏角色3D渲染：哑光软织物块面、少量大褶皱、柔和环境遮蔽"
   character_consistency: "high"
+  spirit_target: "固定呆脸、认真可靠、略显笨拙、外围特效克制"
+  calibration_before_panels: true
+  calibration_max_rounds: 4
+  iteration_order: ["identity", "material", "proportions", "body_action_and_external_effects"]
+  forbid_generic_kawaii_rendering: true
   text_in_image: false
   references: [] # 由用户在当前任务中提供或明确授权使用，不随公开 Skill 分发
   reference_priority: "用户原始参考图 > 已确认 Character Lock > 上一版生成稿 > 风格描述"
   image_input_policy:
     normalize_dimensions_before_masking: true
     mask_must_match_each_input: true
-  torso_lock:
-    continuous_mustard_yellow_front: true
-    forbid_exposed_or_light_belly: true
+  identity_lock:
+    continuous_indigo_hood_and_torso: true
+    warm_ivory_face_paws_and_feet: true
+    spherical_paws_close_to_torso: true
+    forbid_elongated_forearms_elbows_wrists_fingers: true
+    official_flat_eye_and_curled_mouth_graphics: true
+    fixed_face_decal_across_all_panels: true
+    forbid_facial_expression_changes: true
+    external_anime_effects_outside_face_only: true
+    forbid_yellow_body_and_neckerchief: true
     preserve_color_blocks_when_wet: true
 catchphrases:
   address_reader_as: "老大"

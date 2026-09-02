@@ -12,6 +12,8 @@
 2. **Steam 商店：追加艾路外观装备“小苗系列”**
    - URL：https://store.steampowered.com/app/2167453/Monster_Hunter_Rise__Kit_T_Palico_layered_armor_set/?l=tchinese
    - 支持：“小苗”登场于水艺撰写的狩猎技术相关“狩猎指南书”；是最爱米饭的五兄弟姐妹中最小的一只。
+   - 官方媒体 API：`https://store.steampowered.com/api/appdetails?appids=2167453&l=english&cc=us`
+   - 视觉支持：API 当前返回 5 张由 CAPCOM 商店条目发布的 1920×1080 截图，覆盖正面、背面、脸部近景与互动动作；只在用户明确授权下载时用于任务本地比对。
 
 3. **PlayStation Store：追加艾路外观装备“小苗系列”**
    - URL：https://store.playstation.com/zh-hant-hk/product/HP0102-PPSA08038_00-COSTUMEAIR000016
@@ -54,6 +56,7 @@
 - 本公开仓库不托管或分发游戏截图。
 - 上述官方页面 URL 可用于核实角色身份和设定，但不是可直接当作本地图像输入的“图片直链”。
 - 执行 Skill 时，由用户在当前任务中提供其有权使用的参考图，或明确授权可访问的图片 URL。
+- 用户明确要求“下载原图对比”时，可读取上述官方 Steam API 的 `screenshots[].path_full`，下载到任务本地分析目录，并记录下载日期、来源和尺寸；不得提交到技能仓库、打包进 Skill 或转存到第三方图床。
 - 不得擅自从搜索结果、媒体转载页或第三方图床抓取并重新发布角色图片。
 
 ## 证据结论

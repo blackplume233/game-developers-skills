@@ -2,6 +2,48 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.15.2] - 2026-09-02
+
+### Fixed
+
+- Updated `dai-cat-knowledge-comic` v1.3.1 -> v1.3.2 after dynamic-grid review: the warm-ivory forelimbs are now locked as spherical/short-oval paws attached close to the blue torso with hidden or very short connectors. Elongated arms, visible forearms, elbows, wrists, palms, fingers and human articulation are identity drift.
+
+### Changed
+
+- Reach, lift, crawl and pull actions now move the whole body or bring props closer instead of stretching the paws. Updated prompts, checklist, brief, validator, README and Wiki accordingly.
+
+## [1.15.1] - 2026-09-02
+
+### Fixed
+
+- Updated `dai-cat-knowledge-comic` v1.3.0 -> v1.3.1 after expression-grid review: the official eye rings, white crescents and curled mouth are now a fixed facial decal across every emotion and action. Eyebrows, angry eyes, closed-eye smiles, gaze changes, mouth-shape changes and open mouths are identity drift.
+
+### Changed
+
+- Emotion now comes from head orientation, body weight, paws/feet, props and composition. Anime effects are allowed only outside the face/hood, one primary effect per panel, and may not cover or replace facial features.
+- Updated the character bible, spirit loop, checklist, brief, validator, README and Wiki with the fixed-face rule.
+
+## [1.15.0] - 2026-09-01
+
+### Fixed
+
+- Corrected `dai-cat-knowledge-comic` v1.2.0 -> v1.3.0 against five CAPCOM-published 1920x1080 Steam screenshots: the official identity uses a continuous subdued blue cat-eared hood/torso, warm-ivory face/paws/feet, flat black circular eye graphics with white crescents, and a continuous curled mouth mark; removed the incorrect mustard-yellow body, blue neckerchief, separate nose/muzzle, and tiny-glass-highlight rules.
+
+### Changed
+
+- Added an explicit user-authorized official-image download workflow using the Steam app-details media API while keeping screenshots out of the repository and public Skill package.
+- Upgraded calibration to a bounded identity/material/proportion/spirit loop with an identity blocking gate and early stop after two no-improvement attempts on the same dimension.
+- Gemini remains preferred for visual comparison, but equivalent host visual tooling is now an allowed disclosed fallback when Gemini is unavailable.
+- README and Wiki now document the corrected v1.3.0 identity and reference-driven calibration workflow.
+
+## [1.14.0] - 2026-09-01
+
+### Changed
+
+- Updated `dai-cat-knowledge-comic` v1.1.0 -> v1.2.0 after live image-generation review: adds a single-character spirit calibration gate before multi-panel work, a bounded three-round single-variable loop for material/proportion/expression corrections, and explicit anti-drift rules against commercial plush, uniform upholstery texture, glossy plastic, and generic Pixar/Disney-style kawaii rendering.
+- Added `references/spirit-and-rendering.md`, expanded the character bible and quality checklist with the “清澈 + 认真 + 略笨拙 + 克制” spirit model, and updated the reusable brief plus validator.
+- README and Wiki now document the v1.2.0 spirit-calibration and rendering workflow.
+
 ## [1.13.1] - 2026-09-01
 
 ### Changed
