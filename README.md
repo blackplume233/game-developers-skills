@@ -44,6 +44,7 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 
 | 技能 | 版本 | 说明 |
 |------|------|------|
+| [character-skill-forge](skills/skill-management/character-skill-forge/) | 1.0.0 | 将任意已授权角色参考图锻造成角色专属知识漫画 Skill：证据分层、四类角色锁、九宫格压力测试、有限单变量校准与结构验证 |
 | [find-skills](skills/skill-management/find-skills/) | 1.1.0 | 从本仓库、引用仓库和 skills.sh 生态发现和安装技能 |
 | [skill-repo-manager](skills/skill-management/skill-repo-manager/) | 1.5.2 | 路由式技能仓库管理：能力缺口时主动按需检索（本地缓存优先/缺失问用户/自远端下载）；管理搜索、安装、引用外部技能仓库、README/Wiki 同步和发布（含版本校验+AI 隐私审查） |
 
@@ -107,7 +108,7 @@ gh auth status
 
 # 全局安装所有通用技能
 npx skills add blackplume233/game-developers-skills \
-  --skill codex-subagent --skill auto-goal --skill find-skills --skill skill-repo-manager \
+  --skill codex-subagent --skill auto-goal --skill character-skill-forge --skill find-skills --skill skill-repo-manager \
   --skill shadcn-ui --skill ui-ux-pro-max --skill electron --skill tauri-v2 \
   --skill git-commit --skill guard --skill investigate --skill project-wiki-maintainer --skill qa \
   --skill game-deconstruction --skill obscura --skill gua --skill dai-cat-knowledge-comic \
@@ -121,6 +122,9 @@ npx skills add blackplume233/game-developers-skills --skill game-deconstruction 
 
 # 全局安装呆猫知识漫画技能
 npx skills add blackplume233/game-developers-skills --skill dai-cat-knowledge-comic -g -y
+
+# 全局安装角色技能锻造器
+npx skills add blackplume233/game-developers-skills --skill character-skill-forge -g -y
 
 # 项目级安装项目专用交付技能
 npx skills add blackplume233/game-developers-skills --skill ship
@@ -226,6 +230,11 @@ npx skills add blackplume233/game-developers-skills --skill '*' -g -y
     │       ├── scripts/        # 解包编排、知识库、验证与经验学习
     │       └── assets/         # 工作流、种子与报告模板
     ├── skill-management/       # 通用 - 技能管理
+    │   ├── character-skill-forge/
+    │   │   ├── SKILL.md
+    │   │   ├── references/     # 研究工作流、目标包契约与验收量表
+    │   │   ├── assets/         # 角色研究记录模板
+    │   │   └── scripts/        # Meta Skill 与目标角色 Skill 验证器
     │   ├── find-skills/
     │   │   ├── SKILL.md
     │   │   └── scripts/        # 本地与引用仓库技能搜索

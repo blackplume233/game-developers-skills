@@ -1,0 +1,76 @@
+project:
+  character_name: "角色名称"
+  character_slug: "character-slug"
+  capability: "knowledge-comic"
+  language: "zh-CN"
+  audience: "普通成年人"
+  output_root: "由当前任务决定，不写本机用户绝对路径"
+
+rights:
+  ownership: "official_ip | user_original | licensed | unknown"
+  user_authorized_download: false
+  public_distribution_scope: "skill-text-only"
+  reference_images_distributed: false
+
+references:
+  - id: "ref-01"
+    source: "user-provided | official-url | first-party-cdn"
+    evidence_tier: "official | community | observed | inferred | creative_default"
+    rights_note: "允许在本任务中分析；不随 Skill 分发"
+    dimensions: "宽x高"
+    view: "front | three-quarter | side | back | close-up | action | unknown"
+    visible: []
+    hidden_or_unknown: []
+    verified_date: "YYYY-MM-DD"
+
+character_lock:
+  identity_anchors: []
+  expression_policy:
+    mode: "fixed | bounded | expressive"
+    evidence: []
+    allowed: []
+    forbidden: []
+  anatomy_lock:
+    body_topology: []
+    hand_or_limb_type: "spherical | mitten | paw | hoof | human | wing | tentacle | hidden | other"
+    visible_joints: []
+    forbidden_joints: []
+    reach_and_grip_mechanics: []
+  render_lock:
+    medium: "2D | 3D | hybrid"
+    shape_language: []
+    materials: []
+    lighting: []
+    forbidden_drift: []
+  unknowns: []
+
+voice:
+  official: []
+  community: []
+  creative_defaults: []
+  forbidden_claims: []
+
+calibration:
+  max_rounds: 4
+  stop_after_no_improvement_rounds: 2
+  anchor_image: "任务本地路径；不进入 Skill 包"
+  anchor_passed: false
+  nine_grid_image: "任务本地路径；不进入 Skill 包"
+  rounds:
+    - round: 1
+      dimension: "identity | expression_anatomy | proportions_render | action_spirit"
+      observed_failure: ""
+      change_only: ""
+      invariants_repeated: []
+      score_before: 0
+      score_after: 0
+      accepted: false
+  unresolved: []
+
+target_skill:
+  name: "<character-slug>-knowledge-comic"
+  version: "1.0.0"
+  install_authorized: false
+  commit_authorized: false
+  push_authorized: false
+

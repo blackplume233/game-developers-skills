@@ -70,6 +70,7 @@
       "title": "Skill Management",
       "description": "Skill 发现、维护、发布与仓库管理技能。",
       "skills": [
+        "character-skill-forge",
         "create-watch-skill",
         "find-skills",
         "skill-repo-manager"

@@ -30,6 +30,7 @@ surface instead of one growing document.
 
 ## Recent Additions
 
+- `character-skill-forge` v1.0.0 (Skill Management): 把已授权的任意角色参考图转化为角色专属知识漫画 Skill；先分层记录证据与未知项，再建立身份、表情、肢体和渲染四类角色锁，通过单角色锚点、九宫格压力测试及四格真实试例完成有限单变量校准，并区分本地创建、安装、提交与发布授权。
 - `dai-cat-knowledge-comic` v1.3.2 (Content Creation): 固定官方黑白眼圈、白弧高光与卷曲猫嘴；米白前肢锁定为贴近蓝色躯干的球形圆手，禁止长前臂、肘部、手腕和手指；情绪由身体重心、道具、构图及脸盘外单一动漫特效表达。
 - `skill-repo-manager` v1.5.2: 升级为路由式主文案（Dispatch 路由表分诊 Finder/Publisher）；Finder 主动按需检索技能——本地缓存优先、缺失问用户、用户不告知则自远端下载安装；新增 `refresh_cache.py` 本地缓存脚本；以远端 URL 为稳定锚点、不写死本地绝对路径。
 - `obscura` v1.2.1 (Dev Workflow): Rust 开源无头浏览器技能，网页抓取/截图/PDF/AI 自动化/搜索（含一键 `search.sh`），内置一键安装脚本 `install.sh`，见 [skills/dev-workflow/obscura](skills/dev-workflow/obscura/)。

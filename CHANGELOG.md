@@ -2,6 +2,20 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.16.0] - 2026-09-02
+
+### Added
+
+- Added `character-skill-forge` v1.0.0 (`skill-management`): turns user-provided or explicitly authorized character references into a reusable character-specific knowledge-comic Skill package.
+- Added an evidence model that separates official facts, community conventions, direct observations, inferences, creative defaults and unknowns instead of treating a single image as a complete model sheet.
+- Added four portable character locks—identity, expression, anatomy and rendering—with per-character `fixed | bounded | expressive` face-policy selection so Dai Cat-specific rules are not universalized.
+- Added a bounded calibration workflow with a single-character anchor, nine-grid stress test, four-round single-variable budget, two-no-improvement early stop and a real four-panel forward test.
+- Added a reusable character-study template plus structural validators for the Meta Skill and generated target Skills; the target validator was regression-tested against `dai-cat-knowledge-comic` v1.3.2.
+
+### Changed
+
+- Updated README, Wiki and skills.sh grouping guidance with the new Meta Skill and its install command.
+
 ## [1.15.2] - 2026-09-02
 
 ### Fixed
