@@ -2,6 +2,11 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.17.0] - 2026-09-18
+
+### Added
+
+- Added `decide-setup` v1.0.0 (`agent-orchestration`): install, configure, and verify the `decide` decision tool (`pi-decider`: TypeSafe Jev / OpenRouter Decisions API / OpenAI-compatible chat proxy) across pi and omp, with credential setup, end-to-end verification steps, and a troubleshooting table.
 ## [1.16.0] - 2026-09-02
 
 ### Added

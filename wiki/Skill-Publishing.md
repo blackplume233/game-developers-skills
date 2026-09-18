@@ -51,6 +51,7 @@ If `.privacy-rules.yaml` exists, read it before making the final audit decision.
 
 - `auto-goal` v1.3.0 stores program-controlled goal state in top-level YAML frontmatter, keeps helper scripts for state reads and updates, remains compatible with older state tables, requires user confirmation after drafting goal files, and applies grill-me style clarification for ambiguous goals.
 - `qa` v2.1.0 is a generic Dev Workflow skill. It should guide agents to operate the real product entry, collect evidence incrementally, judge behavior like a responsible engineer, and save stable exploratory or regression paths as project test cases. Black-box actions must be steps a real user could reproduce themselves (no internal shortcuts standing in for user actions), and a reproducible plan (scenario steps + expected results, or at minimum an explore charter) must exist before the real target is touched.
+- `decide-setup` v1.0.0 is an onboarding skill for the published `pi-decider` package. It must state the three install paths (npm install, source checkout mount, skill-only), keep credentials as `$ENV_VAR` references, give the four-step verification (`/decide status` → `/decide question` → confirm `provider TypeSafe` → agent tool call), and cover the shared failure modes: `No backend is usable`, duplicate tool registration, omp having no `/reload`, and OpenRouter exposing only the `~typesafe/jev-latest` family alias.
 
 ## Changelog
 

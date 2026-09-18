@@ -41,6 +41,14 @@ Keep `README.md`, this `WIKI.md`, and the relevant `wiki/*.md` page in sync
 when repository behavior changes. The root `WIKI.md` should stay an index; do
 not move long process documentation back into this file.
 
+Adding or changing a skill touches four places, and the freshness guard below
+requires `README.md` and `WIKI.md` to move together with the skill:
+
+1. `skills/<category>/<skill>/` — the skill itself (frontmatter needs `version`)
+2. `README.md` — the category table row, the bulk-install `--skill` list, and the layout tree
+3. `skills.sh.json` — the skill listed under its grouping (`sync_skills_sh.py --check` must pass)
+4. `wiki/Skill-Publishing.md` — a short note in "Current Skill Notes" when behavior matters
+
 Run the documentation freshness guard before committing behavior-changing
 changes:
 

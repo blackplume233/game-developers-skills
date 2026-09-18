@@ -7,7 +7,8 @@
       "description": "Agent 编排、委派与自主执行技能。",
       "skills": [
         "auto-goal",
-        "codex-subagent"
+        "codex-subagent",
+        "decide-setup"
       ]
     },
     {
