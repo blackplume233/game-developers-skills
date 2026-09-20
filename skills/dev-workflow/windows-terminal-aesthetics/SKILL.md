@@ -1,6 +1,6 @@
 ---
 name: windows-terminal-aesthetics
-version: 1.0.2
+version: 1.0.3
 description: >-
   Tune the look of Windows Terminal and prove the result with pixel
   measurements instead of eyeballing: acrylic and Mica backdrops, opacity,
@@ -165,6 +165,15 @@ Calibrate before trusting anything: set opacity 100 and check that the measured
 body equals the scheme's own background exactly. If it does not, stop and find
 out why before drawing conclusions from any other number.
 
+When the question involves a *backdrop* - "does this survive a light wallpaper" -
+the `PrintWindow` path cannot answer it, because the blurred desktop is not part
+of the window's own composition. Use the other instrument: show an opaque
+full-screen colour with `scripts/white-backdrop.ps1`, then capture with `-Screen`.
+A `-Screen` run is only valid if the window really was in front, so read the
+`focused` line and treat NO as a failed run - a screen capture of an occluded
+window photographs the occluder, and every configuration then reports the same
+backdrop colour.
+
 ### 5. Accept or roll back, and record why
 
 Keep the measured table in a comment next to the settings it justifies, with the
@@ -209,6 +218,23 @@ Each of these cost a wrong conclusion before it was measured:
 - **Captures contain unpainted edges.** An 8px black strip on the left and 1px
   frame lines are not content; `analyze-capture.py` trims any edge that is
   uniform along its whole length before looking for text.
+- **A screen capture of a window that is not in front photographs the window in
+  front.** `SetForegroundWindow` is refused when the caller is not already
+  foreground, so a measurement driven from a background process silently
+  captures the wrong pixels - one such run over a white backdrop reported *every*
+  setting as `#FFFFFF`. `-Activate` now forces activation through the foreground
+  thread's input queue, and the `focused` line is the check: NO means rerun, not
+  caveat.
+- **Glass is a contract with the backdrop.** Over a forced pure white backdrop,
+  opacity 50 measures `#727275` - a mid-grey window with text contrast down to
+  4.7:1, where the same setting over a dark wallpaper measures `#181818`. No
+  setting compensates per backdrop: opacity is the only dial, and if a window
+  must stay black on any wallpaper the material has to come off.
+- **A key written at the wrong level is silently ignored.** `useMica` and
+  `applicationTheme` belong to `themes[].window`; a top-level `window` object is
+  not a setting at all, so a "Mica" experiment that writes it there measures
+  plain opacity and looks like a result. Verify with `validate-settings.py` and
+  the schema path, never with "the setting looks right".
 
 ## What Cannot Be Measured This Way
 
@@ -224,6 +250,11 @@ the window looks greyer - the capture never contained the desktop it composites
 over. Never quote a captured body colour as "how bright this will look"; quote it
 as what the window itself paints, and leave the appearance judgement to the user's
 eyes.
+
+The complement is `-Screen` over a fixed backdrop (`white-backdrop.ps1`): that
+capture does contain the blurred desktop, so it measures the composite instead -
+and needs the window unobstructed and in front, which is what the `focused` line
+is for.
 
 ## Reporting
 

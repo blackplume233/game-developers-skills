@@ -154,10 +154,38 @@ controls, with no blur.
 
 with an opaque-ish profile (`"opacity": 85`, `useAcrylic` left false).
 
+`useMica` must live in `themes[].window` - that is where the schema defines it,
+next to `applicationTheme`. Written into the profile, or into a top-level
+`"window"` object, it is silently ignored: no error, no effect, and the capture
+then records plain opacity while looking like a Mica result. Check that a key
+exists at the path you wrote it before trusting any capture that follows from it.
+
 Measured body: `#0F0F0F`, flat (99%). So over a dark scheme Mica is very nearly
 invisible - 3 units away from the scheme's own background. It reads as a subtle
 tint, not as glass. Choose it when the goal is a surface that belongs to the
 desktop without ever looking blurred or bright.
+
+## What The Backdrop Does
+
+Every number above is the window's *own* composition. What you see also includes
+the blurred desktop behind it, and that term is missing from a `PrintWindow`
+capture - which is why the same setting looks different on different wallpapers.
+Measured over a forced pure white backdrop with a screen capture (see
+`measurement.md`), body of a text-free pane plus the contrast of `#CCCCCC` text
+against it:
+
+| Setting | Body over pure white | Text contrast |
+|---|---|---|
+| acrylic, opacity 50 | `#727275` rgb(84,87,90) | 4.7:1 |
+| acrylic, opacity 85 | `#242425` rgb(42,43,45) | 8.8:1 |
+| acrylic, opacity 100 (material off) | the scheme's own background | 12:1 |
+
+So over a bright backdrop, opacity 50 is not a black window - it is a mid-grey
+one, with text contrast down at the 4.5:1 threshold. Nothing in the schema
+compensates per backdrop: **opacity is the only dial**, and darkening the scheme
+background (`#000000` instead of Campbell's `#0C0C0C`) is the only way to lower
+the floor under it. A window that has to stay black on any wallpaper wants
+opacity 100 with the material off: glass is a contract with the backdrop.
 
 ## Choosing
 
@@ -166,7 +194,7 @@ desktop without ever looking blurred or bright.
 | Darkest, flat, no material | Seamless Dark (acrylic off, 85) | `#0A0A0A` | flat near-black |
 | Frosted, almost opaque | Frosted (acrylic, 95) | `#222222` | black window, heavy frost |
 | Frosted, reads obsidian - the practical sweet spot | Frosted (acrylic, 85-90) | `#202020` / `#212121` | black window, visible frost, 10-15% see-through |
-| Bright, glass-first | Frosted (acrylic, 50 and below) | `#181818` / `#101010` | grey glass: the desktop blur dominates |
+| Bright, glass-first | Frosted (acrylic, 50 and below) | `#181818` / `#101010` | own composition only - over white it measures `#727275` and reads as grey glass |
 | Barely-there tint, no blur | Mica (85) | `#0F0F0F` | flat, almost no tint |
 
 ## Not Available

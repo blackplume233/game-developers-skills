@@ -31,6 +31,17 @@
     Capture only the client area instead of the whole visible frame. The default
     (whole frame) is what you want for judging tab-row / title-bar / body seams.
 
+.PARAMETER Screen
+    Capture the window's screen area instead, so the result is the real
+    composite: the window plus whatever the compositor put behind it. This is
+    the right instrument when the *backdrop* is part of the question. The same
+    `opacity` over a dark wallpaper and over a white one produce completely
+    different pictures, and the PrintWindow path cannot show that difference at
+    all, because it renders only the window's own composition. Pair it with a
+    fixed backdrop (white-backdrop.ps1) so runs are comparable, and bring the
+    window to the front with -Activate: unlike PrintWindow this cannot see
+    through other windows, so anything covering the target lands in the image.
+
 .PARAMETER Activate
     Bring the matched window to the foreground and give it a moment to repaint
     before capturing. A measurement of an unfocused window is a measurement of
@@ -69,6 +80,7 @@ param(
     [switch]$Settle,
     [switch]$List,
     [switch]$ClientOnly,
+    [switch]$Screen,
     [switch]$Activate,
     [switch]$CloseMatch
 )
@@ -168,6 +180,42 @@ public class WinCap
         return list;
     }
 
+    // SetForegroundWindow silently refuses when the calling process is not
+    // already foreground - which is exactly the situation when a measurement is
+    // driven from a background process (a script, an agent, a scheduled run).
+    // Attaching to the foreground thread's input queue for the duration of the
+    // call lifts that restriction. Without this you do not get an error: you
+    // get a capture of whatever window was in front instead of the target.
+    [DllImport("user32.dll")] public static extern IntPtr SetFocus(IntPtr h);
+    [DllImport("user32.dll")] public static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
+    [DllImport("user32.dll")] public static extern bool BringWindowToTop(IntPtr h);
+    [DllImport("kernel32.dll")] public static extern uint GetCurrentThreadId();
+
+    public static bool ForceForeground(IntPtr h)
+    {
+        IntPtr fg = GetForegroundWindow();
+        uint fgPid;
+        uint fgThread = fg != IntPtr.Zero ? GetWindowThreadProcessId(fg, out fgPid) : 0;
+        uint myThread = GetCurrentThreadId();
+        bool attached = false;
+        if (fgThread != 0 && fgThread != myThread)
+        {
+            attached = AttachThreadInput(fgThread, myThread, true);
+        }
+        try
+        {
+            ShowWindow(h, 9);   // SW_RESTORE, so a maximized probe can be measured
+            BringWindowToTop(h);
+            SetForegroundWindow(h);
+            SetFocus(h);
+        }
+        finally
+        {
+            if (attached) AttachThreadInput(fgThread, myThread, false);
+        }
+        return GetForegroundWindow() == h;
+    }
+
 }
 '@
 }
@@ -201,6 +249,26 @@ function Save-WindowCapture {
         $bmp.Dispose()
     }
     return $primary
+}
+
+# The complement of Save-WindowCapture: instead of asking the window to render
+# itself, grab the pixels that are actually on screen over that rectangle. This
+# is the only way to see the compositor's contribution - the blurred backdrop
+# behind an acrylic / translucent window - which is exactly the term that
+# decides how the window looks on a light versus a dark background.
+function Save-ScreenCapture {
+    param([int]$X, [int]$Y, [int]$Width, [int]$Height, [string]$Path)
+    $bmp = New-Object System.Drawing.Bitmap($Width, $Height)
+    $g = [System.Drawing.Graphics]::FromImage($bmp)
+    try {
+        $g.CopyFromScreen($X, $Y, 0, 0, (New-Object System.Drawing.Size($Width, $Height)))
+        $bmp.Save($Path, [System.Drawing.Imaging.ImageFormat]::Png)
+    }
+    finally {
+        $g.Dispose()
+        $bmp.Dispose()
+    }
+    return 'screen'
 }
 
 [WinCap]::MakePerMonitorAware()
@@ -243,8 +311,7 @@ if ($Geometry) {
 }
 
 if ($Activate) {
-    [void][WinCap]::ShowWindow($win.Hwnd, 9)   # SW_RESTORE
-    [void][WinCap]::SetForegroundWindow($win.Hwnd)
+    [void][WinCap]::ForceForeground($win.Hwnd)
     Start-Sleep -Milliseconds 400
 }
 $foreground = ([WinCap]::GetForegroundWindow() -eq $win.Hwnd)
@@ -252,6 +319,17 @@ $foreground = ([WinCap]::GetForegroundWindow() -eq $win.Hwnd)
 $cw = if ($ClientOnly) { $win.ClientWidth } else { $win.Width }
 $ch = if ($ClientOnly) { $win.ClientHeight } else { $win.Height }
 if ($cw -le 1 -or $ch -le 1) { throw "Degenerate window size ${cw}x${ch} - is it minimized?" }
+if ($Screen -and $ClientOnly) { throw '-Screen captures the visible frame; drop -ClientOnly and crop after capture instead.' }
+
+# One closure so the settle loop and the single-shot path cannot drift apart.
+$capture = {
+    if ($Screen) {
+        Save-ScreenCapture -X $win.X -Y $win.Y -Width $cw -Height $ch -Path $Out
+    }
+    else {
+        Save-WindowCapture -Hwnd $win.Hwnd -Width $cw -Height $ch -Path $Out -ClientOnly ([bool]$ClientOnly)
+    }
+}
 
 $dir = Split-Path -Parent $Out
 if ($dir -and -not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir -Force | Out-Null }
@@ -262,7 +340,7 @@ if ($Settle) {
     $attempts = 0
     for ($i = 1; $i -le 8; $i++) {
         $attempts = $i
-        $usedFlags = Save-WindowCapture -Hwnd $win.Hwnd -Width $cw -Height $ch -Path $Out -ClientOnly ([bool]$ClientOnly)
+        $usedFlags = & $capture
         if ($i -ge 2 -and (Get-FileHash $Out).Hash -eq (Get-FileHash $prev).Hash) { break }
         Copy-Item $Out $prev -Force
         Start-Sleep -Milliseconds 350
@@ -270,7 +348,7 @@ if ($Settle) {
     Remove-Item $prev -Force -ErrorAction SilentlyContinue
 }
 else {
-    $usedFlags = Save-WindowCapture -Hwnd $win.Hwnd -Width $cw -Height $ch -Path $Out -ClientOnly ([bool]$ClientOnly)
+    $usedFlags = & $capture
 }
 
 Write-Output "captured : $Out  ($(if ($Settle) { "settled after $attempts attempt(s)" } else { 'single shot' }))"
@@ -279,7 +357,12 @@ Write-Output "title    : $($win.Title)"
 Write-Output "frame    : x=$($win.X) y=$($win.Y) ${cw}x${ch} $($(if ($ClientOnly) { '(client)' } else { '(whole visible frame)' }))"
 Write-Output "dpi      : $($win.Dpi)  scale=$([Math]::Round($win.Dpi / 96.0, 2))"
 Write-Output "focused  : $(if ($foreground) { 'yes - focused appearance captured' } else { 'NO - unfocused appearance; rerun with -Activate for the focused theme' })"
-Write-Output "printwin : flags=$usedFlags $(if ($usedFlags -eq 2) { '(PW_RENDERFULLCONTENT)' } elseif ($usedFlags -eq 1) { '(PW_CLIENTONLY)' } else { '(0 - fallback, content may be incomplete)' })"
+if ($Screen) {
+    Write-Output "source   : screen - the real composite, backdrop included (anything covering the window is in this image)"
+}
+else {
+    Write-Output "printwin : flags=$usedFlags $(if ($usedFlags -eq 2) { '(PW_RENDERFULLCONTENT)' } elseif ($usedFlags -eq 1) { '(PW_CLIENTONLY)' } else { '(0 - fallback, content may be incomplete)' })"
+}
 
 if ($CloseMatch) {
     [void][WinCap]::PostMessageW($win.Hwnd, [WinCap]::WM_CLOSE, [IntPtr]::Zero, [IntPtr]::Zero)

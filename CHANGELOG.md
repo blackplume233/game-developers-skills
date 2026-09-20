@@ -2,6 +2,19 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.18.4] - 2026-09-20
+
+### Added
+
+- `windows-terminal-aesthetics`: `capture-window.ps1 -Screen` captures the real composite - the window plus the compositor's blurred backdrop - which the `PrintWindow` path structurally cannot see. With the new `scripts/white-backdrop.ps1` (an opaque, non-activating full-screen colour to measure against) it answers "does this setting survive a light wallpaper".
+- The measured answer, recorded in `references/presets.md`: over pure white, acrylic at opacity 50 is a mid-grey window (`#727275`, 4.7:1 text contrast) while opacity 85 holds `#242425` and 8.8:1. Opacity is the only dial, and a pure black scheme background is the only way to lower the floor.
+
+### Fixed
+
+- `-Activate` no longer fails silently to raise the target: `SetForegroundWindow` is refused when the caller is not already foreground, so a sweep over a white backdrop reported `#FFFFFF` with `share 71%` for every configuration - it was photographing the backdrop. Activation now attaches to the foreground thread's input queue, and `focused: NO` on a `-Screen` capture is documented as a failed run rather than a caveat.
+- `white-backdrop.ps1` subclasses `Form` instead of assigning `ShowWithoutActivation`, which is protected and made the script die on launch.
+- Documented that `useMica` and `applicationTheme` are `themes[].window` keys: a top-level `window` object is silently ignored, so a Mica experiment written there measures plain opacity and looks like a result.
+
 ## [1.18.3] - 2026-09-20
 
 ### Fixed

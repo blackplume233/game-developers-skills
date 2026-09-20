@@ -13,8 +13,15 @@ produced a wrong conclusion at least once before this protocol existed:
    saved window placement, so a probe can come up maximized on one run and
    windowed on the next. Capture a bitmap sized for one and painted for the
    other and you get a mostly-black image whose "body colour" is padding.
+4. **The backdrop is not what you think.** A translucent window is a contract
+   with whatever is behind it, and a `PrintWindow` capture cannot see that term
+   at all. Two runs over two wallpapers are two different measurements.
+5. **The key you set is not a key.** Settings files accept unknown keys
+   silently. A key written at the wrong level - a theme key in the profile, a
+   profile key at the top level - gives no error and no effect, and the capture
+   then records the previous value while looking like a result.
 
-The tools here exist to make all three visible instead of silent.
+The tools here exist to make all five visible instead of silent.
 
 ## The Three Tools
 
@@ -25,6 +32,11 @@ pwsh -File scripts/capture-window.ps1 -List
 # 2. Capture one window, geometry forced, wait for it to stop changing
 pwsh -File scripts/capture-window.ps1 -TitleMatch "probe" -Out shot.png `
      -Geometry 1200x680+80+80 -Activate -Settle
+
+# 2b. The composite instead: the window plus the blurred backdrop you see it
+#     against. Fix the backdrop first (separate process), then screen-capture.
+pwsh -File scripts/white-backdrop.ps1 -Color White      # stop it when done
+pwsh -File scripts/capture-window.ps1 -TitleMatch "probe" -Screen -Activate -Out over-white.png
 ```
 
 ```bash
@@ -171,6 +183,32 @@ So: measure the material and the geometry, judge the blur with your eyes, and
 report it as judged visually. Do not derive a blur claim from a captured pixel
 value.
 
+The complement is `-Screen` over a fixed backdrop (`white-backdrop.ps1`). That
+capture *does* contain the blurred desktop, because it records what is on screen
+rather than what the window renders - so it can measure the composite, at the
+price of requiring the window unobstructed and in front. When the question is
+"does this setting survive a light wallpaper", that is the instrument; when the
+question is "what does this setting paint", `PrintWindow` is.
+
+## Case Study: The Capture That Was The Backdrop
+
+A white-backdrop sweep reported every configuration as `body #FFFFFF`,
+`mean rgb(240,240,240)`, `share 71%`, `text 0`. No setting explained it: the
+image was the *backdrop*, not the window. Two silent causes:
+
+1. `SetForegroundWindow` refused to raise the probe (the measuring process was
+   background, so it was not allowed to change foreground), and the `focused : NO`
+   line was read as a caveat rather than as a failed run.
+2. A screen capture records z-order. The probe was never in front, so it was
+   never in the picture.
+
+Both are fixed in the tooling - activation now attaches to the foreground
+thread's input queue, and the backdrop is a non-activating window
+(`ShowWithoutActivation`, which on `Form` is protected and therefore needs a
+subclass, not a property assignment). The lesson to keep: on a `-Screen` capture,
+`focused: NO` means "this is a photograph of something else", and every
+configuration reporting the same near-white body is the backdrop talking.
+
 ## Troubleshooting
 
 | Symptom | Cause and what to do |
@@ -178,6 +216,6 @@ value.
 | `No visible top-level window title contains '...'` | Run with `-List`. Windows Terminal windows are class `CASCADIA_HOSTING_WINDOW_CLASS`; the title changes as the running program sets it, so prefer `--suppressApplicationTitle` on a dedicated probe window |
 | Several candidate windows | Tighten `-TitleMatch`; the tool names the candidates it saw |
 | `PrintWindow failed` | The window refused to render - usually minimized. Restore it and retry |
-| `focused : NO` on every run | Foreground activation is restricted by the OS. If the profile sets no `unfocusedAppearance`, the measurement still stands; otherwise set one for the test or measure with the window genuinely in front |
+| `focused : NO` even with `-Activate` | `SetForegroundWindow` is refused when the calling process is not already foreground - background scripts and agents hit this every time. `-Activate` now attaches to the foreground thread's input queue to lift the restriction. If the flag still says NO, something else holds the foreground: treat a `-Screen` capture as failed, because it may have photographed that other window |
 | Body reads darker than the scheme background | Expected with a material off: `opacity` alpha-blends the scheme colour over black, so 85% of `#0C0C0C` measures `#0A0A0A` |
 | Detected width is smaller than the requested geometry | `-Geometry` sets the outer window size; the visible frame can be a few pixels smaller. Use the reported frame size, not the requested one, when interpreting x coordinates |
