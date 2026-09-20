@@ -2,6 +2,12 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.18.3] - 2026-09-20
+
+### Fixed
+
+- `windows-terminal-aesthetics` v1.0.1 -> v1.0.2: recorded that a captured body colour is not perceived brightness. Below roughly 80% opacity the desktop blur behind the window dominates what you see, and it is absent from a `PrintWindow` capture, so `#181818` (opacity 50) measured *darker* than `#202020` (opacity 85) while reading grey on screen. `references/presets.md` now places the practical "obsidian with frost" range at 85-95 and classes 50 and below as a different, glass-first look; the pitfall is documented in `SKILL.md`.
+
 ## [1.18.2] - 2026-09-20
 
 ### Fixed

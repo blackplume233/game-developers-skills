@@ -32,6 +32,8 @@ surface instead of one growing document.
 
 ## Recent Additions
 
+- `windows-terminal-aesthetics` v1.0.1 -> v1.0.2: 记下「抓到的 body 色 ≠ 亮度」——半透下窗后桌面的模糊才是主导项,而它**不在** PrintWindow 抓屏里(实测 opacity 50 的 `#181818` 比 opacity 85 的 `#202020` 更暗,屏幕上却更灰)。据此把「曜黑 + 霜」的实用区间定为 **85-95**,50 及以下归为「灰玻璃」的另一种观感,坑位写进 Measured Pitfalls。
+
 - `windows-terminal-aesthetics` v1.0.0 -> v1.0.1: 删掉 `opacity` 的一处过度解读——PrintWindow 根本测不到"透出多少桌面"，且原文与 `opacity` 的语义相矛盾（更低就是更透，只是合成后的 body 值不同）；补上磨砂"半透"端的实测预设（opacity 50 → `#181818`、25 → `#101010`），并把"材质/opacity 变更对**已打开窗口实时生效**（实测 #202020 → #0A0A0A → #202020），无需重启"写进工作流。
 - `windows-terminal-aesthetics` v1.0.0 (Dev Workflow): Windows Terminal 外观调优技能，把"看起来更黑/更磨砂"变成可测量的结论——`capture-window.ps1` 用 PrintWindow 抓窗口自身渲染（抗遮挡），`analyze-capture.py` 给出 body 色、色带结构、标签栏接缝、未绘制边距裁剪与文字行段，`validate-settings.py` 把 settings.json 对照**已安装版本**的 schema 校验。附实测预设与 α 映射表，并记录三条被并排实测证伪的材质假说。见 [wiki 页面](wiki/Windows-Terminal-Aesthetics.md)。
 - `character-skill-forge` v1.0.0 (Skill Management): 把已授权的任意角色参考图转化为角色专属知识漫画 Skill；先分层记录证据与未知项，再建立身份、表情、肢体和渲染四类角色锁，通过单角色锚点、九宫格压力测试及四格真实试例完成有限单变量校准，并区分本地创建、安装、提交与发布授权。

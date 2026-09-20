@@ -81,7 +81,7 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 | [project-wiki-maintainer](skills/dev-workflow/project-wiki-maintainer/) | 1.1.0 | 维护项目 Wiki 与 README，并提供文档新鲜度检查 |
 | [qa](skills/dev-workflow/qa/) | 2.1.0 | 通用 QA Engineer：真实操作验证、证据化报告、自动沉淀测试用例 |
 | [obscura](skills/dev-workflow/obscura/) | 1.2.1 | Rust 开源无头浏览器，网页抓取/截图/PDF/AI 自动化/搜索（含一键 search.sh），内置一键安装脚本 |
-| [windows-terminal-aesthetics](skills/dev-workflow/windows-terminal-aesthetics/) | 1.0.1 | Windows Terminal 外观调优 + 像素级验证：亚克力/Mica 材质、opacity、无界窗口、文字清晰度，并把 settings.json 对照已安装版本的 schema 校验 |
+| [windows-terminal-aesthetics](skills/dev-workflow/windows-terminal-aesthetics/) | 1.0.2 | Windows Terminal 外观调优 + 像素级验证:亚克力/Mica 材质、opacity、无界窗口、文字清晰度,并把 settings.json 对照已安装版本的 schema 校验 |
 
 ### Game Analysis（通用）
 

@@ -112,10 +112,18 @@ fraction over the backdrop, so a lower value is more see-through - but the
 material's own contribution moves with it, which is why the measured body does
 not converge on the scheme colour as opacity falls.
 
-How much of the desktop actually shows through cannot be read off these numbers.
-A PrintWindow capture shows the window's own composition, not the compositor's
-blur of the desktop behind it (see `measurement.md`), so judge translucency by
-eye and use these values only to know which body colour to expect.
+Do not read that table as brightness, and this is the trap worth remembering: the
+captured body keeps getting *darker* below 85 (`#181818` at 50, `#101010` at 25),
+while on screen those settings look *greyer*. A PrintWindow capture contains only
+the window's own composition - the compositor's blur of the desktop behind it is
+missing (see `measurement.md`) - and at low opacity that missing term dominates
+what you see. Over a mid-grey wallpaper the window then stops reading as a black
+window with glass on it and starts reading as grey glass.
+
+So the practical range for a near-black window with frost is **85-95**, and where
+it stops working depends on the backdrop, which means the boundary is found by
+eye rather than by measurement. Treat 50 and below as a different look
+(bright, glass-first) rather than as "more of the same".
 
 There is no dial that adds frost without lifting the body off what the unblurred
 blend produces, and none at all that reaches the pure scheme colour while the
@@ -153,13 +161,13 @@ desktop without ever looking blurred or bright.
 
 ## Choosing
 
-| Goal | Preset | Body |
-|---|---|---|
-| Darkest, flat, no material | Seamless Dark (acrylic off, 85) | `#0A0A0A` |
-| Frosted, barely see-through | Frosted (acrylic, 95) | `#222222` |
-| Frosted and clearly semi-transparent - half the pane is backdrop | Frosted (acrylic, 50) | `#181818` |
-| Frosted, most see-through, still dark | Frosted (acrylic, 25) | `#101010` |
-| Barely-there tint, no blur | Mica (85) | `#0F0F0F` |
+| Goal | Preset | Captured body | Looks like |
+|---|---|---|---|
+| Darkest, flat, no material | Seamless Dark (acrylic off, 85) | `#0A0A0A` | flat near-black |
+| Frosted, almost opaque | Frosted (acrylic, 95) | `#222222` | black window, heavy frost |
+| Frosted, reads obsidian - the practical sweet spot | Frosted (acrylic, 85-90) | `#202020` / `#212121` | black window, visible frost, 10-15% see-through |
+| Bright, glass-first | Frosted (acrylic, 50 and below) | `#181818` / `#101010` | grey glass: the desktop blur dominates |
+| Barely-there tint, no blur | Mica (85) | `#0F0F0F` | flat, almost no tint |
 
 ## Not Available
 

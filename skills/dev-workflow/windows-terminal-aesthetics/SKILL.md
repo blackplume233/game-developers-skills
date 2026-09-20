@@ -1,6 +1,6 @@
 ---
 name: windows-terminal-aesthetics
-version: 1.0.1
+version: 1.0.2
 description: >-
   Tune the look of Windows Terminal and prove the result with pixel
   measurements instead of eyeballing: acrylic and Mica backdrops, opacity,
@@ -176,6 +176,13 @@ measured or guessed.
 
 Each of these cost a wrong conclusion before it was measured:
 
+- **A captured body colour is not perceived brightness.** Below roughly 80%
+  opacity the desktop blur behind the window drives what you see, and it is
+  absent from the capture. `#181818` (opacity 50) was measured darker than
+  `#202020` (opacity 85) yet *looked* grey on screen while 85 looked like a black
+  window with frost. Resolve this class of disagreement with a paired test: a
+  capture plus the user's eyes, and remember the capture is the one missing a
+  term.
 - **A "grey floor" is not the system app theme.** The material's tone was
   attributed to `AppsUseLightTheme = 1` until `applicationTheme: light` and
   `dark` were measured side by side and produced an *identical* body (see
@@ -210,6 +217,13 @@ material's tint, level and dither, the body colour, seams and text positions -
 but **not** how strongly DWM blurs the desktop behind the window. Judge the blur
 itself visually, and say that the blur was verified by eye rather than by
 measurement. Do not infer blur strength from a captured pixel value.
+
+That missing term is not merely unmeasurable, it can be the *dominant* one. At low
+opacity the window is mostly backdrop, so the captured body can read darker while
+the window looks greyer - the capture never contained the desktop it composites
+over. Never quote a captured body colour as "how bright this will look"; quote it
+as what the window itself paints, and leave the appearance judgement to the user's
+eyes.
 
 ## Reporting
 
