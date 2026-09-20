@@ -2,6 +2,17 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.18.1] - 2026-09-20
+
+### Fixed
+
+- Corrected the repository's visibility across the documentation. `blackplume233/game-developers-skills` is **public** (`gh repo view` reports `isPrivate: false`), but `skill-repo-manager` and the README/Installation pages described it as private and told users to authenticate before installing. Installing from it needs no authentication; `gh auth` is only required to publish to this repository or to read a repository that really is private.
+- Removed the false diagnostic on the Installation page that claimed unauthenticated API requests return `404` for this repository, and added a separate section for installing from a genuinely private repository.
+
+### Changed
+
+- Updated `skill-repo-manager` v1.5.2 -> v1.5.3: default repository documented as public, the install section retitled, and the manual clone fallback now triggers on network/TLS/ref/reachability failures rather than "private repository" failures.
+
 ## [1.18.0] - 2026-09-20
 
 ### Added

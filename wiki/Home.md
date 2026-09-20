@@ -8,7 +8,7 @@ maintenance rules, and troubleshooting notes.
 
 | Page | Use it for |
 |------|------------|
-| [Installation](Installation.md) | Installing skills from this private repository and fixing auth or clone failures |
+| [Installation](Installation.md) | Installing skills from this repository and troubleshooting failed installs |
 | [Skill Publishing](Skill-Publishing.md) | Publishing new or updated skills through the required gates |
 | [Referenced Skill Repositories](Referenced-Skill-Repositories.md) | Managing external repositories under `references/` |
 | [Maintenance Rules](Maintenance-Rules.md) | Repository layout, documentation freshness, and local update policy |
@@ -17,7 +17,7 @@ maintenance rules, and troubleshooting notes.
 ## Repository Facts
 
 - Repository: `blackplume233/game-developers-skills`
-- Visibility: private
+- Visibility: public
 - Default branch: `master`
 - Primary skill root: `skills/`
 - Referenced external repositories: `references/`

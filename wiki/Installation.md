@@ -3,21 +3,22 @@
 ## Prerequisites
 
 - Node.js and `npx`
-- GitHub access to `blackplume233/game-developers-skills`
-- GitHub CLI login for private repository access
+- Network access to GitHub
 
-Check access before installing:
+`blackplume233/game-developers-skills` is **public**, so installing from it
+requires no GitHub authentication. A GitHub CLI login is only needed to publish
+to this repository, or to install from a repository that really is private.
+
+Confirm what you are installing from:
 
 ```bash
-gh auth status
-gh repo view blackplume233/game-developers-skills --json nameWithOwner,visibility,defaultBranchRef,viewerPermission
+gh repo view blackplume233/game-developers-skills --json nameWithOwner,visibility,defaultBranchRef
 ```
 
 Expected repository metadata:
 
-- `visibility`: `PRIVATE`
+- `visibility`: `PUBLIC`
 - `defaultBranchRef.name`: `master`
-- `viewerPermission`: `ADMIN`, `WRITE`, or another permission with read access
 
 ## Install The Recommended Manager
 
@@ -58,11 +59,12 @@ Verify installed skills:
 npx skills list -g --json
 ```
 
-## Troubleshooting Private Repository Installs
+## Troubleshooting Failed Installs
 
-Public GitHub API requests return `404` for this repository without
-authentication. Treat `404` from unauthenticated API calls as an auth signal,
-not proof that the repository is missing.
+This repository is public, so unauthenticated API calls against it succeed: a
+`404` here means the owner or repository name is wrong, not that you need to log
+in. `404` is only an authentication signal when the repository really is private
+- check `visibility` before reading anything into it.
 
 If `npx skills add` fails during clone or download:
 
@@ -84,8 +86,9 @@ If `npx skills add` fails during clone or download:
    git -c core.sshCommand="ssh -o StrictHostKeyChecking=accept-new" ls-remote git@github.com:blackplume233/game-developers-skills.git
    ```
 
-4. If Codex's bundled installer helper is needed, pass the GitHub token, the
-   `master` ref, and the full skill path:
+4. If Codex's bundled installer helper is needed, pass the `master` ref and the
+   full skill path. The token is optional for this public repository, and worth
+   supplying to avoid anonymous API rate limits:
 
    ```bash
    $env:GH_TOKEN = gh auth token
@@ -98,3 +101,17 @@ If `npx skills add` fails during clone or download:
 
 Do not use the root path `skill-repo-manager`; that path does not exist in this
 repository.
+
+## Installing From A Genuinely Private Repository
+
+Different situation, different symptom. If the target repository is private, the
+unauthenticated clone fails or asks for credentials, and the API returns `404`.
+Authenticate first, then repeat the same install command:
+
+```bash
+gh auth status
+gh auth setup-git          # let git reuse the GitHub CLI credentials over HTTPS
+```
+
+Everything else on this page - paths, refs, the Codex installer helper - applies
+unchanged.

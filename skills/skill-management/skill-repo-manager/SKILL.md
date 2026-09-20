@@ -1,6 +1,6 @@
 ---
 name: skill-repo-manager
-version: 1.5.2
+version: 1.5.3
 description: >-
   路由式技能仓库管理技能。主文案即路由表, 分诊两类场景: ①能力缺口时主动按需
   检索技能——本地缓存优先、缓存缺失时问用户、用户不告知则自远端下载安装
@@ -32,11 +32,16 @@ description: >-
 ## Default Repository
 
 Unless the user provides another repository, treat this repository as the
-default private skill repository:
+default skill repository:
 
 ```text
 blackplume233/game-developers-skills
 ```
+
+It is **public**. Installing from it needs no authentication, so never tell a
+user to log in or to run `gh auth status` before installing. GitHub credentials
+are only needed to publish to it (push) or to read a repository that really is
+private.
 
 Use this default for repository search, install, reference, publish, update, and
 GitHub access checks. If a local clone is needed and the current working
@@ -89,7 +94,7 @@ temporary or user-selected workspace before editing.
    ```
    该命令由 Skills CLI 从远端仓库拉取并安装到 `~/.agents/skills/<name>/`,
    不经由手动 clone/复制
-3. 仅当 `npx skills add` 因私有仓库/TLS/默认分支失败时, 才回退手动方式:
+3. 仅当 `npx skills add` 因网络/TLS/默认分支/仓库不可达失败时, 才回退手动方式:
    `git clone --depth 1 <url> <tmp>` 后复制技能目录到 `~/.agents/skills/<name>/`
 4. 装完更新缓存 (`installed: true`, `local_path` 记录仓库路径)
 
@@ -127,12 +132,15 @@ npx skills find "<keyword>"
 `npx skills find` 是本技能**确定目标技能名 `<name>` 的查询兜底**: 它同时覆盖
 本地仓库与 skills.sh 市场。找到后, 用 §A3 的 `npx skills add` 下载安装。
 
-### 从私有仓库安装
+### 从本仓库安装（公开，无需认证）
 
 ```bash
 npx skills add blackplume233/game-developers-skills --skill <name> -g
 npx skills add blackplume233/game-developers-skills --skill '*' -g -y   # 全量
 ```
+
+若目标是**另一个确实私有**的仓库, 先确认凭据 (`gh auth status`, 必要时
+`gh auth setup-git`) 再执行同样的 `npx skills add`; 失败时按 §A3 第 3 步手动回退。
 
 ### 从 skills.sh 市场安装
 

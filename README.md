@@ -1,6 +1,6 @@
 # Game Developers Skills
 
-AI Agent 技能私有仓库，兼容 [skills.sh](https://skills.sh/) / `npx skills` 生态。
+AI Agent 技能仓库（**公开**），兼容 [skills.sh](https://skills.sh/) / `npx skills` 生态。
 
 ## 必装技能
 
@@ -10,9 +10,11 @@ AI Agent 技能私有仓库，兼容 [skills.sh](https://skills.sh/) / `npx skil
 npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -g -y
 ```
 
-`skill-repo-manager` 默认指向 `blackplume233/game-developers-skills`。当你说「安装我们的技能」「搜索仓库里的技能」「发布到远端」时，除非另有说明，它会优先使用这个私有技能仓库。
+`skill-repo-manager` 默认指向 `blackplume233/game-developers-skills`。当你说「安装我们的技能」「搜索仓库里的技能」「发布到远端」时，除非另有说明，它会优先使用这个技能仓库。
 
-> 本仓库是私有仓库，安装前需要确保当前机器已经具备 GitHub 访问权限。推荐先运行 `gh auth status` 确认已登录，再安装。若 `npx skills add` 因私有仓库、TLS 或默认分支失败，见 [Installation](wiki/Installation.md) 的私有仓库安装排障流程。
+> 本仓库是**公开**仓库，`npx skills add` 直接可用，**安装不需要任何 GitHub 认证**。需要 `gh auth` 的只有两种情况：把改动**发布**到本仓库，或安装**别的确实私有**的仓库。装载失败（网络 / TLS / 默认分支 / 仓库不可达）时见 [Installation](wiki/Installation.md) 的安装排障流程。
+>
+> 内容全网可读，因此每个技能上传前都必须先过 [隐私审计](docs/privacy-audit-guide.md)，且仓内不得出现本机绝对路径、账号、密钥或内部地址。
 
 `skill-repo-manager` 在仓库中的真实路径是 `skills/skill-management/skill-repo-manager/`，仓库默认分支是 `master`。使用直接下载或自定义安装脚本时需要显式使用该路径和分支。
 
@@ -105,7 +107,7 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 # 安装单个技能
 npx skills add blackplume233/game-developers-skills --skill guard -g -y
 
-# 私有仓库安装前先确认 GitHub CLI 已登录
+# 仅发布/推送本仓库时才需要 GitHub CLI 登录（安装公开仓库不需要）
 gh auth status
 
 # 全局安装所有通用技能
