@@ -79,6 +79,7 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 | [project-wiki-maintainer](skills/dev-workflow/project-wiki-maintainer/) | 1.1.0 | 维护项目 Wiki 与 README，并提供文档新鲜度检查 |
 | [qa](skills/dev-workflow/qa/) | 2.1.0 | 通用 QA Engineer：真实操作验证、证据化报告、自动沉淀测试用例 |
 | [obscura](skills/dev-workflow/obscura/) | 1.2.1 | Rust 开源无头浏览器，网页抓取/截图/PDF/AI 自动化/搜索（含一键 search.sh），内置一键安装脚本 |
+| [windows-terminal-aesthetics](skills/dev-workflow/windows-terminal-aesthetics/) | 1.0.0 | Windows Terminal 外观调优 + 像素级验证：亚克力/Mica 材质、opacity、无界窗口、文字清晰度，并把 settings.json 对照已安装版本的 schema 校验 |
 
 ### Game Analysis（通用）
 
@@ -112,11 +113,14 @@ npx skills add blackplume233/game-developers-skills \
   --skill codex-subagent --skill auto-goal --skill character-skill-forge --skill decide-setup --skill find-skills --skill skill-repo-manager \
   --skill shadcn-ui --skill ui-ux-pro-max --skill electron --skill tauri-v2 \
   --skill git-commit --skill guard --skill investigate --skill project-wiki-maintainer --skill qa \
-  --skill game-deconstruction --skill obscura --skill gua --skill dai-cat-knowledge-comic \
+  --skill game-deconstruction --skill obscura --skill gua --skill dai-cat-knowledge-comic --skill windows-terminal-aesthetics \
   -g -y
 
 # 项目级安装通用 QA 技能
 npx skills add blackplume233/game-developers-skills --skill qa
+
+# 全局安装 Windows Terminal 外观调优技能
+npx skills add blackplume233/game-developers-skills --skill windows-terminal-aesthetics -g -y
 
 # 全局安装游戏白盒拆解技能
 npx skills add blackplume233/game-developers-skills --skill game-deconstruction -g -y

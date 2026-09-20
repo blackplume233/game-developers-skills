@@ -2,6 +2,18 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.18.0] - 2026-09-20
+
+### Added
+
+- **Dev Workflow** (1 skill):
+  - `windows-terminal-aesthetics` v1.0.0 — Windows Terminal 外观调优 + 像素级验证技能：亚克力 / Mica 材质、`opacity`、消除标签栏接缝的"无界"窗口、半透明背景下的文字清晰度调优；附 `capture-window.ps1`（PrintWindow 抗遮挡取窗，支持强制几何与稳定态重采）、`analyze-capture.py`（body 色 / 色带 / 接缝 / 未绘制边距裁剪 / 文字行段，纯标准库解 PNG）、`validate-settings.py`（把 settings.json 对照**已安装版本**的 schema 校验，杜绝键名静默失效）。内置 `references/presets.md`（实测预设与 α 映射表）、`references/measurement.md`（测量协议、有效性清单与被证伪的假说案例）。
+
+### Changed
+
+- README: Dev Workflow 分类新增 `windows-terminal-aesthetics`，并加入快速安装命令。
+- WIKI: 新增 Windows Terminal Aesthetics 页面，记录适用范围、安装与测量边界。
+
 ## [1.17.0] - 2026-09-18
 
 ### Added
