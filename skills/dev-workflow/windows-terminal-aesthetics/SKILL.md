@@ -1,6 +1,6 @@
 ---
 name: windows-terminal-aesthetics
-version: 1.0.3
+version: 1.0.4
 description: >-
   Tune the look of Windows Terminal and prove the result with pixel
   measurements instead of eyeballing: acrylic and Mica backdrops, opacity,

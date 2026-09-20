@@ -133,6 +133,100 @@ Also set `opacity` explicitly: with `useAcrylic: true` and no `opacity`,
 Windows Terminal defaults it to **50**, which lands in the middle of the table
 above rather than at 100.
 
+## Preset: Obsidian Black (measured, in use)
+
+The look this file's numbers were collected against, and the one to start from
+when the goal is "a black window with frost on it, on any wallpaper". Two values
+carry it: the colour the glass is drawn over, and how much backdrop gets through.
+
+```jsonc
+{
+    "schemes": [
+        {
+            // Copy the scheme your build ships - these are Campbell's own
+            // colours, read out of the installed defaults.json - and change
+            // only "background", so every text colour stays untouched.
+            "name": "Obsidian Black",
+            "background": "#000000",
+            "foreground": "#CCCCCC",
+            "cursorColor": "#FFFFFF",
+            "black": "#0C0C0C",
+            "red": "#C50F1F", "green": "#13A10E", "yellow": "#C19C00",
+            "blue": "#0037DA", "purple": "#881798", "cyan": "#3A96DD",
+            "white": "#CCCCCC",
+            "brightBlack": "#767676", "brightRed": "#E74856",
+            "brightGreen": "#16C60C", "brightYellow": "#F9F1A5",
+            "brightBlue": "#3B78FF", "brightPurple": "#B4009E",
+            "brightCyan": "#61D6D6", "brightWhite": "#F2F2F2"
+        }
+    ],
+    "themes": [
+        {
+            "name": "seamless",
+            "window": { "applicationTheme": "dark" },
+            "tabRow": {
+                "background": "terminalBackground",
+                "unfocusedBackground": "terminalBackground"
+            },
+            "tab": {
+                "background": "terminalBackground",
+                "unfocusedBackground": "#00000000",
+                "showCloseButton": "hover"
+            }
+        }
+    ],
+    "theme": "seamless",
+    "profiles": {
+        "defaults": {
+            "colorScheme": "Obsidian Black",
+            "useAcrylic": true,
+            "opacity": 90,
+            "antialiasingMode": "grayscale",
+            "intenseTextStyle": "bold",
+            "adjustIndistinguishableColors": "always",
+            "padding": "0",
+            "cursorShape": "filledBox",
+            "scrollbarState": "hidden",
+            "font": {
+                "face": "Maple Mono NF CN",
+                "size": 12,
+                "features": { "calt": 1, "zero": 1, "cv01": 1, "cv03": 1, "cv04": 1, "ss07": 1 }
+            }
+        }
+    }
+}
+```
+
+Measured on 1.24.11911.0 - forced geometry, settled, focused, text-free pane,
+`#CCCCCC` text against the measured body:
+
+| Configuration | Own composition | Over pure white | Contrast over white |
+|---|---|---|---|
+| **this preset** (`#000000`, acrylic 90) | `#212121` | `#2D2D2D` rgb(46,47,46) | **8.4:1** |
+| same, acrylic 85 | `#202020` | `#242425` rgb(42,43,45) | 8.8:1 |
+| Campbell `#0C0C0C`, acrylic 50 | `#181818` | `#727275` rgb(84,87,90) | 4.7:1 |
+
+The preset's two rows reproduced exactly across independent captures (spread 0).
+Note the direction: *raising* opacity makes the body marginally lighter over a
+bright backdrop (`#242425` at 85, `#2D2D2D` at 90), because the material's own
+veil grows with it - the same reason the α table above reads the way it does.
+
+Why these two values carry the look:
+
+- **`background: #000000`.** The glass is drawn over the scheme colour - at
+  opacity 100 the body measures exactly the scheme background, which is the
+  calibration this whole file rests on - so the scheme is the floor under the
+  material, and lowering the floor is the only change that helps on *every*
+  backdrop at once.
+- **`opacity: 90`.** High enough that the backdrop cannot take over. At 50 the
+  same window over pure white measures `#727275` with text contrast down to
+  4.7:1, which is no longer a black window; 85-95 all behave, and below ~80 the
+  wallpaper starts deciding the look.
+- The rest is crispness rather than colour: grayscale antialiasing (no colour
+  fringing on top of a material), bold intense text (keeps the scheme's hue
+  instead of lightening it), and `padding: 0` so the field runs to the window
+  edge with no inner gutter.
+
 ## Preset: Mica (subtle tint)
 
 Mica applies a desaturated tint derived from the desktop wallpaper beneath all
@@ -196,6 +290,7 @@ opacity 100 with the material off: glass is a contract with the backdrop.
 | Frosted, reads obsidian - the practical sweet spot | Frosted (acrylic, 85-90) | `#202020` / `#212121` | black window, visible frost, 10-15% see-through |
 | Bright, glass-first | Frosted (acrylic, 50 and below) | `#181818` / `#101010` | own composition only - over white it measures `#727275` and reads as grey glass |
 | Barely-there tint, no blur | Mica (85) | `#0F0F0F` | flat, almost no tint |
+| The measured look this skill ships for | Obsidian Black (full preset above) | `#212121` | black window + frost; over a white wallpaper still 8.4:1 |
 
 ## Not Available
 

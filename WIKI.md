@@ -32,6 +32,8 @@ surface instead of one growing document.
 
 ## Recent Additions
 
+- `windows-terminal-aesthetics` v1.0.3 -> v1.0.4: 把"当前效果"固化成**可直接抄的预设**——`references/presets.md` 新增完整的 **Obsidian Black** 预设(Campbell 色板 + `background: #000000` + 亚克力 `opacity: 90` + 灰度抗锯齿/粗体强调/零内边距,含 seamless theme 的 `tabRow`/`tab`),并补上该预设**自身**的实测:窗口自身合成 `#212121`,纯白底真实合成 `#2D2D2D` rgb(46,47,46)、`#CCCCCC` 文字对比度 **8.4:1**,两次独立抓取逐字节一致(spread 0)。仓库 wiki 页同步新增「当前效果(可直接抄)」一节,并把 `-Screen`、`white-backdrop.ps1` 写进工具表与实测事实。
+
 - `windows-terminal-aesthetics` v1.0.2 -> v1.0.3: 补上"看得见的另一半"——新增 `capture-window.ps1 -Screen`(真实屏幕合成,含合成器那层模糊)与 `white-backdrop.ps1`(不透明白色底板,且不抢前台),把"浅色背景效果差"量化成数字:纯白底上 opacity 50 的 body 是 `#727275`、文字对比度跌到 4.7:1,opacity 85 则 `#242425`、8.8:1;结论是 opacity 是唯一旋钮、把 scheme 底色降到 `#000000` 是唯一能压低地板的手段。同时修掉两个静默缺陷:后台进程里 `SetForegroundWindow` 被前台锁拒绝会让 `-Screen` 拍到**别的东西**(整轮颜色全是 `#FFFFFF`),现改用 `AttachThreadInput` 强制激活并把 `focused: NO` 定义为失败;`ShowWithoutActivation` 是 protected 属性,必须继承 `Form` 而不能赋 值。另记录 `useMica`/`applicationTheme` 属于 `themes[].window`——写到顶层 `window` 会被静默忽略,那一轮"Mica"其实什么都没测。
 
 - `windows-terminal-aesthetics` v1.0.1 -> v1.0.2: 记下「抓到的 body 色 ≠ 亮度」——半透下窗后桌面的模糊才是主导项,而它**不在** PrintWindow 抓屏里(实测 opacity 50 的 `#181818` 比 opacity 85 的 `#202020` 更暗,屏幕上却更灰)。据此把「曜黑 + 霜」的实用区间定为 **85-95**,50 及以下归为「灰玻璃」的另一种观感,坑位写进 Measured Pitfalls。

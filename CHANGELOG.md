@@ -2,6 +2,13 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.18.5] - 2026-09-20
+
+### Added
+
+- `windows-terminal-aesthetics`: a complete, copy-ready preset in `references/presets.md` - the **Obsidian Black** look this skill's numbers were collected against: Campbell's palette with `background: #000000`, acrylic at `opacity: 90`, a `seamless` theme whose tab row and tabs paint themselves with the pane background, and the crispness settings (`antialiasingMode: grayscale`, `intenseTextStyle: bold`, `padding: 0`).
+- Measured for that preset itself: own composition `#212121`, and over a forced pure white backdrop `#2D2D2D` rgb(46,47,46) with `#CCCCCC` text at **8.4:1** contrast - reproduced byte-identically across two independent captures. The repo wiki page gains the same preset and the `-Screen` / `white-backdrop.ps1` tooling notes.
+
 ## [1.18.4] - 2026-09-20
 
 ### Added
