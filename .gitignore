@@ -17,3 +17,8 @@ skills-lock.json
 # Temp
 *.tmp
 *.bak
+
+# Python bytecode caches (skills ship .py scripts; importing one drops these
+# next to it and they must never be committed)
+__pycache__/
+*.pyc

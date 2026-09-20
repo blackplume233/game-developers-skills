@@ -2,6 +2,16 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.18.2] - 2026-09-20
+
+### Fixed
+
+- Updated `windows-terminal-aesthetics` v1.0.0 -> v1.0.1: removed an over-claim in `references/presets.md` that lowering `opacity` "does not show more of the desktop" - a PrintWindow capture cannot measure desktop see-through at all, and the statement contradicted what `opacity` means. Added the measured presets for the translucent end of the range (opacity 50 -> `#181818`, opacity 25 -> `#101010`), and documented that profile appearance changes apply to windows that are already open (`useAcrylic` flipped with a window on screen: `#202020` -> `#0A0A0A` -> `#202020`), so a setting that "does nothing" is a validation problem, not a stale window.
+
+### Changed
+
+- `.gitignore` now ignores `__pycache__/` and `*.pyc`, with the rule recorded in `wiki/Maintenance-Rules.md`: skills ship `.py` scripts, so importing one drops bytecode caches beside it and they must never be committed.
+
 ## [1.18.1] - 2026-09-20
 
 ### Fixed

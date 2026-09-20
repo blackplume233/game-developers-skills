@@ -75,8 +75,9 @@ Choose this when the goal is the darkest possible terminal and flatness matters.
 
 ## Preset: Frosted (acrylic)
 
-The frosted look, and the sweet spot for it: the material is at full strength
-while the pane stays 95% opaque.
+The frosted look at full material strength. 95 keeps the pane almost opaque, so
+this is the least see-through version of it; drop to 50 for glass that is
+obviously semi-transparent.
 
 ```jsonc
 "profiles": {
@@ -105,10 +106,20 @@ The full alpha map, acrylic on, `#0C0C0C` scheme:
 
 Read that table carefully, because it is not the behaviour people expect:
 switching acrylic on lifts the body onto a dark veil that barely moves between
-opacity 98 and 85, and *lowering* opacity further brings the body back towards
-the scheme colour rather than showing more of the desktop. There is no dial that
-adds frost without also lightening the body, and none at all that reaches the
-pure scheme colour while the material is on.
+opacity 98 and 85, and lowering opacity from there makes the composite *darker*,
+not brighter. `opacity` still means what it says - the pane is drawn at that
+fraction over the backdrop, so a lower value is more see-through - but the
+material's own contribution moves with it, which is why the measured body does
+not converge on the scheme colour as opacity falls.
+
+How much of the desktop actually shows through cannot be read off these numbers.
+A PrintWindow capture shows the window's own composition, not the compositor's
+blur of the desktop behind it (see `measurement.md`), so judge translucency by
+eye and use these values only to know which body colour to expect.
+
+There is no dial that adds frost without lifting the body off what the unblurred
+blend produces, and none at all that reaches the pure scheme colour while the
+material is on.
 
 Also set `opacity` explicitly: with `useAcrylic: true` and no `opacity`,
 Windows Terminal defaults it to **50**, which lands in the middle of the table
@@ -144,10 +155,11 @@ desktop without ever looking blurred or bright.
 
 | Goal | Preset | Body |
 |---|---|---|
-| Darkest, flat, no glass | Seamless Dark | `#0A0A0A` |
-| Visibly frosted, still dark | Frosted (acrylic, 95) | `#222222` |
-| Slightly more frost than black, most see-through | Frosted (acrylic, 85) | `#202020` |
-| Barely-there tint, no blur | Mica | `#0F0F0F` |
+| Darkest, flat, no material | Seamless Dark (acrylic off, 85) | `#0A0A0A` |
+| Frosted, barely see-through | Frosted (acrylic, 95) | `#222222` |
+| Frosted and clearly semi-transparent - half the pane is backdrop | Frosted (acrylic, 50) | `#181818` |
+| Frosted, most see-through, still dark | Frosted (acrylic, 25) | `#101010` |
+| Barely-there tint, no blur | Mica (85) | `#0F0F0F` |
 
 ## Not Available
 

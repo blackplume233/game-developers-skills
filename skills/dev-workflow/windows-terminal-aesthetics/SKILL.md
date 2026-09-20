@@ -1,6 +1,6 @@
 ---
 name: windows-terminal-aesthetics
-version: 1.0.0
+version: 1.0.1
 description: >-
   Tune the look of Windows Terminal and prove the result with pixel
   measurements instead of eyeballing: acrylic and Mica backdrops, opacity,
@@ -138,6 +138,12 @@ options are a duplicate profile or editing one line.
 
 Set an explicit `opacity` whenever `useAcrylic` is true: if opacity is omitted
 while acrylic is on, Windows Terminal defaults it to **50**, not 100.
+
+Profile appearance changes apply to windows that are already open - verified by
+flipping `useAcrylic` with a window on screen and re-measuring the same window
+(`#202020` -> `#0A0A0A` -> `#202020`). So a settings edit that "did nothing" is a
+validation or key-name problem (step 2), not a stale-window problem. Do not send
+users off to restart the terminal for this.
 
 ### 4. Measure
 
