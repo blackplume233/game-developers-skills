@@ -32,6 +32,8 @@ surface instead of one growing document.
 
 ## Recent Additions
 
+- `windows-terminal-aesthetics` v1.0.4 -> v1.1.0: 新增 **Translucent Dark** 预设，补齐此前没覆盖的两个场景——机器给不出背景材质，以及"想看穿到真实桌面"而不是材质薄纱。做法是两把材质开关都关掉（`useAcrylic: false` + `useMica: false`），标签栏改自带 RGBA 底色（`#1E1E2ECC` / `#1E1E2EAA`，因为已无底层可透），`opacity: 90` + `unfocusedAppearance.opacity: 82`。同时记下**材质可能"在 schema 里、却不在这台机器上"**：实测 `useAcrylic: true` 在 opacity 85 与 60 下都精确画出方案底色 `#1E1E2E`，比关掉亚克力**还实**；Mica 在 `opacity: 0` 时整块平铺 `#202020`，而同一矩形窗口最小化后是 `#121212` / `#067AB0`——面板透明是对 Mica 求值，想真透必须 `useMica: false`。附三连诊断（Mica `opacity: 0` → 亚克力关/开对比 → 排除可控原因），并注明本次机器上第 3 步全部通过、**根因未确定**；同类现象记录于 `microsoft/terminal` issue 18189。新预设的 23 个键已过 `validate-settings.py`（v1.24.11911.0）。仓库 wiki 页同步新增「第二个预设：无材质半透」一节。
+
 - `windows-terminal-aesthetics` v1.0.3 -> v1.0.4: 把"当前效果"固化成**可直接抄的预设**——`references/presets.md` 新增完整的 **Obsidian Black** 预设(Campbell 色板 + `background: #000000` + 亚克力 `opacity: 90` + 灰度抗锯齿/粗体强调/零内边距,含 seamless theme 的 `tabRow`/`tab`),并补上该预设**自身**的实测:窗口自身合成 `#212121`,纯白底真实合成 `#2D2D2D` rgb(46,47,46)、`#CCCCCC` 文字对比度 **8.4:1**,两次独立抓取逐字节一致(spread 0)。仓库 wiki 页同步新增「当前效果(可直接抄)」一节,并把 `-Screen`、`white-backdrop.ps1` 写进工具表与实测事实。
 
 - `windows-terminal-aesthetics` v1.0.2 -> v1.0.3: 补上"看得见的另一半"——新增 `capture-window.ps1 -Screen`(真实屏幕合成,含合成器那层模糊)与 `white-backdrop.ps1`(不透明白色底板,且不抢前台),把"浅色背景效果差"量化成数字:纯白底上 opacity 50 的 body 是 `#727275`、文字对比度跌到 4.7:1,opacity 85 则 `#242425`、8.8:1;结论是 opacity 是唯一旋钮、把 scheme 底色降到 `#000000` 是唯一能压低地板的手段。同时修掉两个静默缺陷:后台进程里 `SetForegroundWindow` 被前台锁拒绝会让 `-Screen` 拍到**别的东西**(整轮颜色全是 `#FFFFFF`),现改用 `AttachThreadInput` 强制激活并把 `focused: NO` 定义为失败;`ShowWithoutActivation` 是 protected 属性,必须继承 `Form` 而不能赋 值。另记录 `useMica`/`applicationTheme` 属于 `themes[].window`——写到顶层 `window` 会被静默忽略,那一轮"Mica"其实什么都没测。

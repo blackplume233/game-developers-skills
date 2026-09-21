@@ -106,6 +106,49 @@ npx skills add blackplume233/game-developers-skills --skill windows-terminal-aes
 - `opacity: 90`：高到背景抢不走主导权。同一窗口在纯白底上 50 时测得 `#727275`、文字对比度仅 4.7:1，已经不算黑窗；85-95 都可用，低于 ~80 就由壁纸决定观感了。
 - 其余是"清晰度"而非颜色：灰度抗锯齿（材质上不再叠彩色描边）、`intenseTextStyle: bold`（保色相而不提亮）、`padding: 0`（不留内侧空白带）。
 
+## 第二个预设：无材质半透
+
+上面那套的前提是**这台机器真的给得出材质**。实测里遇到另一种机器：DWM 拒绝提供背景材质，于是亚克力不是"少一点模糊"，而是把面板推到**更不透明**的一档——`useAcrylic: true` 在 opacity 85 与 60 下都测出与方案底色**完全一致**的 `#1E1E2E`，比关掉亚克力还实。
+
+```jsonc
+"themes": [{
+    "name": "translucent",
+    "window": { "applicationTheme": "dark", "useMica": false },
+    "tabRow": { "background": "#1E1E2ECC", "unfocusedBackground": "#1E1E2EAA" },
+    "tab": { "background": "terminalBackground", "unfocusedBackground": "#00000000", "showCloseButton": "hover" }
+}],
+"theme": "translucent",
+"profiles": { "defaults": {
+    "useAcrylic": false,
+    "opacity": 90,
+    "unfocusedAppearance": { "opacity": 82 },
+    "antialiasingMode": "grayscale"
+} }
+```
+
+屏幕合成实测（窗口矩形抓屏、含背景；底层由 `(body − opacity × 方案色) / (1 − opacity)` 反推）：
+
+| 配置 | 实测 body | 反推底层 |
+|---|---|---|
+| opacity 100（校准） | `#1E1E2E` | 无——精确等于方案底色 |
+| opacity 85，**Mica 开** | `#1F1F2C` | `#252521`——是 Mica，不是桌面 |
+| opacity 90，Mica 关 | `#222231` | `#46464C`——背后那个灰色窗口 |
+| opacity 85，Mica 关 | `#1D1D2A` | `#171713`——背后的深色桌面 |
+| opacity 0，Mica 开 | `#202020` 平铺 | Mica 的纯色降级值；同一矩形窗口最小化后是 `#121212` + `#067AB0` |
+
+两条结论：
+
+- **材质关掉之后，opacity 才是相对真实背景的 alpha 混合**：反推底层跟着窗后内容走（灰窗口 `#46464C`、深色桌面 `#171713`），而不是钉在某个固定档位。同一 opacity 在两行读数不同，是背景变了，不是设置变了。
+- **Mica 会把桌面挡死**。开着 Mica 时反推底层恒为 `#252521`；`opacity: 0` 时整块测得 `#202020`，而同一矩形在窗口最小化后是 `#121212` / `#067AB0`。面板透明是对 Mica 求值，所以"Mica 开着的透明窗"永远看不到真正的窗后内容——想真透，`useMica` 必须为 false。
+
+### 诊断"材质缺失"三连（按顺序）
+
+1. `opacity: 0` + `useMica: true`：body 平整单色，而同一矩形最小化后是**不同的、有变化的**桌面 → 材质在画纯色降级值。
+2. `opacity: 85`，亚克力**关 vs 开**：关时半透、开时精确等于方案底色 → 材质不可用。材质"存在但坏掉"仍然报 on，只能靠对比，不能靠看设置。
+3. 再排除可控原因：透明效果开启（`UISettings.AdvancedEffectsEnabled`）、节能模式关闭且接电源、非 RDP 会话、无远程/串流软件安装的虚拟显示适配器、显卡驱动已装。
+
+本次实测的机器上第 3 步**全部通过**，材质依然只画纯色，因此**根因未确定**——能带走的是上面的诊断，而不是某个猜测出来的原因。同类现象上游记录在 `microsoft/terminal` issue 18189。
+
 ## Boundaries
 
 - `PrintWindow` 展示的是窗口**自身**合成结果：能测材质色调/水平/抖动、body 色、接缝、文字位置，**不能**测 DWM 对窗后桌面的模糊强度。模糊必须肉眼判断，且技能要求如实说明"模糊是目视确认的"。

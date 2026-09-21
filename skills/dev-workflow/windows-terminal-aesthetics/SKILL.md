@@ -1,6 +1,6 @@
 ---
 name: windows-terminal-aesthetics
-version: 1.0.4
+version: 1.1.0
 description: >-
   Tune the look of Windows Terminal and prove the result with pixel
   measurements instead of eyeballing: acrylic and Mica backdrops, opacity,
@@ -9,9 +9,10 @@ description: >-
   version actually installed. Triggers on: "Windows Terminal theme",
   "terminal too grey", "make the terminal transparent", "frosted glass",
   "acrylic", "Mica", "opacity", "edgeless terminal", "seamless tab row",
-  "terminal text looks blurry", "settings.json ignored", "窗口美化",
-  "终端美化", "终端磨砂", "液态玻璃", "亚克力", "终端透明度", "无边框终端",
-  "标签栏接缝", "终端字体发虚", "设置不生效".
+  "terminal text looks blurry", "settings.json ignored", "acrylic has no
+  effect", "acrylic does nothing", "acrylic not working", "窗口美化",
+  "终端美化", "终端磨砂", "液态玻璃", "亚克力", "亚克力没效果", "终端透明度",
+  "终端不透", "无边框终端", "标签栏接缝", "终端字体发虚", "设置不生效".
 license: MIT
 allowed-tools: Shell, Read, Glob, Grep
 ---
@@ -235,6 +236,16 @@ Each of these cost a wrong conclusion before it was measured:
   not a setting at all, so a "Mica" experiment that writes it there measures
   plain opacity and looks like a result. Verify with `validate-settings.py` and
   the schema path, never with "the setting looks right".
+- **A material can be in the schema and absent from the machine.** Where DWM
+  refuses backdrop materials, acrylic does not degrade to "no blur" - it moves
+  the body to a *more* opaque level. Measured: `useAcrylic: true` painted exactly
+  the scheme background (`#1E1E2E`, at opacity 85 and at 60) while
+  `useAcrylic: false` at the same opacity was translucent (`#1D1D2A`), so
+  enabling acrylic reads as "this setting is broken" and gets misdiagnosed as a
+  bad key or a stale window. A material that is present but broken still reports
+  as on, so settle it by comparing acrylic off against on, never by reading the
+  setting. `references/presets.md` carries the three-capture diagnostic; the
+  same behaviour is reported upstream in `microsoft/terminal` issue 18189.
 
 ## What Cannot Be Measured This Way
 

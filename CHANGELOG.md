@@ -2,6 +2,17 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.18.6] - 2026-09-21
+
+### Added
+
+- `windows-terminal-aesthetics` v1.0.4 -> v1.1.0: a **Translucent Dark** preset in `references/presets.md` for the two cases the existing presets did not cover - a machine that refuses backdrop materials, and a window that should show the *desktop itself* behind the panes instead of a material's veil. Both material switches off (`useAcrylic: false`, `useMica: false`), the tab row carrying its own RGBA colour because no backdrop is left for a transparent tab row to fall through to, `opacity: 90` with `unfocusedAppearance.opacity: 82`.
+- The measured reason for switching Mica off: at `opacity: 0` with `useMica: true` the whole pane measured a flat `#202020` while the same rectangle with the window minimized measured `#121212` with `#067AB0` patches. Pane transparency resolves against Mica, so a transparent window over Mica never reaches the desktop, and `useMica` has to be false for genuine see-through.
+
+### Fixed
+
+- Documented that a material can be present in the schema and absent from the machine. Measured on an affected build, `useAcrylic: true` painted the scheme background *exactly* at `opacity` 85 and at `opacity` 60 - **more opaque than `useAcrylic: false`** at the same opacity - so enabling acrylic reads as "the setting is broken" and is easily misdiagnosed as a bad key or a stale window. Adds a three-capture diagnostic (Mica at `opacity: 0`, acrylic off-versus-on, then the controllable causes) and cross-references upstream `microsoft/terminal` issue 18189.
+
 ## [1.18.5] - 2026-09-20
 
 ### Added
