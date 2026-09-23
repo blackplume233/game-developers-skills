@@ -42,6 +42,7 @@ npx skills add blackplume233/game-developers-skills --skill skill-repo-manager -
 | [codex-subagent](skills/agent-orchestration/codex-subagent/) | 1.0.0 | 将子任务委托给 Codex CLI 执行 |
 | [auto-goal](skills/agent-orchestration/auto-goal/) | 1.3.0 | 文件驱动的自动 Goal 执行、frontmatter 状态字段、用户确认与验证循环 |
 | [decide-setup](skills/agent-orchestration/decide-setup/) | 1.0.0 | 接入 `decide` 决策工具（Jev / TypeSafe / OpenRouter / 聊天代理）的安装、凭证配置、验证与故障排查 |
+| [handoff-implement-prompt](skills/agent-orchestration/handoff-implement-prompt/) | 1.0.0 | 为任意项目或任务生成完整交接正文、短恢复提示词与单一入口，用于换会话或交接研究/设计/实现/验证/排障进度；独立工作，不自动开始后续工作 |
 
 ### Skill Management（通用）
 
@@ -112,7 +113,7 @@ gh auth status
 
 # 全局安装所有通用技能
 npx skills add blackplume233/game-developers-skills \
-  --skill codex-subagent --skill auto-goal --skill character-skill-forge --skill decide-setup --skill find-skills --skill skill-repo-manager \
+  --skill codex-subagent --skill auto-goal --skill character-skill-forge --skill decide-setup --skill handoff-implement-prompt --skill find-skills --skill skill-repo-manager \
   --skill shadcn-ui --skill ui-ux-pro-max --skill electron --skill tauri-v2 \
   --skill git-commit --skill guard --skill investigate --skill project-wiki-maintainer --skill qa \
   --skill game-deconstruction --skill obscura --skill gua --skill dai-cat-knowledge-comic --skill windows-terminal-aesthetics \
@@ -200,7 +201,10 @@ npx skills add blackplume233/game-developers-skills --skill '*' -g -y
     ├── agent-orchestration/    # 通用 - Agent 编排
     │   ├── codex-subagent/
     │   ├── auto-goal/
-    │   └── decide-setup/
+    │   ├── decide-setup/
+    │   └── handoff-implement-prompt/
+    │       ├── SKILL.md
+    │       └── references/     # 交接正文模板
     ├── content-creation/        # 通用 - 内容创作
     │   └── dai-cat-knowledge-comic/
     │       ├── SKILL.md

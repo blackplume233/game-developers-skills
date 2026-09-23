@@ -8,7 +8,8 @@
       "skills": [
         "auto-goal",
         "codex-subagent",
-        "decide-setup"
+        "decide-setup",
+        "handoff-implement-prompt"
       ]
     },
     {

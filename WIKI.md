@@ -32,6 +32,8 @@ surface instead of one growing document.
 
 ## Recent Additions
 
+- `handoff-implement-prompt` v1.0.0 (Agent Orchestration): 为任意项目或任务生成独立交接包——按包内模板写完整交接正文、只引用正文的短恢复提示词、仅做导航的单一 `entry.md`；默认落在当前工作区内唯一的 `.tmp/handoff-<task-slug>-<unique-id>/`，写入前核对真实路径与链接，未运行的检查如实标 NOT RUN / BLOCKED，生成交接不等于授权执行下一阶段。
+
 - `windows-terminal-aesthetics` v1.0.4 -> v1.1.0: 新增 **Translucent Dark** 预设，补齐此前没覆盖的两个场景——机器给不出背景材质，以及"想看穿到真实桌面"而不是材质薄纱。做法是两把材质开关都关掉（`useAcrylic: false` + `useMica: false`），标签栏改自带 RGBA 底色（`#1E1E2ECC` / `#1E1E2EAA`，因为已无底层可透），`opacity: 90` + `unfocusedAppearance.opacity: 82`。同时记下**材质可能"在 schema 里、却不在这台机器上"**：实测 `useAcrylic: true` 在 opacity 85 与 60 下都精确画出方案底色 `#1E1E2E`，比关掉亚克力**还实**；Mica 在 `opacity: 0` 时整块平铺 `#202020`，而同一矩形窗口最小化后是 `#121212` / `#067AB0`——面板透明是对 Mica 求值，想真透必须 `useMica: false`。附三连诊断（Mica `opacity: 0` → 亚克力关/开对比 → 排除可控原因），并注明本次机器上第 3 步全部通过、**根因未确定**；同类现象记录于 `microsoft/terminal` issue 18189。新预设的 23 个键已过 `validate-settings.py`（v1.24.11911.0）。仓库 wiki 页同步新增「第二个预设：无材质半透」一节。
 
 - `windows-terminal-aesthetics` v1.0.3 -> v1.0.4: 把"当前效果"固化成**可直接抄的预设**——`references/presets.md` 新增完整的 **Obsidian Black** 预设(Campbell 色板 + `background: #000000` + 亚克力 `opacity: 90` + 灰度抗锯齿/粗体强调/零内边距,含 seamless theme 的 `tabRow`/`tab`),并补上该预设**自身**的实测:窗口自身合成 `#212121`,纯白底真实合成 `#2D2D2D` rgb(46,47,46)、`#CCCCCC` 文字对比度 **8.4:1**,两次独立抓取逐字节一致(spread 0)。仓库 wiki 页同步新增「当前效果(可直接抄)」一节,并把 `-Screen`、`white-backdrop.ps1` 写进工具表与实测事实。

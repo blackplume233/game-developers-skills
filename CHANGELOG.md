@@ -2,6 +2,12 @@
 
 All notable changes to this skill repository will be documented in this file.
 
+## [1.19.0] - 2026-09-23
+
+### Added
+
+- Added `handoff-implement-prompt` v1.0.0 (`agent-orchestration`): produces a self-contained handoff package for any project or task — a full handoff document from `references/handoff-template.md`, a short resume prompt that references rather than inlines it, and a single `entry.md` navigator — written to a unique in-workspace directory with path/link safety checks, honest NOT RUN / BLOCKED verification records, and no implicit authorization to start the next phase.
+
 ## [1.18.6] - 2026-09-21
 
 ### Added
